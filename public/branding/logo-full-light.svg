@@ -1,0 +1,15 @@
+<svg viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="20" cy="20" r="16" fill="#0E7490"/>
+  <circle cx="20" cy="20" r="13" fill="#FFFFFF" fill-opacity="0.12"/>
+  <line x1="20" y1="6" x2="20" y2="8" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" opacity="0.5"/>
+  <line x1="20" y1="34" x2="20" y2="32" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" opacity="0.5"/>
+  <line x1="6" y1="20" x2="8" y2="20" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" opacity="0.5"/>
+  <line x1="34" y1="20" x2="32" y2="20" stroke="#FFFFFF" stroke-width="0.75" stroke-linecap="round" opacity="0.5"/>
+  <line x1="20" y1="20" x2="20" y2="10" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
+  <line x1="20" y1="20" x2="27" y2="20" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
+  <circle cx="20" cy="20" r="2" fill="#FFFFFF"/>
+  <circle cx="32" cy="8" r="4" fill="#F97316"/>
+  <path d="M30.5 8h3M32 6.5v3" stroke="#0F172A" stroke-width="0.75" stroke-linecap="round" opacity="0.55"/>
+  <text x="44" y="26" fill="#0F172A" font-family="Inter, sans-serif" font-size="15" font-weight="700">Saat</text>
+  <text x="84" y="26" fill="#0E7490" font-family="Inter, sans-serif" font-size="15" font-weight="700">Hesaplama</text>
+</svg>

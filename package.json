@@ -1,0 +1,35 @@
+{
+  "name": "saat-hesaplama",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run generate:brand && next build",
+    "start": "next start",
+    "lint": "next lint",
+    "generate:brand": "node scripts/generate-brand-assets.mjs",
+    "test": "npx tsx src/lib/time-utils.test.ts",
+    "test:words": "node scripts/word-count.mjs"
+  },
+  "dependencies": {
+    "framer-motion": "^11.15.0",
+    "lucide-react": "^0.469.0",
+    "next": "14.2.35",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.10",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^8.57.1",
+    "eslint-config-next": "14.2.35",
+    "png-to-ico": "^2.1.8",
+    "postcss": "^8.4.49",
+    "sharp": "^0.33.5",
+    "tailwindcss": "^3.4.17",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2"
+  }
+}
