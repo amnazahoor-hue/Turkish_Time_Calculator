@@ -5,10 +5,10 @@ import {
 
 const ORDER = [
   "Organization",
-  "Person",
+  "WebSite",
   "WebPage",
   "BreadcrumbList",
-  "WebApplication",
+  "Person",
   "FAQPage",
 ] as const;
 

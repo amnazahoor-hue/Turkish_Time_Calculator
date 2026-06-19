@@ -12,7 +12,6 @@ export interface ToolPageSchemaInput {
   name: string;
   description: string;
   path: string;
-  webAppName: string;
   breadcrumbs: { name: string; url: string }[];
   faqs: { question: string; answer: string }[];
 }
@@ -25,7 +24,6 @@ export function getSchemaBaseUrl(): string {
     ? `https://${process.env.VERCEL_URL}`.replace(/\/$/, "")
     : null;
 
-  // Preview / branch deploys — schema URLs must match the preview domain
   if (vercelUrl && process.env.VERCEL_ENV !== "production") {
     return vercelUrl;
   }
@@ -46,19 +44,19 @@ function pageUrl(baseUrl: string, path: string) {
   return `${baseUrl}${path}`;
 }
 
-/** Six separate JSON-LD objects — Organization, Person, WebPage, BreadcrumbList, WebApplication, FAQPage. */
+/** Tool pages only: Organization, WebSite, WebPage, BreadcrumbList, Person, FAQPage. */
 export function buildToolPageJsonLdScripts(
   input: ToolPageSchemaInput,
   baseUrl: string = getSchemaBaseUrl()
 ): Record<string, unknown>[] {
-  const { name, description, path, webAppName, breadcrumbs, faqs } = input;
+  const { name, description, path, breadcrumbs, faqs } = input;
 
   const url = pageUrl(baseUrl, path);
   const orgId = `${baseUrl}/#organization`;
+  const websiteId = `${baseUrl}/#website`;
   const authorUrl = `${baseUrl}${AUTHOR_PATH}`;
   const authorId = `${authorUrl}#person`;
   const webPageId = `${url}#webpage`;
-  const webAppId = `${url}#webapp`;
   const breadcrumbId = `${url}#breadcrumb`;
   const faqId = `${url}#faqpage`;
 
@@ -81,12 +79,13 @@ export function buildToolPageJsonLdScripts(
     },
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": authorId,
-      name: AUTHOR.name,
-      url: authorUrl,
-      jobTitle: AUTHOR.role,
-      worksFor: { "@id": orgId },
+      "@type": "WebSite",
+      "@id": websiteId,
+      name: SITE_NAME,
+      url: `${baseUrl}/`,
+      description: SITE_DESCRIPTION,
+      inLanguage: "tr-TR",
+      publisher: { "@id": orgId },
     },
     {
       "@context": "https://schema.org",
@@ -96,10 +95,9 @@ export function buildToolPageJsonLdScripts(
       name,
       description,
       inLanguage: "tr-TR",
-      isPartOf: { "@id": orgId },
+      isPartOf: { "@id": websiteId },
       publisher: { "@id": orgId },
       author: { "@id": authorId },
-      mainEntity: { "@id": webAppId },
       breadcrumb: { "@id": breadcrumbId },
       primaryImageOfPage: {
         "@type": "ImageObject",
@@ -121,22 +119,12 @@ export function buildToolPageJsonLdScripts(
     },
     {
       "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "@id": webAppId,
-      name: webAppName,
-      description,
-      url,
-      applicationCategory: "UtilitiesApplication",
-      operatingSystem: "Web",
-      inLanguage: "tr-TR",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "TRY",
-      },
-      isPartOf: { "@id": orgId },
-      mainEntityOfPage: { "@id": webPageId },
-      author: { "@id": authorId },
+      "@type": "Person",
+      "@id": authorId,
+      name: AUTHOR.name,
+      url: authorUrl,
+      jobTitle: AUTHOR.role,
+      worksFor: { "@id": orgId },
     },
     {
       "@context": "https://schema.org",

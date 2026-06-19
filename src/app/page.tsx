@@ -21,7 +21,6 @@ export default function HomePage() {
         name={HOME_PAGE.title}
         description={HOME_PAGE.description}
         path={HOME_PAGE.path}
-        webAppName={HOME_PAGE.focusKeyword}
         breadcrumbs={[{ name: "Ana Sayfa", url: "/" }]}
         faqs={CALCULATOR_FAQS}
       />

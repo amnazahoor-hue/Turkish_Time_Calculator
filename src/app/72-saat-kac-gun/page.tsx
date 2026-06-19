@@ -32,7 +32,6 @@ export default function YetmisIkiSaatKacGunPage() {
         name={SEVENTY_TWO_HOURS_PAGE.title}
         description={SEVENTY_TWO_HOURS_PAGE.description}
         path={PAGE_PATH}
-        webAppName={SEVENTY_TWO_HOURS_PAGE.h1}
         breadcrumbs={[
           { name: "Ana Sayfa", url: "/" },
           { name: "72 Saat Kaç Gündür", url: PAGE_PATH },

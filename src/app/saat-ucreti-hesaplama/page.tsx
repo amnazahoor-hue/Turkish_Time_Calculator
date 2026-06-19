@@ -32,7 +32,6 @@ export default function SaatUcretiHesaplamaPage() {
         name={HOURLY_WAGE_PAGE.title}
         description={HOURLY_WAGE_PAGE.description}
         path={PAGE_PATH}
-        webAppName={HOURLY_WAGE_PAGE.h1}
         breadcrumbs={[
           { name: "Ana Sayfa", url: "/" },
           { name: "Saat Ücreti Hesaplama", url: PAGE_PATH },
