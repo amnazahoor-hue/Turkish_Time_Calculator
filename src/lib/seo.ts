@@ -190,6 +190,8 @@ export interface WebPageSchemaOptions {
   speakableSelectors?: string[];
   aboutTopic?: string;
   includeAuthor?: boolean;
+  /** When set, WebPage isPartOf uses this @id (tool pages → Organization). */
+  isPartOfId?: string;
 }
 
 export function generateWebPageSchema({
@@ -208,6 +210,7 @@ export function generateWebPageSchema({
   speakableSelectors,
   aboutTopic,
   includeAuthor = false,
+  isPartOfId,
 }: WebPageSchemaOptions) {
   const url = `${SITE_URL}${path}`;
   const imageUrl = `${SITE_URL}${primaryImage ?? OG_IMAGE}`;
@@ -219,6 +222,7 @@ export function generateWebPageSchema({
     "@id": `${SITE_URL}#organization`,
     name: SITE_NAME,
   };
+  const partOfId = isPartOfId ?? `${SITE_URL}#website`;
 
   return {
     "@context": "https://schema.org",
@@ -228,21 +232,11 @@ export function generateWebPageSchema({
     name,
     description,
     inLanguage: "tr-TR",
-    isPartOf: {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}#website`,
-      name: SITE_NAME,
-      url: SITE_URL,
-    },
+    isPartOf: { "@id": partOfId },
     publisher: organizationRef,
     ...(includeAuthor
       ? {
-          author: {
-            "@type": "Person",
-            "@id": `${authorUrl}#person`,
-            name: AUTHOR.name,
-            url: authorUrl,
-          },
+          author: { "@id": `${authorUrl}#person` },
         }
       : {}),
     ...(schemaType === "WebPage"
@@ -358,10 +352,11 @@ export interface ToolPageSchemaBundleOptions {
   speakableSelectors?: string[];
   aboutTopic?: string;
   primaryImage?: string;
-  additional?: Record<string, unknown>[];
 }
 
-/** Full structured-data bundle for calculator / tool pages. */
+const AUTHOR_PAGE_PATH = `/yazar/${AUTHOR.slug}`;
+
+/** Tool pages: Organization, WebPage, BreadcrumbList, WebApplication, FAQPage, Person. */
 export function buildToolPageSchemas({
   name,
   description,
@@ -372,13 +367,13 @@ export function buildToolPageSchemas({
   speakableSelectors,
   aboutTopic,
   primaryImage,
-  additional = [],
 }: ToolPageSchemaBundleOptions): Record<string, unknown> {
   const webAppId = `${SITE_URL}${path}#webapp`;
+  const organizationId = `${SITE_URL}#organization`;
 
   return toSchemaGraph([
     generateOrganizationSchema(),
-    generateWebSiteSchema(),
+    generateAuthorPersonSchema(),
     generateWebPageSchema({
       name,
       description,
@@ -391,20 +386,16 @@ export function buildToolPageSchemas({
       aboutTopic: aboutTopic ?? webAppName,
       includeAuthor: true,
       mainEntityRef: webAppId,
+      isPartOfId: organizationId,
     }),
     generateBreadcrumbSchema(breadcrumbs, path),
     generateWebApplicationSchema({
       name: webAppName,
       description,
       path,
-    }),
-    generateArticleSchema({
-      headline: name,
-      description,
-      path,
+      isPartOfId: organizationId,
     }),
     generateFAQSchema(faqs, { path, name }),
-    ...additional,
   ]);
 }
 
@@ -455,6 +446,10 @@ export function generatePersonSchema(
   };
 }
 
+export function generateAuthorPersonSchema() {
+  return generatePersonSchema(AUTHOR, AUTHOR_PAGE_PATH);
+}
+
 export interface FAQSchemaPageOptions {
   path: string;
   name?: string;
@@ -496,6 +491,7 @@ export interface ToolApplicationSchemaOptions {
   description: string;
   path: string;
   applicationCategory?: string;
+  isPartOfId?: string;
 }
 
 export function generateWebApplicationSchema({
@@ -503,9 +499,11 @@ export function generateWebApplicationSchema({
   description,
   path,
   applicationCategory = "UtilitiesApplication",
+  isPartOfId,
 }: ToolApplicationSchemaOptions) {
   const url = `${SITE_URL}${path}`;
   const authorUrl = `${SITE_URL}/yazar/${AUTHOR.slug}`;
+  const partOfId = isPartOfId ?? `${SITE_URL}#website`;
 
   return {
     "@context": "https://schema.org",
@@ -523,20 +521,12 @@ export function generateWebApplicationSchema({
       price: "0",
       priceCurrency: "TRY",
     },
-    isPartOf: {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}#website`,
-    },
+    isPartOf: { "@id": partOfId },
     mainEntityOfPage: {
       "@type": "WebPage",
       "@id": `${url}#webpage`,
     },
-    author: {
-      "@type": "Person",
-      "@id": `${authorUrl}#person`,
-      name: AUTHOR.name,
-      url: authorUrl,
-    },
+    author: { "@id": `${authorUrl}#person` },
     publisher: {
       "@type": "Organization",
       "@id": `${SITE_URL}#organization`,

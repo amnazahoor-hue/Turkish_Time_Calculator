@@ -6,7 +6,6 @@ import { SchemaMarkup } from "@/components/seo/schema-markup";
 import {
   generatePageMetadata,
   buildToolPageSchemas,
-  generateHeroVideoSchema,
 } from "@/lib/seo";
 import { HOME_PAGE } from "@/lib/pages-seo";
 import { CALCULATOR_FAQS } from "@/lib/calculator-page-content";
@@ -31,7 +30,6 @@ export default function HomePage() {
           breadcrumbs: [{ name: "Ana Sayfa", url: "/" }],
           speakableSelectors: ["#home-hero-title", "#home-hero-lead"],
           faqs: CALCULATOR_FAQS,
-          additional: [generateHeroVideoSchema()],
         })}
       />
       <HeroSection />
