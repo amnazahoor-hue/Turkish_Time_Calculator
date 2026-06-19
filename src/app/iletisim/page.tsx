@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageTransition, FadeUp } from "@/components/motion";
-import { ContactForm, ContactInfo, MapPlaceholder } from "@/components/contact/contact-form";
+import { ContactForm, ContactInfo } from "@/components/contact/contact-form";
 import { SchemaMarkup } from "@/components/seo/schema-markup";
 import { generateIndexablePageMetadata, buildPageSchemas } from "@/lib/seo";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
@@ -65,9 +65,6 @@ export default function IletisimPage() {
                 </FadeUp>
                 <div className="mt-5 sm:mt-6">
                   <ContactInfo />
-                </div>
-                <div className="mt-5 sm:mt-6">
-                  <MapPlaceholder />
                 </div>
               </div>
             </div>

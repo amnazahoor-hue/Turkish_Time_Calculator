@@ -192,7 +192,7 @@ export function LegalHubLayout({
 }) {
   return (
     <article className="pt-24 pb-12 md:pt-28 md:pb-16">
-      <div className="mx-auto w-full px-4 md:px-6">
+      <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
         <FadeUp>
           <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white shadow-[0_24px_50px_-20px_rgba(0,43,91,0.45)] sm:rounded-[2rem] sm:px-10 sm:py-12">
             <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />

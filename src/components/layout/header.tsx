@@ -44,13 +44,14 @@ export function Header() {
           <Link
             href="/"
             aria-label="Ana Sayfa"
-            className="group flex min-w-0 shrink items-center gap-2 overflow-hidden"
+            className="group flex min-w-0 items-center gap-2"
           >
             <SiteLogo
-              size={40}
+              size={44}
+              priority
               className="h-9 w-9 shrink-0 transition-transform duration-300 group-hover:scale-105 md:h-10 md:w-10 xl:h-11 xl:w-11"
             />
-            <span className="truncate text-xs font-semibold text-primary sm:text-sm xl:text-lg">
+            <span className="min-w-0 truncate text-xs font-semibold text-primary sm:text-sm xl:text-lg">
               {SITE_NAME}
             </span>
           </Link>

@@ -21,6 +21,7 @@ export function SiteLogo({
       width={size}
       height={size}
       priority={priority}
+      sizes={`${size}px`}
       className={cn("object-contain", className)}
     />
   );

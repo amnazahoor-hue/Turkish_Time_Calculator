@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { LazyImage } from "@/components/ui/lazy-image";
 import { FadeUp } from "@/components/motion";
 import { SectionTitle } from "@/components/calculator/content-layouts";
@@ -54,7 +55,14 @@ export function AddSubtractTimeSection() {
               Bu hesap makinesi, ihtiyaçlarınıza göre zaman girişlerini toplamanıza
               veya çıkarmanıza olanak tanır. Başlangıç tarihini ve saatini giriş
               alanlarına girmeniz yeterlidir. Toplama veya çıkarma seçeneklerinden
-              birini seçin; ardından yeni tarih ve saati elde edeceksiniz.
+              birini seçin; ardından yeni tarih ve{" "}
+              <Link
+                href="/72-saat-kac-gun"
+                className="font-medium text-primary underline-offset-2 transition-colors hover:text-accent hover:underline"
+              >
+                saati
+              </Link>{" "}
+              elde edeceksiniz.
             </p>
           </FadeUp>
         </div>

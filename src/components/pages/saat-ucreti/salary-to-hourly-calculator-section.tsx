@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import { LazyImage } from "@/components/ui/lazy-image";
 import { Calculator, Coins } from "lucide-react";
@@ -99,6 +100,16 @@ export function SalaryToHourlyCalculatorSection() {
             <SectionTitle className="mx-auto">{title}</SectionTitle>
             <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
               {intro}
+            </p>
+            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
+              Saat ve gün dönüşümleri için{" "}
+              <Link
+                href="/72-saat-kac-gun"
+                className="font-medium text-primary underline-offset-2 transition-colors hover:text-accent hover:underline"
+              >
+                72 saat kaç gündür
+              </Link>{" "}
+              sayfamızdaki hesaplayıcıyı da kullanabilirsiniz.
             </p>
           </div>
 

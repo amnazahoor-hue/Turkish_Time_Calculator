@@ -22,14 +22,14 @@ import { CALCULATOR_TAB_EXPORT_META } from "@/lib/calculator-export";
 import type { CalculatorTab } from "@/types";
 
 const tabTriggerClass =
-  "whitespace-normal rounded-none border-b-2 border-transparent px-1.5 py-2.5 text-center text-[11px] leading-tight text-white/60 shadow-none hover:!bg-white/10 hover:text-white/90 data-[state=active]:border-white data-[state=active]:bg-transparent data-[state=active]:font-semibold data-[state=active]:text-white data-[state=active]:shadow-none md:flex-1 md:whitespace-nowrap md:px-3 md:py-3 md:text-sm";
+  "min-w-[46%] shrink-0 snap-start whitespace-normal rounded-none border-b-2 border-transparent px-2 py-2.5 text-center text-[11px] leading-snug text-white/60 shadow-none hover:!bg-white/10 hover:text-white/90 data-[state=active]:border-white data-[state=active]:bg-transparent data-[state=active]:font-semibold data-[state=active]:text-white data-[state=active]:shadow-none min-[400px]:min-w-0 min-[400px]:shrink md:flex-1 md:whitespace-nowrap md:px-3 md:py-3 md:text-sm";
 const toolLabelClass =
-  "text-[9px] font-bold uppercase tracking-widest text-navy-400 sm:text-[10px]";
+  "text-[10px] font-bold uppercase tracking-wide text-navy-400 sm:tracking-widest";
 const toolInputClass =
-  "mt-1 h-10 min-w-0 border-navy-200 bg-navy-50/50 px-2.5 text-sm font-semibold text-gray-900 focus-visible:border-navy-300 focus-visible:ring-navy-300 sm:mt-1.5 sm:h-11 sm:px-4";
+  "mt-1 h-10 min-w-0 w-full border-navy-200 bg-navy-50/50 px-2 text-sm font-semibold text-gray-900 focus-visible:border-navy-300 focus-visible:ring-navy-300 min-[400px]:px-2.5 sm:mt-1.5 sm:h-11 sm:px-4";
 const toolHeadingClass = "text-sm font-semibold text-primary";
 const toolSectionClass = "space-y-2 sm:space-y-3";
-const toolFieldsRowClass = "grid grid-cols-2 gap-2 sm:gap-3";
+const toolFieldsRowClass = "grid grid-cols-1 gap-2 min-[400px]:grid-cols-2 sm:gap-3";
 const toolGridClass = "grid gap-3 sm:grid-cols-2 sm:gap-4";
 
 interface CalculatorCardProps {
@@ -130,7 +130,7 @@ export function CalculatorCard({
         <FadeUp delay={0.1}>
           <HoverLift>
           <div className="overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-lg transition-shadow duration-300 hover:shadow-[0_20px_50px_-12px_rgba(0,43,91,0.18)] md:rounded-3xl">
-            <div className="border-b border-navy-100 bg-primary px-3 py-2.5 sm:px-5 sm:py-4 md:px-6">
+            <div className="border-b border-navy-100 bg-primary px-2 py-2 sm:px-5 sm:py-4 md:px-6">
               <Tabs
                 value={activeTab}
                 onValueChange={(v) => {
@@ -140,7 +140,7 @@ export function CalculatorCard({
                   setCalculatedAt(null);
                 }}
               >
-                <TabsList className="grid h-auto grid-cols-2 gap-0 rounded-none border-0 bg-transparent p-0 md:flex md:gap-0">
+                <TabsList className="flex h-auto w-full snap-x snap-mandatory gap-0 overflow-x-auto rounded-none border-0 bg-transparent p-0 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden min-[400px]:grid min-[400px]:grid-cols-2 min-[400px]:overflow-visible min-[400px]:snap-none md:flex md:overflow-visible">
                   <TabsTrigger value="fark" className={tabTriggerClass}>
                     Saat Farkı
                   </TabsTrigger>
@@ -157,7 +157,7 @@ export function CalculatorCard({
               </Tabs>
             </div>
 
-            <div className="p-3 sm:p-5 md:p-6">
+            <div className="p-2.5 sm:p-5 md:p-6">
               <Tabs value={activeTab}>
                 <TabsContent value="fark" className="mt-0">
                   <div className={toolGridClass}>
@@ -413,7 +413,7 @@ export function CalculatorCard({
                       min={0}
                       value={breakMinutes}
                       onChange={(e) => setBreakMinutes(Number(e.target.value))}
-                      className={`${toolInputClass} max-w-xs`}
+                      className={`${toolInputClass} w-full min-[400px]:max-w-xs`}
                     />
                   </div>
                 </TabsContent>
@@ -450,7 +450,7 @@ export function CalculatorCard({
                   <h4 className="text-[10px] font-bold uppercase tracking-widest text-accent">
                     Sonuç
                   </h4>
-                  <pre className="mt-3 whitespace-pre-wrap font-sans text-2xl font-bold text-accent md:text-4xl">
+                  <pre className="mt-3 whitespace-pre-wrap font-sans text-lg font-bold text-accent min-[400px]:text-2xl md:text-4xl">
                     {result}
                   </pre>
                   <CalculatorResultActions

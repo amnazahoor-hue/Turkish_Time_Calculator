@@ -22,7 +22,7 @@ export function HeroSection() {
           <source src="/hero-background.webm" type="video/webm" />
           <source src="/hero-background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-white/50" />
+        <div className="absolute inset-0 bg-white/40" />
         <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-white/35 to-white/25" />
         <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50" />
       </div>

@@ -47,6 +47,67 @@ async function loadImageAsDataUrl(path: string): Promise<string | null> {
   }
 }
 
+const PDF_FONT = "NotoSans";
+const PDF_FONT_FILES = {
+  normal: "NotoSans-Regular.ttf",
+  bold: "NotoSans-Bold.ttf",
+} as const;
+
+function arrayBufferToBase64(buffer: ArrayBuffer): string {
+  const bytes = new Uint8Array(buffer);
+  let binary = "";
+  const chunkSize = 8192;
+  for (let i = 0; i < bytes.length; i += chunkSize) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+  }
+  return btoa(binary);
+}
+
+async function loadFontBase64(path: string): Promise<string | null> {
+  try {
+    const response = await fetch(getAbsoluteUrl(path));
+    if (!response.ok) return null;
+    return arrayBufferToBase64(await response.arrayBuffer());
+  } catch {
+    return null;
+  }
+}
+
+async function registerPdfFonts(doc: jsPDF): Promise<boolean> {
+  const [regular, bold] = await Promise.all([
+    loadFontBase64(`/fonts/${PDF_FONT_FILES.normal}`),
+    loadFontBase64(`/fonts/${PDF_FONT_FILES.bold}`),
+  ]);
+
+  if (!regular || !bold) return false;
+
+  doc.addFileToVFS(PDF_FONT_FILES.normal, regular);
+  doc.addFont(PDF_FONT_FILES.normal, PDF_FONT, "normal");
+  doc.addFileToVFS(PDF_FONT_FILES.bold, bold);
+  doc.addFont(PDF_FONT_FILES.bold, PDF_FONT, "bold");
+  return true;
+}
+
+function setPdfFont(
+  doc: jsPDF,
+  style: "normal" | "bold",
+  hasUnicodeFont: boolean
+): void {
+  if (hasUnicodeFont) {
+    doc.setFont(PDF_FONT, style);
+    return;
+  }
+  doc.setFont("helvetica", style);
+}
+
+function splitPdfLines(
+  doc: jsPDF,
+  text: string,
+  maxWidth: number
+): string[] {
+  return doc.splitTextToSize(text, maxWidth) as string[];
+}
+
 async function loadImageForPdf(
   path: string
 ): Promise<{ data: string; format: "PNG" | "JPEG" } | null> {
@@ -131,12 +192,15 @@ export async function downloadCalculatorPdf(
   payload: CalculatorExportPayload
 ): Promise<void> {
   const doc = new jsPDF({ unit: "mm", format: "a4" });
+  const hasUnicodeFont = await registerPdfFonts(doc);
   const pageWidth = doc.internal.pageSize.getWidth();
   const pageHeight = doc.internal.pageSize.getHeight();
   const margin = 16;
   const contentWidth = pageWidth - margin * 2;
   const when = payload.calculatedAt ?? new Date();
   const toolUrl = getToolUrl(payload.toolPath);
+  const lineHeight = 5;
+  const bodyLineHeight = 5.5;
 
   doc.setFillColor(...ACCENT_RGB);
   doc.rect(0, 0, pageWidth, 8, "F");
@@ -149,11 +213,11 @@ export async function downloadCalculatorPdf(
   }
 
   doc.setTextColor(...NAVY_RGB);
-  doc.setFont("helvetica", "bold");
+  setPdfFont(doc, "bold", hasUnicodeFont);
   doc.setFontSize(16);
   doc.text(SITE_NAME, margin + (logoImage ? 22 : 0), y + 7);
 
-  doc.setFont("helvetica", "normal");
+  setPdfFont(doc, "normal", hasUnicodeFont);
   doc.setFontSize(10);
   doc.setTextColor(...MUTED_RGB);
   doc.text(toolUrl, margin + (logoImage ? 22 : 0), y + 13);
@@ -166,12 +230,12 @@ export async function downloadCalculatorPdf(
   y += 8;
 
   doc.setTextColor(...NAVY_RGB);
-  doc.setFont("helvetica", "bold");
+  setPdfFont(doc, "bold", hasUnicodeFont);
   doc.setFontSize(14);
   doc.text(payload.toolTitle, margin, y);
   y += 7;
 
-  doc.setFont("helvetica", "normal");
+  setPdfFont(doc, "normal", hasUnicodeFont);
   doc.setFontSize(9);
   doc.setTextColor(...MUTED_RGB);
   doc.text(
@@ -182,58 +246,75 @@ export async function downloadCalculatorPdf(
   y += 10;
 
   if (payload.inputsSummary?.trim()) {
-    doc.setFont("helvetica", "bold");
+    setPdfFont(doc, "bold", hasUnicodeFont);
     doc.setFontSize(11);
     doc.setTextColor(...NAVY_RGB);
     doc.text("Hesaplama Girdileri", margin, y);
     y += 6;
 
-    doc.setFont("helvetica", "normal");
+    setPdfFont(doc, "normal", hasUnicodeFont);
     doc.setFontSize(10);
     doc.setTextColor(51, 51, 51);
-    const inputLines = doc.splitTextToSize(payload.inputsSummary.trim(), contentWidth);
+    const inputLines = splitPdfLines(
+      doc,
+      payload.inputsSummary.trim(),
+      contentWidth
+    );
     doc.text(inputLines, margin, y);
-    y += inputLines.length * 5 + 6;
+    y += inputLines.length * lineHeight + 6;
   }
+
+  const resultLines = splitPdfLines(
+    doc,
+    payload.resultText,
+    contentWidth - 8
+  );
+  const resultBoxHeight = Math.max(34, 18 + resultLines.length * bodyLineHeight);
+  const resultBoxY = y;
 
   doc.setFillColor(255, 245, 235);
   doc.setDrawColor(...ACCENT_RGB);
-  doc.roundedRect(margin, y, contentWidth, 34, 3, 3, "FD");
-  y += 8;
+  doc.roundedRect(margin, resultBoxY, contentWidth, resultBoxHeight, 3, 3, "FD");
 
-  doc.setFont("helvetica", "bold");
+  setPdfFont(doc, "bold", hasUnicodeFont);
   doc.setFontSize(10);
   doc.setTextColor(...ACCENT_RGB);
-  doc.text("SONUÇ", margin + 4, y);
-  y += 7;
+  doc.text("SONUÇ", margin + 4, resultBoxY + 8);
 
-  doc.setFont("helvetica", "bold");
+  setPdfFont(doc, "bold", hasUnicodeFont);
   doc.setFontSize(13);
   doc.setTextColor(...NAVY_RGB);
-  const resultLines = doc.splitTextToSize(payload.resultText, contentWidth - 8);
-  doc.text(resultLines, margin + 4, y);
-  y += resultLines.length * 6 + 12;
+  doc.text(resultLines, margin + 4, resultBoxY + 15);
 
-  const footerY = pageHeight - 42;
+  y = resultBoxY + resultBoxHeight + 12;
+
+  const footerParagraphs = [
+    SITE_DESCRIPTION,
+    "Bu belge bilgilendirme amaçlıdır; resmi bordro, hukuki süre veya mali danışmanlık yerine geçmez.",
+    `Araç bağlantısı: ${toolUrl}`,
+    `İletişim: ${SITE_URL}/iletisim`,
+  ];
+
+  const footerBodyLines = footerParagraphs.flatMap((paragraph, index) => {
+    const lines = splitPdfLines(doc, paragraph, contentWidth - 8);
+    return index === 0 ? lines : ["", ...lines];
+  });
+  const footerHeight = 16 + footerBodyLines.length * 4.2;
+  const footerY = Math.max(y + 12, pageHeight - margin - footerHeight);
+
   doc.setFillColor(245, 247, 250);
   doc.setDrawColor(220, 226, 235);
-  doc.roundedRect(margin, footerY, contentWidth, 30, 2, 2, "FD");
+  doc.roundedRect(margin, footerY, contentWidth, footerHeight, 2, 2, "FD");
 
-  doc.setFont("helvetica", "bold");
+  setPdfFont(doc, "bold", hasUnicodeFont);
   doc.setFontSize(9);
   doc.setTextColor(...NAVY_RGB);
   doc.text(`${SITE_NAME} — Resmi Hesaplama Belgesi`, margin + 4, footerY + 7);
 
-  doc.setFont("helvetica", "normal");
+  setPdfFont(doc, "normal", hasUnicodeFont);
   doc.setFontSize(8);
   doc.setTextColor(...MUTED_RGB);
-  const footerText = [
-    SITE_DESCRIPTION,
-    "Bu belge bilgilendirme amaçlıdır; resmi bordro, hukuki süre veya mali danışmanlık yerine geçmez.",
-    `Araç bağlantısı: ${toolUrl} | İletişim: ${SITE_URL}/iletisim`,
-  ].join(" ");
-  const footerLines = doc.splitTextToSize(footerText, contentWidth - 8);
-  doc.text(footerLines, margin + 4, footerY + 13);
+  doc.text(footerBodyLines, margin + 4, footerY + 13);
 
   const filename = `${slugify(payload.toolTitle) || "saat-hesaplama"}-sonuc.pdf`;
   doc.save(filename);

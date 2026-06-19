@@ -15,7 +15,7 @@ import { SEVENTY_TWO_HOURS_FAQS } from "@/lib/seventy-two-hours-content";
 export function SeventyTwoHoursFaqSection() {
   return (
     <section className="section-padding">
-      <div className="mx-auto w-full px-4 md:px-6">
+      <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
         <FadeUp>
           <article className="overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-sm md:rounded-3xl">
             <div className="h-1 bg-gradient-to-r from-accent to-primary" />

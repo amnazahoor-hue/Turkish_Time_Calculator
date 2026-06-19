@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Send, MapPin, Mail, Phone, Clock } from "lucide-react";
+import { Send, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -107,58 +107,15 @@ export function ContactForm() {
 }
 
 export function ContactInfo() {
-  const info = [
-    {
-      icon: MapPin,
-      title: "Adres",
-      content: "Maslak Mahallesi, Büyükdere Caddesi No: 123\nSarıyer, İstanbul 34398",
-    },
-    {
-      icon: Mail,
-      title: "E-posta",
-      content: "info@saathesaplama.com",
-    },
-    {
-      icon: Phone,
-      title: "Telefon",
-      content: "+90 (212) 555 00 00",
-    },
-    {
-      icon: Clock,
-      title: "Çalışma Saatleri",
-      content: "Pazartesi - Cuma: 09:00 - 18:00",
-    },
-  ];
-
-  return (
-    <div className="space-y-6">
-      {info.map((item) => (
-        <FadeUp key={item.title}>
-          <div className="flex gap-4 rounded-2xl border border-border/60 bg-white p-5">
-            <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-primary/10">
-              <item.icon className="h-5 w-5 text-primary" />
-            </div>
-            <div>
-              <h3 className="font-semibold text-foreground">{item.title}</h3>
-              <p className="mt-1 whitespace-pre-line text-sm text-muted">
-                {item.content}
-              </p>
-            </div>
-          </div>
-        </FadeUp>
-      ))}
-    </div>
-  );
-}
-
-export function MapPlaceholder() {
   return (
     <FadeUp>
-      <div className="flex h-64 items-center justify-center rounded-2xl border border-border/60 bg-gradient-to-br from-primary/5 to-secondary/5 md:h-80">
-        <div className="text-center">
-          <MapPin className="mx-auto h-10 w-10 text-primary" />
-          <p className="mt-3 font-medium text-foreground">İstanbul, Türkiye</p>
-          <p className="mt-1 text-sm text-muted">Harita yakında eklenecek</p>
+      <div className="flex gap-4 rounded-2xl border border-border/60 bg-white p-5">
+        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-primary/10">
+          <Mail className="h-5 w-5 text-primary" />
+        </div>
+        <div>
+          <h3 className="font-semibold text-foreground">E-posta</h3>
+          <p className="mt-1 text-sm text-muted">info@saathesaplama.com</p>
         </div>
       </div>
     </FadeUp>

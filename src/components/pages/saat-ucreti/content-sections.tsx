@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
@@ -170,6 +171,16 @@ export function HowHourlyCalculatedSection() {
           <SectionTitle className="mx-auto">{title}</SectionTitle>
           <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
             {intro}
+          </p>
+          <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
+            Zaman ve tarih hesaplamaları için ana sayfamızdaki{" "}
+            <Link
+              href="/"
+              className="font-medium text-primary underline-offset-2 transition-colors hover:text-accent hover:underline"
+            >
+              saat hesaplama
+            </Link>{" "}
+            aracını kullanabilirsiniz.
           </p>
         </FadeUp>
 
