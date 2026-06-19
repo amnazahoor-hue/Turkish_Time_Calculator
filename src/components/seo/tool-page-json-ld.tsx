@@ -12,6 +12,10 @@ const ORDER = [
   "FAQPage",
 ] as const;
 
+function serializeJsonLd(schema: Record<string, unknown>): string {
+  return JSON.stringify(schema).replace(/</g, "\\u003c");
+}
+
 export function ToolPageJsonLd(props: ToolPageSchemaInput) {
   const scripts = buildToolPageJsonLdScripts(props);
   const ordered = ORDER.map((type) =>
@@ -24,7 +28,7 @@ export function ToolPageJsonLd(props: ToolPageSchemaInput) {
         <script
           key={String(schema["@id"] ?? schema["@type"])}
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          dangerouslySetInnerHTML={{ __html: serializeJsonLd(schema) }}
         />
       ))}
     </>

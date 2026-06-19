@@ -18,25 +18,28 @@ export interface ToolPageSchemaInput {
 
 const AUTHOR_PATH = `/yazar/${AUTHOR.slug}`;
 
-/** Build-time base URL. Preview deploys use VERCEL_URL; production uses NEXT_PUBLIC_SITE_URL. */
+/** Canonical base URL for schema @id fields — must match the public page URL. */
 export function getSchemaBaseUrl(): string {
-  const vercelUrl = process.env.VERCEL_URL
-    ? `https://${process.env.VERCEL_URL}`.replace(/\/$/, "")
-    : null;
-
-  if (vercelUrl && process.env.VERCEL_ENV !== "production") {
-    return vercelUrl;
-  }
-
   if (process.env.NEXT_PUBLIC_SITE_URL) {
     return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
   }
 
-  if (vercelUrl) {
-    return vercelUrl;
+  const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
+  if (productionUrl) {
+    return productionUrl.startsWith("http")
+      ? productionUrl.replace(/\/$/, "")
+      : `https://${productionUrl}`.replace(/\/$/, "");
+  }
+
+  if (process.env.VERCEL_URL) {
+    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
   }
 
   return "https://isaathesaplama.tr";
+}
+
+function cleanSchemaText(value: string): string {
+  return value.replace(/[\u200B-\u200D\uFEFF]/g, "").trim();
 }
 
 function pageUrl(baseUrl: string, path: string) {
@@ -50,6 +53,8 @@ export function buildToolPageJsonLdScripts(
   baseUrl: string = getSchemaBaseUrl()
 ): Record<string, unknown>[] {
   const { name, description, path, breadcrumbs, faqs } = input;
+  const pageName = cleanSchemaText(name);
+  const pageDescription = cleanSchemaText(description);
 
   const url = pageUrl(baseUrl, path);
   const orgId = `${baseUrl}/#organization`;
@@ -92,8 +97,8 @@ export function buildToolPageJsonLdScripts(
       "@type": "WebPage",
       "@id": webPageId,
       url,
-      name,
-      description,
+      name: pageName,
+      description: pageDescription,
       inLanguage: "tr-TR",
       isPartOf: { "@id": websiteId },
       publisher: { "@id": orgId },
@@ -131,15 +136,15 @@ export function buildToolPageJsonLdScripts(
       "@type": "FAQPage",
       "@id": faqId,
       url,
-      name: `${name} — Sık Sorulan Sorular`,
+      name: `${pageName} — Sık Sorulan Sorular`,
       inLanguage: "tr-TR",
       isPartOf: { "@id": webPageId },
       mainEntity: faqs.map((faq) => ({
         "@type": "Question",
-        name: faq.question,
+        name: cleanSchemaText(faq.question),
         acceptedAnswer: {
           "@type": "Answer",
-          text: faq.answer,
+          text: cleanSchemaText(faq.answer),
         },
       })),
     },
