@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { PageTransition, FadeUp } from "@/components/motion";
-import { ContactForm, ContactInfo } from "@/components/contact/contact-form";
+import { ContactForm, ContactInfo } from "@/components/iletisim/contact-form";
 import { SchemaMarkup } from "@/components/seo/schema-markup";
 import { generateIndexablePageMetadata, buildPageSchemas } from "@/lib/seo";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";

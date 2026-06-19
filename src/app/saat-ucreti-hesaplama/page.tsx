@@ -14,8 +14,7 @@ import { SaatUcretiFaqSection } from "@/components/pages/saat-ucreti/faq-section
 import { SchemaMarkup } from "@/components/seo/schema-markup";
 import {
   generatePageMetadata,
-  buildPageSchemas,
-  generateFAQSchema,
+  buildToolPageSchemas,
 } from "@/lib/seo";
 import { HOURLY_WAGE_PAGE } from "@/lib/pages-seo";
 import { SAAT_UCRETI_FAQS } from "@/lib/saat-ucreti-content";
@@ -33,20 +32,21 @@ export default function SaatUcretiHesaplamaPage() {
   return (
     <PageTransition>
       <SchemaMarkup
-        data={buildPageSchemas({
+        data={buildToolPageSchemas({
           name: HOURLY_WAGE_PAGE.title,
           description: HOURLY_WAGE_PAGE.description,
           path: PAGE_PATH,
+          webAppName: HOURLY_WAGE_PAGE.h1,
+          aboutTopic: HOURLY_WAGE_PAGE.focusKeyword,
           breadcrumbs: [
             { name: "Ana Sayfa", url: "/" },
             { name: "Saat Ücreti Hesaplama", url: PAGE_PATH },
           ],
-          additional: [
-            generateFAQSchema(SAAT_UCRETI_FAQS, {
-              path: PAGE_PATH,
-              name: HOURLY_WAGE_PAGE.title,
-            }),
+          speakableSelectors: [
+            "#hero-saat-ucreti-title",
+            "#hero-saat-ucreti-intro",
           ],
+          faqs: SAAT_UCRETI_FAQS,
         })}
       />
       <SaatUcretiHeroSection />

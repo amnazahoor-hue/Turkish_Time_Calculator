@@ -34,7 +34,7 @@ export const legalNavLinks = [
   { href: "/disclaimer", label: "Disclaimer" },
   { href: "/privacy-policy", label: "Privacy Policy" },
   { href: "/terms-and-conditions", label: "Terms of Use" },
-  { href: "/contact", label: "Contact" },
+  { href: "/iletisim", label: "Contact" },
 ];
 
 export const allNavLinks = [...sectionNavLinks, ...legalNavLinks];

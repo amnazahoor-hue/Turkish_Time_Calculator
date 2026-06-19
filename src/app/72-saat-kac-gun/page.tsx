@@ -12,8 +12,7 @@ import { SeventyTwoHoursFaqSection } from "@/components/pages/seventy-two-hours/
 import { SchemaMarkup } from "@/components/seo/schema-markup";
 import {
   generatePageMetadata,
-  buildPageSchemas,
-  generateFAQSchema,
+  buildToolPageSchemas,
 } from "@/lib/seo";
 import {
   SEVENTY_TWO_HOURS_PAGE,
@@ -33,20 +32,18 @@ export default function YetmisIkiSaatKacGunPage() {
   return (
     <PageTransition>
       <SchemaMarkup
-        data={buildPageSchemas({
+        data={buildToolPageSchemas({
           name: SEVENTY_TWO_HOURS_PAGE.title,
           description: SEVENTY_TWO_HOURS_PAGE.description,
           path: PAGE_PATH,
+          webAppName: SEVENTY_TWO_HOURS_PAGE.h1,
+          aboutTopic: SEVENTY_TWO_HOURS_PAGE.focusKeyword,
           breadcrumbs: [
             { name: "Ana Sayfa", url: "/" },
             { name: "72 Saat Kaç Gündür", url: PAGE_PATH },
           ],
-          additional: [
-            generateFAQSchema(SEVENTY_TWO_HOURS_FAQS, {
-              path: PAGE_PATH,
-              name: SEVENTY_TWO_HOURS_PAGE.title,
-            }),
-          ],
+          speakableSelectors: ["#hero-72-saat-title", "#hero-72-saat-intro"],
+          faqs: SEVENTY_TWO_HOURS_FAQS,
         })}
       />
       <SeventyTwoHoursHeroSection />

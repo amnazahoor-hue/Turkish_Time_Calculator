@@ -7,7 +7,7 @@ import { HeroCalculatorVisual } from "./hero-calculator-visual";
 
 export function HeroSection() {
   return (
-    <section className="relative overflow-hidden pt-24 pb-10 md:pt-28 md:pb-12 lg:pt-32 lg:pb-14">
+    <section id="home-hero" className="relative overflow-hidden pt-24 pb-10 md:pt-28 md:pb-12 lg:pt-32 lg:pb-14">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <video
           autoPlay
@@ -31,12 +31,18 @@ export function HeroSection() {
         <div className="grid items-center gap-6 md:gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-10">
           <FadeUp>
             <div className="mx-auto max-w-lg text-center lg:mx-0 lg:max-w-[520px] lg:text-left">
-              <h1 className="text-3xl font-bold tracking-tight sm:text-[2.5rem] md:text-[3rem] md:leading-tight lg:text-[3.5rem]">
+              <h1
+                id="home-hero-title"
+                className="text-3xl font-bold tracking-tight sm:text-[2.5rem] md:text-[3rem] md:leading-tight lg:text-[3.5rem]"
+              >
                 <span className="text-primary">Saat </span>
                 <span className="text-accent">Hesaplama</span>
               </h1>
 
-              <p className="mt-3 text-base leading-relaxed text-foreground md:mt-4 md:text-lg">
+              <p
+                id="home-hero-lead"
+                className="mt-3 text-base leading-relaxed text-foreground md:mt-4 md:text-lg"
+              >
                 Bu saat hesaplama aracı temel olarak iki zaman değerini toplamak
                 veya çıkarmak için kullanılır. Aynı günün iki zaman dilimi
                 arasındaki süreyi belirleyin. Bu hesap makinesiyle kaç saat

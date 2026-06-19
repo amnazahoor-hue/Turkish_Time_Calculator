@@ -1,7 +1,6 @@
 import fs from "node:fs";
 import path from "node:path";
 import sharp from "sharp";
-import pngToIco from "png-to-ico";
 
 const BRANDING = path.join(process.cwd(), "public", "branding");
 
@@ -23,10 +22,9 @@ async function generate() {
   }
 
   const favicon32 = path.join(BRANDING, "favicon-32.webp");
-  const faviconIco = path.join(BRANDING, "favicon.ico");
-  const icoBuffer = await pngToIco(favicon32);
-  fs.writeFileSync(faviconIco, icoBuffer);
-  console.log("✓ favicon.ico");
+  const siteFavicon = path.join(process.cwd(), "public", "images", "favicon.webp");
+  fs.copyFileSync(favicon32, siteFavicon);
+  console.log("✓ public/images/favicon.webp");
 
   const ogBase = sharp(path.join(BRANDING, "logo-full-light.svg")).resize(1200, 630, {
     fit: "contain",

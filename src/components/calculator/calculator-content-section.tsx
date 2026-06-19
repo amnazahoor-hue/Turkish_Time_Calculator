@@ -174,7 +174,7 @@ export function CalculatorContentSection() {
 
           visualImage={{
 
-            src: "/images/image2.webp",
+            src: "/images/salary-calc-visual.webp",
 
             alt: "Saati manuel olarak ekleme görseli",
 

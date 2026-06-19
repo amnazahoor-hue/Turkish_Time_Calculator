@@ -63,7 +63,7 @@ export default function FAQ() {
                   <div>
                     <p className="faq-highlight__label">{item.label}</p>
                     {item.label === "Need help?" ? (
-                      <Link href="/contact" className="faq-highlight__value faq-highlight__link">
+                      <Link href="/iletisim" className="faq-highlight__value faq-highlight__link">
                         {item.value}
                       </Link>
                     ) : (
@@ -76,7 +76,7 @@ export default function FAQ() {
 
             <p className="faq-aside-note">
               Can&apos;t find your answer?{" "}
-              <Link href="/contact" className="faq-aside-link">
+              <Link href="/iletisim" className="faq-aside-link">
                 Send us a message
               </Link>{" "}
               — we typically reply within 24 hours.

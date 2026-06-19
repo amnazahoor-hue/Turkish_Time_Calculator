@@ -9,7 +9,7 @@ function ManualTimeImage() {
   return (
     <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
       <LazyImage
-        src="/images/image1.webp"
+        src="/images/manual-subtract-visual.webp"
         alt="Saat hesaplama manuel yöntem görseli"
         width={800}
         height={597}

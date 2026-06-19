@@ -7,7 +7,26 @@ import {
   OG_IMAGE,
   OG_IMAGE_WIDTH,
   OG_IMAGE_HEIGHT,
+  FOOTER_SOCIAL_LINKS,
 } from "./constants";
+import { AUTHOR } from "./legal-pages-config";
+
+/** Backend-managed media metadata for structured data. */
+export const HERO_VIDEO_SCHEMA = {
+  name: "Saat Hesaplama — Ana Sayfa Tanıtım Videosu",
+  description:
+    "Saat Hesaplama platformunun ana sayfa arka plan videosu; zaman hesaplama aracının görsel tanıtımını sunar.",
+  mp4Path: "/hero-background.mp4",
+  webmPath: "/hero-background.webm",
+  thumbnailPath: "/branding/og-image.webp",
+  duration: "PT12S",
+  uploadDate: "2024-06-01",
+} as const;
+
+export const CONTENT_SCHEMA_DATES = {
+  datePublished: "2024-06-01",
+  dateModified: "2026-06-19",
+} as const;
 
 export interface PageSEOProps {
   title: string;
@@ -126,8 +145,10 @@ export function generateOrganizationSchema() {
       "@type": "ContactPoint",
       contactType: "customer service",
       email: "info@saathesaplama.com",
+      url: `${SITE_URL}/iletisim`,
       availableLanguage: "Turkish",
     },
+    sameAs: FOOTER_SOCIAL_LINKS.map((link) => link.href),
   };
 }
 
@@ -146,14 +167,6 @@ export function generateWebSiteSchema() {
       url: SITE_URL,
       logo: `${SITE_URL}${SITE_LOGO}`,
     },
-    potentialAction: {
-      "@type": "SearchAction",
-      target: {
-        "@type": "EntryPoint",
-        urlTemplate: `${SITE_URL}/saat-hesaplama?q={search_term_string}`,
-      },
-      "query-input": "required name=search_term_string",
-    },
   };
 }
 
@@ -163,31 +176,49 @@ export interface WebPageSchemaOptions {
   name: string;
   description: string;
   path: string;
+  datePublished?: string;
   dateModified?: string;
   hasBreadcrumb?: boolean;
   schemaType?: PageSchemaType;
+  /** ProfilePage — person @id */
   mainEntityId?: string;
+  /** WebPage — linked tool/application @id */
+  mainEntityRef?: string;
   primaryImage?: string;
   primaryImageWidth?: number;
   primaryImageHeight?: number;
+  speakableSelectors?: string[];
+  aboutTopic?: string;
+  includeAuthor?: boolean;
 }
 
 export function generateWebPageSchema({
   name,
   description,
   path,
+  datePublished,
   dateModified,
   hasBreadcrumb = false,
   schemaType = "WebPage",
   mainEntityId,
+  mainEntityRef,
   primaryImage,
   primaryImageWidth,
   primaryImageHeight,
+  speakableSelectors,
+  aboutTopic,
+  includeAuthor = false,
 }: WebPageSchemaOptions) {
   const url = `${SITE_URL}${path}`;
   const imageUrl = `${SITE_URL}${primaryImage ?? OG_IMAGE}`;
   const imageWidth = primaryImageWidth ?? OG_IMAGE_WIDTH;
   const imageHeight = primaryImageHeight ?? OG_IMAGE_HEIGHT;
+  const authorUrl = `${SITE_URL}/yazar/${AUTHOR.slug}`;
+  const organizationRef = {
+    "@type": "Organization" as const,
+    "@id": `${SITE_URL}#organization`,
+    name: SITE_NAME,
+  };
 
   return {
     "@context": "https://schema.org",
@@ -203,16 +234,30 @@ export function generateWebPageSchema({
       name: SITE_NAME,
       url: SITE_URL,
     },
+    publisher: organizationRef,
+    ...(includeAuthor
+      ? {
+          author: {
+            "@type": "Person",
+            "@id": `${authorUrl}#person`,
+            name: AUTHOR.name,
+            url: authorUrl,
+          },
+        }
+      : {}),
     ...(schemaType === "WebPage"
       ? {
           about: {
             "@type": "Thing",
-            name: SITE_NAME,
+            name: aboutTopic ?? name,
           },
         }
       : {}),
     ...(schemaType === "ProfilePage" && mainEntityId
       ? { mainEntity: { "@id": mainEntityId } }
+      : {}),
+    ...(schemaType === "WebPage" && mainEntityRef
+      ? { mainEntity: { "@id": mainEntityRef } }
       : {}),
     primaryImageOfPage: {
       "@type": "ImageObject",
@@ -223,7 +268,16 @@ export function generateWebPageSchema({
     ...(hasBreadcrumb
       ? { breadcrumb: { "@id": `${url}#breadcrumb` } }
       : {}),
+    ...(datePublished ? { datePublished } : {}),
     ...(dateModified ? { dateModified } : {}),
+    ...(speakableSelectors && speakableSelectors.length > 0
+      ? {
+          speakable: {
+            "@type": "SpeakableSpecification",
+            cssSelector: speakableSelectors,
+          },
+        }
+      : {}),
   };
 }
 
@@ -255,18 +309,21 @@ export function generateBreadcrumbSchema(
 export interface PageSchemaBundleOptions extends WebPageSchemaOptions {
   breadcrumbs?: BreadcrumbItem[];
   additional?: Record<string, unknown>[];
+  speakableSelectors?: string[];
 }
 
 export function buildPageSchemas({
   breadcrumbs,
   additional = [],
   hasBreadcrumb,
+  speakableSelectors,
   ...webPage
 }: PageSchemaBundleOptions): Record<string, unknown>[] {
   const schemas: Record<string, unknown>[] = [
     generateWebPageSchema({
       ...webPage,
       hasBreadcrumb: hasBreadcrumb ?? Boolean(breadcrumbs?.length),
+      speakableSelectors,
     }),
   ];
 
@@ -275,6 +332,64 @@ export function buildPageSchemas({
   }
 
   return [...schemas, ...additional];
+}
+
+export interface ToolPageSchemaBundleOptions {
+  name: string;
+  description: string;
+  path: string;
+  webAppName: string;
+  breadcrumbs: BreadcrumbItem[];
+  faqs: { question: string; answer: string }[];
+  speakableSelectors?: string[];
+  aboutTopic?: string;
+  primaryImage?: string;
+  additional?: Record<string, unknown>[];
+}
+
+/** Full structured-data bundle for calculator / tool pages. */
+export function buildToolPageSchemas({
+  name,
+  description,
+  path,
+  webAppName,
+  breadcrumbs,
+  faqs,
+  speakableSelectors,
+  aboutTopic,
+  primaryImage,
+  additional = [],
+}: ToolPageSchemaBundleOptions): Record<string, unknown>[] {
+  const webAppId = `${SITE_URL}${path}#webapp`;
+
+  return [
+    generateWebPageSchema({
+      name,
+      description,
+      path,
+      datePublished: CONTENT_SCHEMA_DATES.datePublished,
+      dateModified: CONTENT_SCHEMA_DATES.dateModified,
+      hasBreadcrumb: true,
+      speakableSelectors,
+      primaryImage,
+      aboutTopic: aboutTopic ?? webAppName,
+      includeAuthor: true,
+      mainEntityRef: webAppId,
+    }),
+    generateBreadcrumbSchema(breadcrumbs, path),
+    generateWebApplicationSchema({
+      name: webAppName,
+      description,
+      path,
+    }),
+    generateArticleSchema({
+      headline: name,
+      description,
+      path,
+    }),
+    generateFAQSchema(faqs, { path, name }),
+    ...additional,
+  ];
 }
 
 export interface PersonSchemaInput {
@@ -360,19 +475,137 @@ export function generateFAQSchema(
   };
 }
 
-export function generateSoftwareApplicationSchema() {
+export interface ToolApplicationSchemaOptions {
+  name: string;
+  description: string;
+  path: string;
+  applicationCategory?: string;
+}
+
+export function generateWebApplicationSchema({
+  name,
+  description,
+  path,
+  applicationCategory = "UtilitiesApplication",
+}: ToolApplicationSchemaOptions) {
+  const url = `${SITE_URL}${path}`;
+  const authorUrl = `${SITE_URL}/yazar/${AUTHOR.slug}`;
+
   return {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: SITE_NAME,
-    applicationCategory: "UtilitiesApplication",
+    "@type": "WebApplication",
+    "@id": `${url}#webapp`,
+    name,
+    description,
+    url,
+    applicationCategory,
     operatingSystem: "Web",
+    browserRequirements: "Requires JavaScript. Requires HTML5.",
+    inLanguage: "tr-TR",
     offers: {
       "@type": "Offer",
       price: "0",
       priceCurrency: "TRY",
     },
-    description: SITE_DESCRIPTION,
-    url: SITE_URL,
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}#website`,
+    },
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+    },
+    author: {
+      "@type": "Person",
+      "@id": `${authorUrl}#person`,
+      name: AUTHOR.name,
+      url: authorUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}#organization`,
+      name: SITE_NAME,
+    },
   };
+}
+
+export interface ArticleSchemaOptions {
+  headline: string;
+  description: string;
+  path: string;
+  datePublished?: string;
+  dateModified?: string;
+}
+
+export function generateArticleSchema({
+  headline,
+  description,
+  path,
+  datePublished = CONTENT_SCHEMA_DATES.datePublished,
+  dateModified = CONTENT_SCHEMA_DATES.dateModified,
+}: ArticleSchemaOptions) {
+  const url = `${SITE_URL}${path}`;
+  const authorUrl = `${SITE_URL}/yazar/${AUTHOR.slug}`;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "@id": `${url}#article`,
+    headline,
+    description,
+    url,
+    inLanguage: "tr-TR",
+    datePublished,
+    dateModified,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": `${url}#webpage`,
+    },
+    author: {
+      "@type": "Person",
+      "@id": `${authorUrl}#person`,
+      name: AUTHOR.name,
+      url: authorUrl,
+    },
+    publisher: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}#organization`,
+      name: SITE_NAME,
+      logo: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}${SITE_LOGO}`,
+      },
+    },
+  };
+}
+
+export function generateHeroVideoSchema() {
+  const video = HERO_VIDEO_SCHEMA;
+
+  return {
+    "@context": "https://schema.org",
+    "@type": "VideoObject",
+    "@id": `${SITE_URL}/#hero-video`,
+    name: video.name,
+    description: video.description,
+    contentUrl: `${SITE_URL}${video.mp4Path}`,
+    embedUrl: SITE_URL,
+    thumbnailUrl: `${SITE_URL}${video.thumbnailPath}`,
+    uploadDate: video.uploadDate,
+    duration: video.duration,
+    inLanguage: "tr-TR",
+    publisher: {
+      "@type": "Organization",
+      "@id": `${SITE_URL}#organization`,
+      name: SITE_NAME,
+    },
+  };
+}
+
+export function generateSoftwareApplicationSchema() {
+  return generateWebApplicationSchema({
+    name: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    path: "/",
+  });
 }

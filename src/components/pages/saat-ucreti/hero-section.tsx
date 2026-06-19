@@ -10,7 +10,7 @@ export function SaatUcretiHeroSection() {
   const { h1, paragraphs } = SAAT_UCRETI_HERO;
 
   return (
-    <section className="relative overflow-hidden pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20">
+    <section id="hero-saat-ucreti" className="relative overflow-hidden pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20">
       <div className="pointer-events-none absolute inset-0" aria-hidden="true">
         <div className="absolute inset-0 bg-gradient-to-br from-[#e8f0f8] via-[#f8fafc] to-[#fff3eb]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_25%,rgba(0,43,91,0.14),transparent_52%)]" />
@@ -21,11 +21,17 @@ export function SaatUcretiHeroSection() {
       <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-6">
         <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <FadeUp>
-            <h1 className="text-3xl font-black leading-tight tracking-tight text-navy sm:text-4xl md:text-[2.5rem] md:leading-tight lg:text-[2.75rem]">
+            <h1
+              id="hero-saat-ucreti-title"
+              className="text-3xl font-black leading-tight tracking-tight text-navy sm:text-4xl md:text-[2.5rem] md:leading-tight lg:text-[2.75rem]"
+            >
               {capitalizeHeadingWords(h1)}
             </h1>
 
-            <div className="mt-5 space-y-4 text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
+            <div
+              id="hero-saat-ucreti-intro"
+              className="mt-5 space-y-4 text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7"
+            >
               {paragraphs.map((paragraph, index) => (
                 <p key={index}>{paragraph}</p>
               ))}

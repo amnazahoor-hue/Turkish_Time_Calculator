@@ -3,7 +3,7 @@ import path from "path";
 import sharp from "sharp";
 
 const ROOT = path.resolve("public");
-const MAX_KB = 100;
+const MAX_KB = Number(process.env.MAX_KB || 100);
 const RASTER_EXT = new Set([".webp", ".png", ".jpg", ".jpeg", ".gif", ".avif"]);
 const CONVERT_EXT = new Set([".png", ".jpg", ".jpeg", ".gif", ".avif"]);
 

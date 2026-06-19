@@ -5,11 +5,6 @@ const routes = [
   "",
   "/72-saat-kac-gun",
   "/saat-ucreti-hesaplama",
-  "/saat-hesaplama",
-  "/saat-farki-hesaplama",
-  "/saat-ekleme",
-  "/saat-cikarma",
-  "/calisma-saati-hesaplama",
   "/hakkimizda",
   "/iletisim",
 ];

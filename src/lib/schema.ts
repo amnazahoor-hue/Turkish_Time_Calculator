@@ -17,7 +17,7 @@ export function getOrganizationSchema() {
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
-      url: `${siteConfig.url}/contact`,
+      url: `${siteConfig.url}/iletisim`,
       availableLanguage: "English",
     },
   };
