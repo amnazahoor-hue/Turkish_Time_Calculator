@@ -14,7 +14,7 @@ export const metadata: Metadata = generatePageMetadata({
   keywords: [HOME_PAGE.focusKeyword],
 });
 
-export default async function HomePage() {
+export default function HomePage() {
   return (
     <>
       <ToolPageJsonLd

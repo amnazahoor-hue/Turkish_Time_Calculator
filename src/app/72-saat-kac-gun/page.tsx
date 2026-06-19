@@ -25,7 +25,7 @@ export const metadata: Metadata = generatePageMetadata({
   keywords: [SEVENTY_TWO_HOURS_PAGE.focusKeyword],
 });
 
-export default async function YetmisIkiSaatKacGunPage() {
+export default function YetmisIkiSaatKacGunPage() {
   return (
     <PageTransition>
       <ToolPageJsonLd

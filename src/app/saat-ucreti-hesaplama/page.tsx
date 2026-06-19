@@ -25,7 +25,7 @@ export const metadata: Metadata = generatePageMetadata({
   keywords: [HOURLY_WAGE_PAGE.focusKeyword],
 });
 
-export default async function SaatUcretiHesaplamaPage() {
+export default function SaatUcretiHesaplamaPage() {
   return (
     <PageTransition>
       <ToolPageJsonLd
