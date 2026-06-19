@@ -306,6 +306,18 @@ export function generateBreadcrumbSchema(
   };
 }
 
+export function toSchemaGraph(
+  nodes: Record<string, unknown>[]
+): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@graph": nodes.map((node) => {
+      const { "@context": _context, ...rest } = node;
+      return rest;
+    }),
+  };
+}
+
 export interface PageSchemaBundleOptions extends WebPageSchemaOptions {
   breadcrumbs?: BreadcrumbItem[];
   additional?: Record<string, unknown>[];
@@ -318,8 +330,10 @@ export function buildPageSchemas({
   hasBreadcrumb,
   speakableSelectors,
   ...webPage
-}: PageSchemaBundleOptions): Record<string, unknown>[] {
-  const schemas: Record<string, unknown>[] = [
+}: PageSchemaBundleOptions): Record<string, unknown> {
+  const nodes: Record<string, unknown>[] = [
+    generateOrganizationSchema(),
+    generateWebSiteSchema(),
     generateWebPageSchema({
       ...webPage,
       hasBreadcrumb: hasBreadcrumb ?? Boolean(breadcrumbs?.length),
@@ -328,10 +342,10 @@ export function buildPageSchemas({
   ];
 
   if (breadcrumbs && breadcrumbs.length > 0) {
-    schemas.push(generateBreadcrumbSchema(breadcrumbs, webPage.path));
+    nodes.push(generateBreadcrumbSchema(breadcrumbs, webPage.path));
   }
 
-  return [...schemas, ...additional];
+  return toSchemaGraph([...nodes, ...additional]);
 }
 
 export interface ToolPageSchemaBundleOptions {
@@ -359,10 +373,12 @@ export function buildToolPageSchemas({
   aboutTopic,
   primaryImage,
   additional = [],
-}: ToolPageSchemaBundleOptions): Record<string, unknown>[] {
+}: ToolPageSchemaBundleOptions): Record<string, unknown> {
   const webAppId = `${SITE_URL}${path}#webapp`;
 
-  return [
+  return toSchemaGraph([
+    generateOrganizationSchema(),
+    generateWebSiteSchema(),
     generateWebPageSchema({
       name,
       description,
@@ -389,7 +405,7 @@ export function buildToolPageSchemas({
     }),
     generateFAQSchema(faqs, { path, name }),
     ...additional,
-  ];
+  ]);
 }
 
 export interface PersonSchemaInput {

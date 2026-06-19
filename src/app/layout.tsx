@@ -3,12 +3,7 @@ import { Inter } from "next/font/google";
 import Header from "@/components/layout/header";
 import Footer from "@/components/layout/footer";
 import { PagePreloader } from "@/components/layout/page-preloader";
-import { SchemaMarkup } from "@/components/seo/schema-markup";
-import {
-  generateOrganizationSchema,
-  generateWebSiteSchema,
-  getOpenGraphImages,
-} from "@/lib/seo";
+import { getOpenGraphImages } from "@/lib/seo";
 import { SITE_URL, SITE_NAME, SITE_DESCRIPTION, OG_IMAGE } from "@/lib/constants";
 import "./globals.css";
 
@@ -55,9 +50,6 @@ export default function RootLayout({
       <body className={`${inter.variable} overflow-x-clip bg-background font-sans`}>
         <div className="site-shell flex min-h-screen flex-col bg-background">
           <PagePreloader />
-          <SchemaMarkup
-            data={[generateOrganizationSchema(), generateWebSiteSchema()]}
-          />
           <Header />
           <main className="w-full flex-1 overflow-x-clip">{children}</main>
           <Footer />
