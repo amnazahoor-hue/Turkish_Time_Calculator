@@ -1,0 +1,27 @@
+import Image from "next/image";
+import { SITE_LOGO, SITE_NAME } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+
+interface SiteLogoProps {
+  size?: number;
+  className?: string;
+  priority?: boolean;
+}
+
+export function SiteLogo({
+  size = 44,
+  className,
+  priority = false,
+}: SiteLogoProps) {
+  return (
+    <Image
+      src={SITE_LOGO}
+      alt={SITE_NAME}
+      width={size}
+      height={size}
+      priority={priority}
+      className={cn("object-contain", className)}
+      style={{ width: size, height: size }}
+    />
+  );
+}
