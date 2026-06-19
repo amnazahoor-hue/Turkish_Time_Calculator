@@ -11,11 +11,8 @@ import {
   WorkingHoursSection,
 } from "@/components/pages/saat-ucreti/content-sections";
 import { SaatUcretiFaqSection } from "@/components/pages/saat-ucreti/faq-section";
-import { SchemaMarkup } from "@/components/seo/schema-markup";
-import {
-  generatePageMetadata,
-  buildToolPageSchemas,
-} from "@/lib/seo";
+import { ToolPageJsonLd } from "@/components/seo/tool-page-json-ld";
+import { generatePageMetadata } from "@/lib/seo";
 import { HOURLY_WAGE_PAGE } from "@/lib/pages-seo";
 import { SAAT_UCRETI_FAQS } from "@/lib/saat-ucreti-content";
 
@@ -28,26 +25,19 @@ export const metadata: Metadata = generatePageMetadata({
   keywords: [HOURLY_WAGE_PAGE.focusKeyword],
 });
 
-export default function SaatUcretiHesaplamaPage() {
+export default async function SaatUcretiHesaplamaPage() {
   return (
     <PageTransition>
-      <SchemaMarkup
-        data={buildToolPageSchemas({
-          name: HOURLY_WAGE_PAGE.title,
-          description: HOURLY_WAGE_PAGE.description,
-          path: PAGE_PATH,
-          webAppName: HOURLY_WAGE_PAGE.h1,
-          aboutTopic: HOURLY_WAGE_PAGE.focusKeyword,
-          breadcrumbs: [
-            { name: "Ana Sayfa", url: "/" },
-            { name: "Saat Ücreti Hesaplama", url: PAGE_PATH },
-          ],
-          speakableSelectors: [
-            "#hero-saat-ucreti-title",
-            "#hero-saat-ucreti-intro",
-          ],
-          faqs: SAAT_UCRETI_FAQS,
-        })}
+      <ToolPageJsonLd
+        name={HOURLY_WAGE_PAGE.title}
+        description={HOURLY_WAGE_PAGE.description}
+        path={PAGE_PATH}
+        webAppName={HOURLY_WAGE_PAGE.h1}
+        breadcrumbs={[
+          { name: "Ana Sayfa", url: "/" },
+          { name: "Saat Ücreti Hesaplama", url: PAGE_PATH },
+        ]}
+        faqs={SAAT_UCRETI_FAQS}
       />
       <SaatUcretiHeroSection />
       <HowHourlyCalculatedSection />

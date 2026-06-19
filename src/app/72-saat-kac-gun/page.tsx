@@ -9,11 +9,8 @@ import {
 import { HoursDaysConversionTableSection } from "@/components/pages/seventy-two-hours/hours-days-conversion-table-section";
 import { SeventyTwoHoursSolutionSection } from "@/components/pages/seventy-two-hours/solution-section";
 import { SeventyTwoHoursFaqSection } from "@/components/pages/seventy-two-hours/faq-section";
-import { SchemaMarkup } from "@/components/seo/schema-markup";
-import {
-  generatePageMetadata,
-  buildToolPageSchemas,
-} from "@/lib/seo";
+import { ToolPageJsonLd } from "@/components/seo/tool-page-json-ld";
+import { generatePageMetadata } from "@/lib/seo";
 import {
   SEVENTY_TWO_HOURS_PAGE,
   SEVENTY_TWO_HOURS_FAQS,
@@ -28,23 +25,19 @@ export const metadata: Metadata = generatePageMetadata({
   keywords: [SEVENTY_TWO_HOURS_PAGE.focusKeyword],
 });
 
-export default function YetmisIkiSaatKacGunPage() {
+export default async function YetmisIkiSaatKacGunPage() {
   return (
     <PageTransition>
-      <SchemaMarkup
-        data={buildToolPageSchemas({
-          name: SEVENTY_TWO_HOURS_PAGE.title,
-          description: SEVENTY_TWO_HOURS_PAGE.description,
-          path: PAGE_PATH,
-          webAppName: SEVENTY_TWO_HOURS_PAGE.h1,
-          aboutTopic: SEVENTY_TWO_HOURS_PAGE.focusKeyword,
-          breadcrumbs: [
-            { name: "Ana Sayfa", url: "/" },
-            { name: "72 Saat Kaç Gündür", url: PAGE_PATH },
-          ],
-          speakableSelectors: ["#hero-72-saat-title", "#hero-72-saat-intro"],
-          faqs: SEVENTY_TWO_HOURS_FAQS,
-        })}
+      <ToolPageJsonLd
+        name={SEVENTY_TWO_HOURS_PAGE.title}
+        description={SEVENTY_TWO_HOURS_PAGE.description}
+        path={PAGE_PATH}
+        webAppName={SEVENTY_TWO_HOURS_PAGE.h1}
+        breadcrumbs={[
+          { name: "Ana Sayfa", url: "/" },
+          { name: "72 Saat Kaç Gündür", url: PAGE_PATH },
+        ]}
+        faqs={SEVENTY_TWO_HOURS_FAQS}
       />
       <SeventyTwoHoursHeroSection />
       <HoursToDaysCalculatorSection />

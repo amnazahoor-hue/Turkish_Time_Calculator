@@ -342,63 +342,6 @@ export function buildPageSchemas({
   return toSchemaGraph([...nodes, ...additional]);
 }
 
-export interface ToolPageSchemaBundleOptions {
-  name: string;
-  description: string;
-  path: string;
-  webAppName: string;
-  breadcrumbs: BreadcrumbItem[];
-  faqs: { question: string; answer: string }[];
-  speakableSelectors?: string[];
-  aboutTopic?: string;
-  primaryImage?: string;
-}
-
-const AUTHOR_PAGE_PATH = `/yazar/${AUTHOR.slug}`;
-
-/** Tool pages: Organization, WebPage, BreadcrumbList, WebApplication, FAQPage, Person. */
-export function buildToolPageSchemas({
-  name,
-  description,
-  path,
-  webAppName,
-  breadcrumbs,
-  faqs,
-  speakableSelectors,
-  aboutTopic,
-  primaryImage,
-}: ToolPageSchemaBundleOptions): Record<string, unknown> {
-  const webAppId = `${SITE_URL}${path}#webapp`;
-  const organizationId = `${SITE_URL}#organization`;
-
-  return toSchemaGraph([
-    generateOrganizationSchema(),
-    generateAuthorPersonSchema(),
-    generateWebPageSchema({
-      name,
-      description,
-      path,
-      datePublished: CONTENT_SCHEMA_DATES.datePublished,
-      dateModified: CONTENT_SCHEMA_DATES.dateModified,
-      hasBreadcrumb: true,
-      speakableSelectors,
-      primaryImage,
-      aboutTopic: aboutTopic ?? webAppName,
-      includeAuthor: true,
-      mainEntityRef: webAppId,
-      isPartOfId: organizationId,
-    }),
-    generateBreadcrumbSchema(breadcrumbs, path),
-    generateWebApplicationSchema({
-      name: webAppName,
-      description,
-      path,
-      isPartOfId: organizationId,
-    }),
-    generateFAQSchema(faqs, { path, name }),
-  ]);
-}
-
 export interface PersonSchemaInput {
   name: string;
   role: string;
@@ -447,7 +390,7 @@ export function generatePersonSchema(
 }
 
 export function generateAuthorPersonSchema() {
-  return generatePersonSchema(AUTHOR, AUTHOR_PAGE_PATH);
+  return generatePersonSchema(AUTHOR, `/yazar/${AUTHOR.slug}`);
 }
 
 export interface FAQSchemaPageOptions {
