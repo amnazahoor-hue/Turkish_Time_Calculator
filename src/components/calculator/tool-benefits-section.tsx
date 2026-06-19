@@ -1,21 +1,21 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
 import {
   Zap,
   Target,
   Clock,
   Layers,
   Receipt,
-  Timer,
   type LucideIcon,
 } from "lucide-react";
-import { FadeUp } from "@/components/motion";
-import { SectionTitle } from "@/components/calculator/content-layouts";
+import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
+import { SiteLogo } from "@/components/layout/site-logo";
 import {
   CALCULATOR_BENEFITS,
   TOOL_BENEFITS_SECTION,
 } from "@/lib/calculator-page-content";
+import { cn } from "@/lib/utils";
 
 const BENEFIT_ICONS: Record<string, LucideIcon> = {
   Zap,
@@ -25,108 +25,302 @@ const BENEFIT_ICONS: Record<string, LucideIcon> = {
   Receipt,
 };
 
-const VISUAL_ICONS = [Zap, Target, Clock, Layers, Receipt] as const;
+const DIAGRAM_HEIGHT = 680;
+const HUB = { x: 500, y: 385 };
 
-function BenefitsVisual() {
+const SPOKE_NODES = [
+  { x: 500, y: 168, slot: "top" as const },
+  { x: 238, y: 258, slot: "left" as const },
+  { x: 238, y: 512, slot: "left" as const },
+  { x: 762, y: 258, slot: "right" as const },
+  { x: 762, y: 512, slot: "right" as const },
+] as const;
+
+function getNodeStyle(node: (typeof SPOKE_NODES)[number]) {
+  const left = `${(node.x / 1000) * 100}%`;
+  const top = `${(node.y / DIAGRAM_HEIGHT) * 100}%`;
+
+  switch (node.slot) {
+    case "top":
+      return {
+        left,
+        top,
+        transform: "translate(-50%, calc(-100% + 14px))",
+      };
+    case "left":
+      return {
+        left,
+        top,
+        transform: "translate(calc(-100% + 14px), -50%)",
+      };
+    case "right":
+      return {
+        left,
+        top,
+        transform: "translate(-14px, -50%)",
+      };
+  }
+}
+
+function BenefitHub({ active }: { active: boolean }) {
   return (
-    <div className="relative flex h-72 w-full items-center justify-center sm:h-80 md:h-[22rem]">
-      <motion.div
-        animate={{ scale: [1, 1.12, 1], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute h-48 w-48 rounded-full bg-primary/20 blur-3xl sm:h-56 sm:w-56"
+    <div
+      className={cn(
+        "relative flex h-[92px] w-[92px] items-center justify-center rounded-full border bg-white p-2 shadow-[0_4px_20px_-4px_rgba(0,43,91,0.15)] transition-all duration-300 md:h-[100px] md:w-[100px] md:p-2.5",
+        active
+          ? "scale-110 border-accent/50 shadow-[0_8px_28px_-6px_rgba(211,84,0,0.25)]"
+          : "border-navy/15 hover:scale-105 hover:border-accent/30"
+      )}
+    >
+      <SiteLogo
+        size={68}
+        className="!ml-0 !mr-0 block shrink-0 object-center md:!h-[72px] md:!w-[72px]"
       />
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-        className="absolute h-56 w-56 rounded-full border border-dashed border-primary/20 sm:h-64 sm:w-64"
-      />
-      <motion.div
-        animate={{ rotate: -360 }}
-        transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
-        className="absolute h-44 w-44 rounded-full border border-primary/10 sm:h-52 sm:w-52"
-      />
-
-      <motion.div
-        animate={{ y: [0, -8, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="relative flex h-24 w-24 items-center justify-center rounded-2xl bg-gradient-primary shadow-glow sm:h-28 sm:w-28"
-      >
-        <Timer className="h-12 w-12 text-white sm:h-14 sm:w-14" strokeWidth={1.75} />
-      </motion.div>
-
-      {VISUAL_ICONS.map((Icon, index) => {
-        const angle = (index / VISUAL_ICONS.length) * 360 - 90;
-        const radius = 108;
-        const x = Math.cos((angle * Math.PI) / 180) * radius;
-        const y = Math.sin((angle * Math.PI) / 180) * radius;
-
-        return (
-          <div
-            key={index}
-            className="absolute left-1/2 top-1/2"
-            style={{ transform: `translate(calc(-50% + ${x}px), calc(-50% + ${y}px))` }}
-          >
-            <motion.div
-              animate={{ y: [0, index % 2 === 0 ? -6 : 6, 0] }}
-              transition={{
-                duration: 2.5 + index * 0.3,
-                repeat: Infinity,
-                ease: "easeInOut",
-                delay: index * 0.2,
-              }}
-              className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/60 bg-white shadow-premium sm:h-12 sm:w-12"
-            >
-              <Icon className="h-5 w-5 text-primary" />
-            </motion.div>
-          </div>
-        );
-      })}
     </div>
+  );
+}
+
+function SpokeLines({ activeIndex }: { activeIndex: number | null }) {
+  return (
+    <svg
+      aria-hidden
+      className="pointer-events-none absolute inset-0 h-full w-full"
+      viewBox={`0 0 1000 ${DIAGRAM_HEIGHT}`}
+      preserveAspectRatio="xMidYMid meet"
+    >
+      {SPOKE_NODES.map((node, i) => (
+        <line
+          key={i}
+          x1={HUB.x}
+          y1={HUB.y}
+          x2={node.x}
+          y2={node.y}
+          stroke={
+            activeIndex === i
+              ? "rgba(211,84,0,0.45)"
+              : "rgba(0,43,91,0.14)"
+          }
+          strokeWidth={activeIndex === i ? 2 : 1.5}
+          strokeDasharray={activeIndex === i ? "none" : "5 7"}
+          className="transition-all duration-300"
+        />
+      ))}
+    </svg>
+  );
+}
+
+function SpokeIcon({
+  icon: Icon,
+  index,
+  active,
+}: {
+  icon: LucideIcon;
+  index: number;
+  active: boolean;
+}) {
+  return (
+    <div
+      className={cn(
+        "flex h-8 w-8 shrink-0 items-center justify-center rounded-full border bg-white transition-all duration-300",
+        active
+          ? "scale-110 border-accent bg-accent/10 text-accent"
+          : index % 2 === 0
+            ? "border-accent/40 text-accent"
+            : "border-navy/25 text-navy"
+      )}
+    >
+      <Icon className="h-3.5 w-3.5" strokeWidth={2} />
+    </div>
+  );
+}
+
+function BenefitCard({
+  title,
+  description,
+  icon,
+  index,
+  slot,
+  isActive,
+  onHover,
+}: {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  index: number;
+  slot: "top" | "left" | "right";
+  isActive: boolean;
+  onHover: (index: number | null) => void;
+}) {
+  const Icon = icon;
+
+  const cardClass = cn(
+    "w-[168px] rounded-xl border bg-white p-3.5 shadow-sm transition-all duration-300 sm:w-[188px] md:w-[200px] lg:w-[220px]",
+    "border-navy-100",
+    isActive && "border-accent shadow-[0_10px_28px_-8px_rgba(211,84,0,0.3)] ring-1 ring-accent/20"
+  );
+
+  const content = (
+    <>
+      <h3
+        className={cn(
+          "text-sm font-bold leading-snug text-navy md:text-[15px]",
+          isActive && "text-accent"
+        )}
+      >
+        {title}
+      </h3>
+      <p className="mt-1.5 text-xs leading-relaxed text-muted sm:text-sm sm:leading-6">
+        {description}
+      </p>
+    </>
+  );
+
+  const hoverHandlers = {
+    onMouseEnter: () => onHover(index),
+    onMouseLeave: () => onHover(null),
+    onFocus: () => onHover(index),
+    onBlur: () => onHover(null),
+  };
+
+  if (slot === "top") {
+    return (
+      <article {...hoverHandlers} className={cn(cardClass, "text-center")}>
+        <div className="flex justify-center">
+          <SpokeIcon icon={Icon} index={index} active={isActive} />
+        </div>
+        <div className="mt-3">{content}</div>
+      </article>
+    );
+  }
+
+  if (slot === "left") {
+    return (
+      <article {...hoverHandlers} className={cardClass}>
+        <div className="flex items-start gap-2.5 text-left">
+          <SpokeIcon icon={Icon} index={index} active={isActive} />
+          <div className="min-w-0 flex-1">{content}</div>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article {...hoverHandlers} className={cardClass}>
+      <div className="flex items-start gap-2.5 text-left">
+        <SpokeIcon icon={Icon} index={index} active={isActive} />
+        <div className="min-w-0 flex-1">{content}</div>
+      </div>
+    </article>
+  );
+}
+
+function MobileBenefit({
+  title,
+  description,
+  icon,
+  index,
+}: {
+  title: string;
+  description: string;
+  icon: LucideIcon;
+  index: number;
+}) {
+  const Icon = icon;
+
+  return (
+    <article className="group rounded-xl border border-navy-100 bg-white p-4 shadow-sm transition-all duration-300 hover:border-accent hover:shadow-md">
+      <div className="flex items-start gap-3">
+        <SpokeIcon icon={Icon} index={index} active={false} />
+        <div className="min-w-0 flex-1">
+          <h3 className="text-sm font-bold text-navy group-hover:text-accent">
+            {title}
+          </h3>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted">{description}</p>
+        </div>
+      </div>
+    </article>
   );
 }
 
 export function ToolBenefitsSection() {
   const { title, intro } = TOOL_BENEFITS_SECTION;
+  const [activeIndex, setActiveIndex] = useState<number | null>(null);
 
   return (
-    <article className="hover-card overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 md:rounded-3xl">
-      <div className="h-1 bg-gradient-primary" />
-      <div className="grid items-center gap-8 p-5 sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-10 xl:gap-14">
-        <FadeUp className="order-2 flex flex-col justify-center lg:order-1">
-          <SectionTitle>{title}</SectionTitle>
-          <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base md:leading-7">
-            {intro}
-          </p>
-
-          <ul className="mt-6 space-y-3">
-            {CALCULATOR_BENEFITS.map((benefit) => {
-              const Icon = BENEFIT_ICONS[benefit.icon] ?? Zap;
-              return (
-                <li
-                  key={benefit.title}
-                  className="flex gap-3 rounded-xl border border-border/50 bg-slate-50/60 p-4 transition-colors hover:border-primary/20 hover:bg-primary/[0.04]"
-                >
-                  <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-primary shadow-sm">
-                    <Icon className="h-5 w-5 text-white" />
-                  </span>
-                  <div>
-                    <h3 className="text-sm font-bold text-foreground sm:text-base">
-                      {benefit.title}
-                    </h3>
-                    <p className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">
-                      {benefit.description}
-                    </p>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
+    <section className="relative w-full overflow-hidden bg-white py-12 md:py-16 lg:py-20">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6">
+        <FadeUp>
+          <div className="mx-auto max-w-3xl text-center">
+            <h2 className="text-2xl font-black tracking-tight text-navy sm:text-3xl md:text-4xl">
+              {title}
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base md:text-[17px] md:leading-8">
+              {intro}
+            </p>
+          </div>
         </FadeUp>
 
-        <div className="order-1 flex items-center justify-center lg:order-2 lg:justify-end">
-          <BenefitsVisual />
+        <div className="relative mx-auto mt-16 hidden w-full max-w-5xl md:mt-20 md:block lg:max-w-6xl">
+          <div className="relative h-[540px] w-full sm:h-[600px] lg:h-[680px]">
+            <SpokeLines activeIndex={activeIndex} />
+
+            <div
+              className="absolute z-10 -translate-x-1/2 -translate-y-1/2"
+              style={{
+                left: "50%",
+                top: `${(HUB.y / DIAGRAM_HEIGHT) * 100}%`,
+              }}
+            >
+              <BenefitHub active={activeIndex !== null} />
+            </div>
+
+            {CALCULATOR_BENEFITS.map((benefit, index) => {
+              const node = SPOKE_NODES[index];
+              const Icon = BENEFIT_ICONS[benefit.icon] ?? Zap;
+
+              return (
+                <div
+                  key={benefit.title}
+                  className="absolute z-20"
+                  style={getNodeStyle(node)}
+                >
+                  <BenefitCard
+                    title={benefit.title}
+                    description={benefit.description}
+                    icon={Icon}
+                    index={index}
+                    slot={node.slot}
+                    isActive={activeIndex === index}
+                    onHover={setActiveIndex}
+                  />
+                </div>
+              );
+            })}
+          </div>
         </div>
+
+        <StaggerContainer
+          staggerDelay={0.07}
+          className="relative mx-auto mt-10 max-w-lg space-y-3 md:hidden"
+        >
+          <StaggerItem className="flex justify-center pb-3">
+            <BenefitHub active={false} />
+          </StaggerItem>
+          {CALCULATOR_BENEFITS.map((benefit, index) => {
+            const Icon = BENEFIT_ICONS[benefit.icon] ?? Zap;
+            return (
+              <StaggerItem key={benefit.title}>
+                <MobileBenefit
+                  title={benefit.title}
+                  description={benefit.description}
+                  icon={Icon}
+                  index={index}
+                />
+              </StaggerItem>
+            );
+          })}
+        </StaggerContainer>
       </div>
-    </article>
+    </section>
   );
 }

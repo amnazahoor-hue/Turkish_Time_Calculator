@@ -38,7 +38,11 @@ export function Header() {
         )}
       >
         <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 md:h-16 md:px-6">
-          <Link href="/" className="group flex items-center gap-1.5">
+          <Link
+            href="/"
+            aria-label="Ana Sayfa"
+            className="group flex items-center gap-1.5"
+          >
             <SiteLogo
               size={44}
               className="transition-transform duration-300 group-hover:scale-105"
@@ -121,3 +125,5 @@ export function Header() {
     </header>
   );
 }
+
+export default Header;

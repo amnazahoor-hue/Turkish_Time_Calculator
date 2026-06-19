@@ -112,9 +112,21 @@ export const TOOL_FEATURES_SECTION = {
   intro:
     "Bu zaman hesap makinesinde bulunan bazı gelişmiş özellikler şunlardır:",
   items: [
-    "Birden fazla gün, ay veya yıl için tarih ve saat hesaplamaları.",
-    "Tüm tarih ve saat formatları kabul edilir.",
-    "Uluslararası toplantılar için saat dilimlerini ayarlamanıza olanak tanır.",
+    {
+      title: "Tarih ve Saat Hesaplamaları",
+      description:
+        "Birden fazla gün, ay veya yıl için tarih ve saat hesaplamalarını tek ekrandan yapın.",
+    },
+    {
+      title: "Esnek Format Desteği",
+      description:
+        "Tüm tarih ve saat formatları kabul edilir; 24 saat ve AM/PM girişleri desteklenir.",
+    },
+    {
+      title: "Saat Dilimi Planlaması",
+      description:
+        "Uluslararası toplantılar için saat dilimlerini ayarlamanıza ve farkı görmenize olanak tanır.",
+    },
   ],
 } as const;
 
@@ -123,11 +135,31 @@ export const TOOL_USES_SECTION = {
   intro:
     "Saat hesaplama makinesi, size birden fazla işlev sunan ücretsiz bir araçtır. En yaygın kullanım alanlarından bazıları şunlardır:",
   items: [
-    "Çalışma süresini hesapla",
-    "Proje Süresini Takip Edin",
-    "Toplantı ve Etkinlikleri Planlayın",
-    "Geçen Süreyi Belirleyin",
-    "Çalışma ve Eğitim Saatlerini Hesaplayın",
+    {
+      title: "Çalışma süresini hesapla",
+      description:
+        "Giriş ve çıkış saatlerinden günlük mesai, vardiya ve fazla mesai süresini saniyeler içinde hesaplayın.",
+    },
+    {
+      title: "Proje Süresini Takip Edin",
+      description:
+        "Proje başlangıç ve bitiş zamanlarını kaydederek ekip performansını net biçimde ölçün.",
+    },
+    {
+      title: "Toplantı ve Etkinlikleri Planlayın",
+      description:
+        "Toplantı saatlerini ve etkinlik aralıklarını kolayca planlayın, çakışmaları önleyin.",
+    },
+    {
+      title: "Geçen Süreyi Belirleyin",
+      description:
+        "İki tarih veya saat arasında ne kadar zaman geçtiğini gün, saat ve dakika olarak görün.",
+    },
+    {
+      title: "Çalışma ve Eğitim Saatlerini Hesaplayın",
+      description:
+        "Öğrenciler ve eğitmenler için ders, staj ve çalışma sürelerini düzenli takip edin.",
+    },
   ],
 } as const;
 

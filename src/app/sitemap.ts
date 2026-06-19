@@ -15,6 +15,7 @@ const routes = [
   "/kullanim-kosullari",
   "/cerez-politikasi",
   "/sorumluluk-reddi",
+  "/yazar/aylin-durmus",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

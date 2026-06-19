@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
 import { SiteLogo } from "@/components/layout/site-logo";
+import { FooterSocialIcons } from "@/components/layout/footer-social-icons";
 import { FOOTER_LINKS, SITE_NAME } from "@/lib/constants";
 
 export function Footer() {
@@ -19,20 +19,7 @@ export function Footer() {
               Türkiye&apos;nin en gelişmiş saat hesaplama platformu. Saat farkı,
               tarih işlemleri ve çalışma süresi hesaplamalarını anında yapın.
             </p>
-            <div className="mt-6 space-y-2 text-sm text-foreground/70">
-              <div className="flex items-center gap-2">
-                <Mail className="h-4 w-4 text-accent" />
-                info@saathesaplama.com
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="h-4 w-4 text-accent" />
-                +90 (212) 555 00 00
-              </div>
-              <div className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-accent" />
-                İstanbul, Türkiye
-              </div>
-            </div>
+            <FooterSocialIcons />
           </div>
 
           <div>
@@ -84,15 +71,21 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-3 border-t border-navy-100 pt-6 md:mt-10 md:flex-row md:pt-8">
+        <div className="mt-8 border-t border-navy-100 pt-6 text-center md:mt-10 md:pt-8">
           <p className="text-sm text-foreground/60">
-            © {new Date().getFullYear()} {SITE_NAME}. Tüm hakları saklıdır.
-          </p>
-          <p className="text-sm text-foreground/60">
-            Türkiye&apos;de sevgiyle yapıldı 🇹🇷
+            © {new Date().getFullYear()}{" "}
+            <Link
+              href="/"
+              className="font-medium text-primary transition-colors hover:text-accent"
+            >
+              {SITE_NAME}
+            </Link>
+            . Tüm hakları saklıdır.
           </p>
         </div>
       </div>
     </footer>
   );
 }
+
+export default Footer;

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import {
   CalendarClock,
@@ -102,6 +103,41 @@ export function VisualCalculatorCard() {
   );
 }
 
+function TimelineSectionImage({
+  src,
+  alt,
+  width,
+  height,
+  align = "left",
+}: {
+  src: string;
+  alt: string;
+  width: number;
+  height: number;
+  align?: "left" | "right";
+}) {
+  return (
+    <div
+      className={cn(
+        "relative mx-auto w-full max-w-md lg:mx-0",
+        align === "right" && "lg:ml-auto"
+      )}
+    >
+      <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-sm" />
+      <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-white shadow-premium transition-all duration-500 ease-out hover:scale-[1.02] hover:border-primary/25 hover:shadow-[0_24px_50px_-16px_rgba(0,43,91,0.25)] sm:rounded-3xl">
+        <Image
+          src={src}
+          alt={alt}
+          width={width}
+          height={height}
+          className="h-auto w-full object-cover"
+          sizes="(max-width: 1024px) 100vw, 480px"
+        />
+      </div>
+    </div>
+  );
+}
+
 /* ─── Layout 2: Overlap white + primary panel (sample 1) ─── */
 
 export function OverlapPanelSection({
@@ -167,31 +203,50 @@ export function FourStepCards({
 }) {
   return (
     <FadeUp>
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5 lg:gap-0 lg:overflow-hidden lg:rounded-2xl lg:border lg:border-border/60 lg:shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-border/60 shadow-sm sm:rounded-3xl">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-0 lg:grid-cols-5">
         {steps.map((step, index) => (
-          <div
+          <motion.div
             key={step.title}
+            whileHover={{
+              y: -10,
+              transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
+            }}
             className={cn(
-              "relative flex flex-col items-center px-4 py-6 text-center sm:rounded-xl sm:border sm:border-border/60 lg:rounded-none lg:border-0",
-              index === 0
-                ? "bg-primary/5 lg:border-r lg:border-primary/20 lg:bg-primary/[0.07]"
-                : "bg-white lg:border-r lg:border-border/40 last:lg:border-r-0"
+              "group relative flex cursor-default flex-col items-center overflow-hidden bg-white px-4 py-6 text-center",
+              "border-border/40 sm:border-b sm:last:border-b-0",
+              "lg:border-0 lg:border-r lg:last:border-r-0",
+              "transition-[box-shadow,background-color,border-color] duration-300",
+              "hover:z-10 hover:bg-gradient-to-b hover:from-primary/[0.06] hover:via-white hover:to-white",
+              "hover:shadow-[0_20px_45px_-15px_rgba(0,43,91,0.22),0_0_28px_-6px_rgba(211,84,0,0.25)]",
+              "lg:hover:shadow-[0_20px_45px_-15px_rgba(0,43,91,0.22),0_0_28px_-6px_rgba(211,84,0,0.25)]"
             )}
           >
-            {index === 0 && (
-              <span className="absolute left-0 top-0 hidden h-full w-1 bg-gradient-primary lg:block" />
-            )}
-            <span className="flex h-11 w-11 items-center justify-center rounded-full bg-gradient-primary text-sm font-bold text-white shadow-glow">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-primary via-primary to-accent transition-transform duration-300 ease-out group-hover:scale-x-100"
+            />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-accent/0 blur-2xl transition-all duration-500 group-hover:bg-accent/15"
+            />
+            <span
+              className={cn(
+                "relative flex h-11 w-11 items-center justify-center rounded-full bg-gradient-primary text-sm font-bold text-white shadow-glow",
+                "transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_22px_rgba(211,84,0,0.5)]"
+              )}
+            >
               {index + 1}
             </span>
-            <h3 className="mt-3 text-sm font-bold text-foreground sm:text-base">
+            <h3 className="mt-3 text-sm font-bold text-foreground transition-colors duration-300 group-hover:text-primary sm:text-base">
               {step.title}
             </h3>
-            <p className="mt-2 text-xs leading-relaxed text-muted sm:text-sm">
+            <p className="mt-2 text-xs leading-relaxed text-muted transition-colors duration-300 group-hover:text-foreground/80 sm:text-sm">
               {step.description}
             </p>
-          </div>
+          </motion.div>
         ))}
+        </div>
       </div>
     </FadeUp>
   );
@@ -204,53 +259,96 @@ export function TimelineSection({
   intro,
   steps,
   example,
+  visualImage,
+  visualPosition = "left",
 }: {
   title: string;
   intro: string;
   steps: { title: string; description: string }[];
   example?: { label: string; rows: { key: string; value: string }[] };
+  visualImage?: { src: string; alt: string; width: number; height: number };
+  visualPosition?: "left" | "right";
 }) {
+  const imageOnRight = visualPosition === "right";
+
+  const visualBlock = (
+    <div
+      className={cn(
+        "flex justify-center",
+        visualImage ? (imageOnRight ? "lg:order-2 lg:justify-end" : "lg:order-1 lg:justify-start") : "hidden lg:order-1 lg:flex"
+      )}
+    >
+      {visualImage ? (
+        <TimelineSectionImage {...visualImage} align={visualPosition} />
+      ) : (
+        <VisualCalculatorCard />
+      )}
+    </div>
+  );
+
+  const contentBlock = (
+    <div
+      className={cn(
+        visualImage && (imageOnRight ? "lg:order-1" : "lg:order-2")
+      )}
+    >
+      <p className="text-sm text-muted sm:text-base">{intro}</p>
+      <ol className="relative mt-6 space-y-0">
+        <div className="absolute bottom-2 left-[18px] top-2 w-px bg-border" />
+        {steps.map((step, index) => (
+          <li key={step.title} className="relative flex gap-4 pb-6 last:pb-0">
+            <span className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-primary text-xs font-bold text-white shadow-sm">
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div className="pt-0.5">
+              <h3 className="text-sm font-bold text-foreground">{step.title}</h3>
+              <p className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">
+                {step.description}
+              </p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      {example && (
+        <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-4">
+          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
+            {example.label}
+          </p>
+          <div className="mt-2 space-y-1.5 font-mono text-sm">
+            {example.rows.map((row) => (
+              <div key={row.key} className="flex justify-between gap-4">
+                <span className="text-muted">{row.key}</span>
+                <span className="font-semibold text-foreground">{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+
   return (
     <FadeUp>
       <SectionTitle className="mb-6">{title}</SectionTitle>
-      <div className="grid gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-        <div className="hidden justify-center lg:flex">
-          <VisualCalculatorCard />
-        </div>
-        <div>
-          <p className="text-sm text-muted sm:text-base">{intro}</p>
-          <ol className="relative mt-6 space-y-0">
-            <div className="absolute bottom-2 left-[18px] top-2 w-px bg-border" />
-            {steps.map((step, index) => (
-              <li key={step.title} className="relative flex gap-4 pb-6 last:pb-0">
-                <span className="relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gradient-primary text-xs font-bold text-white shadow-sm">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-                <div className="pt-0.5">
-                  <h3 className="text-sm font-bold text-foreground">{step.title}</h3>
-                  <p className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">
-                    {step.description}
-                  </p>
-                </div>
-              </li>
-            ))}
-          </ol>
-          {example && (
-            <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-4">
-              <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-                {example.label}
-              </p>
-              <div className="mt-2 space-y-1.5 font-mono text-sm">
-                {example.rows.map((row) => (
-                  <div key={row.key} className="flex justify-between gap-4">
-                    <span className="text-muted">{row.key}</span>
-                    <span className="font-semibold text-foreground">{row.value}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+      <div
+        className={cn(
+          "grid gap-8 lg:items-start",
+          imageOnRight && visualImage
+            ? "lg:grid-cols-[1.1fr_0.9fr]"
+            : "lg:grid-cols-[0.9fr_1.1fr]"
+        )}
+      >
+        {imageOnRight && visualImage ? (
+          <>
+            {contentBlock}
+            {visualBlock}
+          </>
+        ) : (
+          <>
+            {visualBlock}
+            {contentBlock}
+          </>
+        )}
       </div>
     </FadeUp>
   );
@@ -279,10 +377,10 @@ export function IconCardListSection({
             {items.map((item) => (
               <li
                 key={item.title}
-                className="flex gap-3 rounded-xl border border-primary/10 bg-primary/[0.03] p-4 transition-colors hover:border-primary/25 hover:bg-primary/[0.06]"
+                className="group flex gap-3 rounded-xl border border-primary/10 bg-primary/[0.03] p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-primary/[0.08] hover:shadow-[0_16px_36px_-12px_rgba(0,43,91,0.18)]"
               >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10">
-                  <item.icon className="h-5 w-5 text-primary" />
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary/10 transition-all duration-300 group-hover:scale-110 group-hover:bg-gradient-primary group-hover:shadow-[0_0_16px_rgba(211,84,0,0.4)]">
+                  <item.icon className="h-5 w-5 text-primary transition-colors duration-300 group-hover:text-white" />
                 </span>
                 <div>
                   <h3 className="text-sm font-semibold text-foreground">

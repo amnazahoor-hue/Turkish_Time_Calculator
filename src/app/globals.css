@@ -34,11 +34,32 @@
   .text-balance {
     text-wrap: balance;
   }
+
+  .object-contain {
+    object-fit: contain;
+    margin-left: -1rem;
+  }
 }
 
 @layer components {
   .section-padding {
     @apply bg-background py-10 md:py-14 lg:py-16;
+  }
+
+  .section-band {
+    @apply py-10 md:py-14 lg:py-16;
+  }
+
+  .section-band-gray {
+    @apply section-band bg-background;
+  }
+
+  .section-band-white {
+    @apply section-band bg-white;
+  }
+
+  .section-band-features {
+    @apply section-band bg-gradient-to-b from-navy-50/90 via-[#eef4f9] to-accent/[0.07];
   }
 
   .section-heading {
@@ -54,7 +75,15 @@
   }
 
   .hover-card {
-    @apply transition-all duration-300 ease-out hover:-translate-y-1 hover:border-navy-200/80 hover:shadow-premium;
+    @apply transition-all duration-300 ease-out hover:-translate-y-1.5 hover:border-navy-200/80 hover:shadow-[0_20px_45px_-15px_rgba(0,43,91,0.18),0_0_24px_-6px_rgba(211,84,0,0.18)];
+  }
+
+  .hover-glow-icon {
+    @apply transition-all duration-300 hover:scale-110 hover:shadow-[0_0_20px_rgba(211,84,0,0.45)];
+  }
+
+  .hover-image-frame {
+    @apply transition-all duration-500 ease-out hover:scale-[1.02] hover:shadow-[0_24px_50px_-16px_rgba(0,43,91,0.25)];
   }
 
   .hover-lift-sm {

@@ -1,36 +1,22 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { Clock } from "lucide-react";
+import Image from "next/image";
 import { FadeUp } from "@/components/motion";
 import { SectionTitle } from "@/components/calculator/content-layouts";
 import { MANUAL_SUBTRACT_OVERLAP } from "@/lib/calculator-page-content";
 
-function AnimatedClockVisual() {
+function ManualTimeImage() {
   return (
-    <div className="relative flex h-56 w-full items-center justify-center sm:h-64 md:h-72">
-      <motion.div
-        animate={{ scale: [1, 1.15, 1], opacity: [0.25, 0.45, 0.25] }}
-        transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute h-40 w-40 rounded-full bg-primary/20 blur-2xl sm:h-48 sm:w-48"
+    <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
+      <Image
+        src="/images/image1.webp"
+        alt="Saat hesaplama manuel yöntem görseli"
+        width={800}
+        height={597}
+        className="h-auto w-full rounded-2xl object-cover sm:rounded-3xl"
+        sizes="(max-width: 1024px) 100vw, 480px"
+        priority={false}
       />
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-        className="absolute h-44 w-44 rounded-full border border-dashed border-primary/25 sm:h-52 sm:w-52"
-      />
-      <motion.div
-        animate={{ y: [0, -12, 0] }}
-        transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-        className="relative flex h-28 w-28 items-center justify-center rounded-full bg-gradient-primary shadow-glow sm:h-32 sm:w-32"
-      >
-        <motion.div
-          animate={{ rotate: [0, 8, -8, 0] }}
-          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <Clock className="h-14 w-14 text-white sm:h-16 sm:w-16" strokeWidth={1.75} />
-        </motion.div>
-      </motion.div>
     </div>
   );
 }
@@ -40,14 +26,9 @@ export function ManualSubtractSection() {
     MANUAL_SUBTRACT_OVERLAP;
 
   return (
-    <article className="hover-card overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm transition-all duration-300 md:rounded-3xl">
-      <div className="h-1 bg-gradient-primary" />
-      <div className="grid items-center gap-8 p-5 sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-10 xl:gap-14">
-        <div className="order-1 flex items-center justify-center lg:col-start-1 lg:justify-start">
-          <AnimatedClockVisual />
-        </div>
-
-        <FadeUp className="order-2 flex flex-col justify-center lg:col-start-2">
+    <section className="py-4 sm:py-6">
+      <div className="grid items-center gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+        <FadeUp className="flex flex-col justify-center">
           <SectionTitle>{title}</SectionTitle>
           <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base md:leading-7">
             {intro}
@@ -89,7 +70,11 @@ export function ManualSubtractSection() {
             </ol>
           </div>
         </FadeUp>
+
+        <FadeUp delay={0.1} className="flex items-center justify-center lg:justify-end">
+          <ManualTimeImage />
+        </FadeUp>
       </div>
-    </article>
+    </section>
   );
 }

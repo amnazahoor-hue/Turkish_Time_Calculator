@@ -1,16 +1,13 @@
 export const SITE_NAME = "Saat Hesaplama";
 export const SITE_LOGO = "/images/logo.webp";
-export const SITE_URL = "https://saathesaplama.com";
+export const SITE_URL = "https://isaathesaplama.tr";
 export const SITE_DESCRIPTION =
   "Türkiye'nin en gelişmiş saat hesaplama aracı. Saat farkı, tarih ekleme, çıkarma ve çalışma süresi hesaplamalarını anında yapın.";
 
 export const NAV_LINKS = [
   { label: "Araçlar", href: "/#araclar" },
-  { label: "72 Saat Kaç Gündür", href: "/72-saat-kac-gundur" },
   { label: "Özellikler", href: "/#ozellikler" },
   { label: "Blog", href: "/#blog" },
-  { label: "Hakkımızda", href: "/hakkimizda" },
-  { label: "İletişim", href: "/iletisim" },
 ] as const;
 
 export const TOOL_LINKS = [
@@ -175,11 +172,20 @@ export const BENEFITS = [
   },
 ] as const;
 
+export const FOOTER_SOCIAL_LINKS = [
+  { href: "https://youtube.com/", label: "YouTube", platform: "youtube" as const },
+  { href: "https://facebook.com/", label: "Facebook", platform: "facebook" as const },
+  { href: "https://instagram.com/", label: "Instagram", platform: "instagram" as const },
+  { href: "https://pinterest.com/", label: "Pinterest", platform: "pinterest" as const },
+  { href: "https://x.com/", label: "X (Twitter)", platform: "x" as const },
+] as const;
+
 export const FOOTER_LINKS = {
   tools: TOOL_LINKS,
   company: [
     { label: "Hakkımızda", href: "/hakkimizda" },
     { label: "İletişim", href: "/iletisim" },
+    { label: "Yazar — Aylin Durmuş", href: "/yazar/aylin-durmus" },
   ],
   legal: [
     { label: "Gizlilik Politikası", href: "/gizlilik-politikasi" },

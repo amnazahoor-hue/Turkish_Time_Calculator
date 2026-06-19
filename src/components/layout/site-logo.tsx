@@ -20,7 +20,7 @@ export function SiteLogo({
       width={size}
       height={size}
       priority={priority}
-      className={cn("object-contain", className)}
+      className={cn("object-contain ml-0", className)}
       style={{ width: size, height: size }}
     />
   );
