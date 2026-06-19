@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
 import {
   CalendarClock,
@@ -14,7 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { FadeUp } from "@/components/motion";
-import { cn } from "@/lib/utils";
+import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
 /* ─── Shared primitives ─── */
 
@@ -25,6 +25,9 @@ export function SectionTitle({
   children: React.ReactNode;
   className?: string;
 }) {
+  const content =
+    typeof children === "string" ? capitalizeHeadingWords(children) : children;
+
   return (
     <h2
       className={cn(
@@ -32,8 +35,7 @@ export function SectionTitle({
         className
       )}
     >
-      {children}
-      <span className="mt-2 block h-1 w-16 rounded-full bg-gradient-primary" />
+      {content}
     </h2>
   );
 }
@@ -125,9 +127,10 @@ function TimelineSectionImage({
     >
       <div className="absolute -inset-3 rounded-3xl bg-gradient-to-br from-primary/10 via-transparent to-accent/10 blur-sm" />
       <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-white shadow-premium transition-all duration-500 ease-out hover:scale-[1.02] hover:border-primary/25 hover:shadow-[0_24px_50px_-16px_rgba(0,43,91,0.25)] sm:rounded-3xl">
-        <Image
+        <LazyImage
           src={src}
           alt={alt}
+          title={alt}
           width={width}
           height={height}
           className="h-auto w-full object-cover"
@@ -163,10 +166,7 @@ export function OverlapPanelSection({
 
           {exampleRows && exampleRows.length > 0 && (
             <div className="mt-6 max-w-md rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/[0.06] to-secondary/[0.04] p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-                Örnek
-              </p>
-              <ol className="mt-3 space-y-2.5">
+              <ol className="space-y-2.5">
                 {exampleRows.map((row, index) => (
                   <li key={row.label} className="flex items-start gap-3 text-sm">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-gradient-primary text-xs font-bold text-white">
@@ -201,51 +201,49 @@ export function FourStepCards({
 }: {
   steps: readonly { title: string; description: string }[];
 }) {
+  const lastAloneOnTablet =
+    steps.length % 2 === 1 ? steps.length - 1 : -1;
+
   return (
     <FadeUp>
-      <div className="overflow-hidden rounded-2xl border border-border/60 shadow-sm sm:rounded-3xl">
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-0 lg:grid-cols-5">
-        {steps.map((step, index) => (
-          <motion.div
-            key={step.title}
-            whileHover={{
-              y: -10,
-              transition: { duration: 0.3, ease: [0.22, 1, 0.36, 1] },
-            }}
-            className={cn(
-              "group relative flex cursor-default flex-col items-center overflow-hidden bg-white px-4 py-6 text-center",
-              "border-border/40 sm:border-b sm:last:border-b-0",
-              "lg:border-0 lg:border-r lg:last:border-r-0",
-              "transition-[box-shadow,background-color,border-color] duration-300",
-              "hover:z-10 hover:bg-gradient-to-b hover:from-primary/[0.06] hover:via-white hover:to-white",
-              "hover:shadow-[0_20px_45px_-15px_rgba(0,43,91,0.22),0_0_28px_-6px_rgba(211,84,0,0.25)]",
-              "lg:hover:shadow-[0_20px_45px_-15px_rgba(0,43,91,0.22),0_0_28px_-6px_rgba(211,84,0,0.25)]"
-            )}
-          >
-            <span
-              aria-hidden
-              className="pointer-events-none absolute inset-x-0 top-0 h-1 origin-left scale-x-0 bg-gradient-to-r from-primary via-primary to-accent transition-transform duration-300 ease-out group-hover:scale-x-100"
-            />
-            <span
-              aria-hidden
-              className="pointer-events-none absolute -right-6 -top-6 h-20 w-20 rounded-full bg-accent/0 blur-2xl transition-all duration-500 group-hover:bg-accent/15"
-            />
-            <span
+      <div className="overflow-hidden rounded-2xl border border-border/60 shadow-sm md:rounded-3xl">
+        <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 sm:gap-3 md:p-4 lg:grid-cols-3 xl:grid-cols-5 xl:gap-0 xl:p-0">
+          {steps.map((step, index) => (
+            <motion.div
+              key={step.title}
               className={cn(
-                "relative flex h-11 w-11 items-center justify-center rounded-full bg-gradient-primary text-sm font-bold text-white shadow-glow",
-                "transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_0_22px_rgba(211,84,0,0.5)]"
+                "group relative flex flex-col items-center overflow-hidden rounded-xl bg-white px-3 py-5 text-center",
+                "border border-navy-100/70 shadow-sm",
+                "md:px-4 md:py-6",
+                "lg:rounded-xl lg:border lg:border-navy-100/70 lg:shadow-sm",
+                "xl:rounded-none xl:border-0 xl:border-r xl:border-border/40 xl:shadow-none xl:last:border-r-0",
+                "transition-[box-shadow,background-color] duration-300",
+                "xl:hover:z-10 xl:hover:bg-gradient-to-b xl:hover:from-primary/[0.06] xl:hover:via-white xl:hover:to-white",
+                "xl:hover:shadow-[0_20px_45px_-15px_rgba(0,43,91,0.22),0_0_28px_-6px_rgba(211,84,0,0.25)]",
+                index === lastAloneOnTablet &&
+                  "sm:col-span-2 sm:mx-auto sm:max-w-sm lg:col-span-1 xl:col-span-1 xl:mx-0 xl:max-w-none"
               )}
             >
-              {index + 1}
-            </span>
-            <h3 className="mt-3 text-sm font-bold text-foreground transition-colors duration-300 group-hover:text-primary sm:text-base">
-              {step.title}
-            </h3>
-            <p className="mt-2 text-xs leading-relaxed text-muted transition-colors duration-300 group-hover:text-foreground/80 sm:text-sm">
-              {step.description}
-            </p>
-          </motion.div>
-        ))}
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 hidden h-1 origin-left scale-x-0 bg-gradient-to-r from-primary via-primary to-accent transition-transform duration-300 ease-out group-hover:scale-x-100 lg:block"
+              />
+              <span
+                className={cn(
+                  "relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-primary text-sm font-bold text-white shadow-glow md:h-11 md:w-11",
+                  "transition-transform duration-300 lg:group-hover:scale-110 lg:group-hover:shadow-[0_0_22px_rgba(211,84,0,0.5)]"
+                )}
+              >
+                {index + 1}
+              </span>
+              <h3 className="mt-3 text-sm font-bold text-foreground md:text-base lg:group-hover:text-primary">
+                {capitalizeHeadingWords(step.title)}
+              </h3>
+              <p className="mt-2 text-xs leading-relaxed text-muted md:text-sm">
+                {step.description}
+              </p>
+            </motion.div>
+          ))}
         </div>
       </div>
     </FadeUp>
@@ -301,7 +299,7 @@ export function TimelineSection({
               {String(index + 1).padStart(2, "0")}
             </span>
             <div className="pt-0.5">
-              <h3 className="text-sm font-bold text-foreground">{step.title}</h3>
+              <h3 className="text-sm font-bold text-foreground">{capitalizeHeadingWords(step.title)}</h3>
               <p className="mt-1 text-xs leading-relaxed text-muted sm:text-sm">
                 {step.description}
               </p>
@@ -311,10 +309,7 @@ export function TimelineSection({
       </ol>
       {example && (
         <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-4">
-          <p className="text-xs font-semibold uppercase tracking-wider text-primary">
-            {example.label}
-          </p>
-          <div className="mt-2 space-y-1.5 font-mono text-sm">
+          <div className="space-y-1.5 font-mono text-sm">
             {example.rows.map((row) => (
               <div key={row.key} className="flex justify-between gap-4">
                 <span className="text-muted">{row.key}</span>
@@ -384,7 +379,7 @@ export function IconCardListSection({
                 </span>
                 <div>
                   <h3 className="text-sm font-semibold text-foreground">
-                    {item.title}
+                    {capitalizeHeadingWords(item.title)}
                   </h3>
                   <p className="mt-0.5 text-xs leading-relaxed text-muted sm:text-sm">
                     {item.description}
@@ -438,7 +433,7 @@ export function FeatureGridSection({
               <feature.icon className="h-5 w-5 text-primary" />
             </span>
             <h3 className="mt-3 text-sm font-bold text-foreground sm:text-base">
-              {feature.title}
+              {capitalizeHeadingWords(feature.title)}
             </h3>
             <p className="mt-1.5 text-xs leading-relaxed text-muted sm:text-sm">
               {feature.description}

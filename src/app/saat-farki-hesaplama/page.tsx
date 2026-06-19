@@ -2,13 +2,19 @@ import type { Metadata } from "next";
 import { CalculatorCard } from "@/components/calculator/calculator-card";
 import { PageTransition } from "@/components/motion";
 import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generatePageMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { generatePageMetadata, buildPageSchemas } from "@/lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+const PAGE = {
   title: "Saat Farkı Hesaplama",
   description:
     "İki tarih ve saat arasındaki farkı gün, saat, dakika olarak hesaplayın. Ücretsiz online saat farkı hesaplama aracı.",
   path: "/saat-farki-hesaplama",
+} as const;
+
+export const metadata: Metadata = generatePageMetadata({
+  title: PAGE.title,
+  description: PAGE.description,
+  path: PAGE.path,
   keywords: ["saat farkı hesaplama", "zaman farkı hesaplama", "iki saat arası fark"],
 });
 
@@ -16,10 +22,15 @@ export default function SaatFarkiPage() {
   return (
     <PageTransition>
       <SchemaMarkup
-        data={generateBreadcrumbSchema([
-          { name: "Ana Sayfa", url: "/" },
-          { name: "Saat Farkı Hesaplama", url: "/saat-farki-hesaplama" },
-        ])}
+        data={buildPageSchemas({
+          name: PAGE.title,
+          description: PAGE.description,
+          path: PAGE.path,
+          breadcrumbs: [
+            { name: "Ana Sayfa", url: "/" },
+            { name: PAGE.title, url: PAGE.path },
+          ],
+        })}
       />
       <div className="pt-24 pb-12 md:pt-28 md:pb-16">
         <div className="mx-auto max-w-4xl px-4 text-center md:px-6">

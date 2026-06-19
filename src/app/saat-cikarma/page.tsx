@@ -2,13 +2,19 @@ import type { Metadata } from "next";
 import { CalculatorCard } from "@/components/calculator/calculator-card";
 import { PageTransition } from "@/components/motion";
 import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generatePageMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { generatePageMetadata, buildPageSchemas } from "@/lib/seo";
 
-export const metadata: Metadata = generatePageMetadata({
+const PAGE = {
   title: "Saat Çıkarma",
   description:
     "Belirli bir tarihten saat ve dakika çıkarın. Ücretsiz online tarih ve saat çıkarma hesaplama aracı.",
   path: "/saat-cikarma",
+} as const;
+
+export const metadata: Metadata = generatePageMetadata({
+  title: PAGE.title,
+  description: PAGE.description,
+  path: PAGE.path,
   keywords: ["saat çıkarma", "tarihten saat çıkarma", "dakika çıkarma"],
 });
 
@@ -16,10 +22,15 @@ export default function SaatCikarmaPage() {
   return (
     <PageTransition>
       <SchemaMarkup
-        data={generateBreadcrumbSchema([
-          { name: "Ana Sayfa", url: "/" },
-          { name: "Saat Çıkarma", url: "/saat-cikarma" },
-        ])}
+        data={buildPageSchemas({
+          name: PAGE.title,
+          description: PAGE.description,
+          path: PAGE.path,
+          breadcrumbs: [
+            { name: "Ana Sayfa", url: "/" },
+            { name: PAGE.title, url: PAGE.path },
+          ],
+        })}
       />
       <div className="pt-24 pb-12 md:pt-28 md:pb-16">
         <div className="mx-auto max-w-4xl px-4 text-center md:px-6">

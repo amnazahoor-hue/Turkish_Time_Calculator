@@ -7,25 +7,35 @@ import {
   generateSoftwareApplicationSchema,
   generatePageMetadata,
   generateFAQSchema,
+  buildPageSchemas,
 } from "@/lib/seo";
+import { HOME_PAGE } from "@/lib/pages-seo";
 import { CALCULATOR_FAQS } from "@/lib/calculator-page-content";
 
 export const metadata: Metadata = generatePageMetadata({
-  title: "Daha İyi Sonuçlar İçin Kanıtlanmış Saat Hesaplama Yöntemleri",
-  description:
-    "Karmaşık matematiği basitleştiren en üstün saat hesaplama tekniklerini keşfedin. Zamanı verimli bir şekilde hesaplamanın kanıtlanmış yöntemlerini öğrenin.",
-  path: "/",
-  keywords: ["saat hesaplama"],
+  title: HOME_PAGE.title,
+  description: HOME_PAGE.description,
+  path: HOME_PAGE.path,
+  keywords: [HOME_PAGE.focusKeyword],
 });
 
 export default function HomePage() {
   return (
     <>
       <SchemaMarkup
-        data={[
-          generateSoftwareApplicationSchema(),
-          generateFAQSchema(CALCULATOR_FAQS),
-        ]}
+        data={buildPageSchemas({
+          name: HOME_PAGE.title,
+          description: HOME_PAGE.description,
+          path: HOME_PAGE.path,
+          breadcrumbs: [{ name: "Ana Sayfa", url: "/" }],
+          additional: [
+            generateSoftwareApplicationSchema(),
+            generateFAQSchema(CALCULATOR_FAQS, {
+              path: HOME_PAGE.path,
+              name: HOME_PAGE.title,
+            }),
+          ],
+        })}
       />
       <HeroSection />
       <CalculatorCard />

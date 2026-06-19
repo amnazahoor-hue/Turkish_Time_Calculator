@@ -2,6 +2,7 @@
 
 import { SEO_CONTENT } from "@/lib/seo-content";
 import { FadeUp } from "@/components/motion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 export function SEOContentSection() {
   return (
@@ -22,7 +23,7 @@ export function SEOContentSection() {
                 className="mb-8 border-b border-border/40 pb-8 last:mb-0 last:border-0 last:pb-0 md:mb-10 md:pb-10"
               >
                 <h2 className="text-xl font-bold text-foreground md:text-2xl">
-                  {section.title}
+                  {capitalizeHeadingWords(section.title)}
                 </h2>
                 <div
                   className="mt-4 space-y-3 text-sm leading-relaxed text-muted md:mt-5 md:text-base [&_p]:mb-3"

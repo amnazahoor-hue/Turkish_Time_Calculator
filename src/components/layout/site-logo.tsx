@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { SITE_LOGO, SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
@@ -14,14 +14,14 @@ export function SiteLogo({
   priority = false,
 }: SiteLogoProps) {
   return (
-    <Image
+    <LazyImage
       src={SITE_LOGO}
       alt={SITE_NAME}
+      title={SITE_NAME}
       width={size}
       height={size}
       priority={priority}
-      className={cn("object-contain ml-0", className)}
-      style={{ width: size, height: size }}
+      className={cn("object-contain", className)}
     />
   );
 }

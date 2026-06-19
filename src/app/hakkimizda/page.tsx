@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { Target, Eye, Heart, Award, TrendingUp, ArrowRight } from "lucide-react";
 import { PageTransition, FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generatePageMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { generateIndexablePageMetadata, buildPageSchemas } from "@/lib/seo";
 import { TRUST_STATS, SITE_NAME } from "@/lib/constants";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 import { AUTHOR } from "@/lib/legal-pages-config";
 
-export const metadata: Metadata = generatePageMetadata({
+const PAGE = {
   title: "Hakkımızda",
   description:
     "Saat Hesaplama platformu hakkında bilgi edinin. Misyonumuz, vizyonumuz ve değerlerimizi keşfedin.",
   path: "/hakkimizda",
+} as const;
+
+export const metadata: Metadata = generateIndexablePageMetadata({
+  title: PAGE.title,
+  description: PAGE.description,
+  path: PAGE.path,
 });
 
 const values = [
@@ -43,21 +49,26 @@ const timeline = [
   { year: "2022", title: "Kuruluş", description: "Saat Hesaplama platformu İstanbul'da kuruldu." },
   { year: "2023", title: "10.000 Kullanıcı", description: "Platform 10.000 aktif kullanıcıya ulaştı." },
   { year: "2024", title: "Yeni Araçlar", description: "Çalışma saati ve 72 saat dönüştürücü eklendi." },
-  { year: "2025", title: "Gelişmiş Rehberler", description: "SSS, yasal sayfalar ve içerik ekibi genişletildi." },
+  { year: "2025", title: "Gelişmiş Rehberler", description: "Sık sorulan sorular, yasal sayfalar ve içerik ekibi genişletildi." },
 ];
 
 export default function HakkimizdaPage() {
   return (
     <PageTransition>
       <SchemaMarkup
-        data={generateBreadcrumbSchema([
-          { name: "Ana Sayfa", url: "/" },
-          { name: "Hakkımızda", url: "/hakkimizda" },
-        ])}
+        data={buildPageSchemas({
+          name: PAGE.title,
+          description: PAGE.description,
+          path: PAGE.path,
+          breadcrumbs: [
+            { name: "Ana Sayfa", url: "/" },
+            { name: PAGE.title, url: PAGE.path },
+          ],
+        })}
       />
 
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="mx-auto w-full px-4 md:px-6">
           <FadeUp>
             <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white sm:rounded-[2rem] sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />
@@ -87,7 +98,7 @@ export default function HakkimizdaPage() {
                     <h2 className="text-xl font-bold text-navy">Ne Yapıyoruz?</h2>
                     <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[15px]">
                       İki zaman arasındaki farkı hesaplama, saat ve dakika ekleme/çıkarma, çalışma
-                      süresi ve mesai senaryolarını destekleriz. SSS, adım adım rehberler ve yasal
+                      süresi ve mesai senaryolarını destekleriz. Sık sorulan sorular, adım adım rehberler ve yasal
                       özetlerle karmaşık zaman aritmetiğini herkes için anlaşılır kılarız.
                     </p>
                   </div>
@@ -175,7 +186,7 @@ export default function HakkimizdaPage() {
                 <FadeUp>
                   <h2 className="text-2xl font-black text-navy">İçerik Ekibimiz</h2>
                   <p className="mt-2 text-sm text-muted">
-                    Saat hesaplama rehberleri ve SSS metinlerinin sorumlusu.
+                    Saat hesaplama rehberleri ve sık sorulan sorular metinlerinin sorumlusu.
                   </p>
                 </FadeUp>
                 <FadeUp delay={0.1}>
@@ -184,9 +195,9 @@ export default function HakkimizdaPage() {
                     className="hover-card mt-6 flex flex-col items-center gap-4 rounded-2xl border border-navy-100 bg-white p-6 text-center sm:flex-row sm:text-left"
                   >
                     <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-2xl border-2 border-white shadow-md">
-                      <Image
+                      <LazyImage
                         src={AUTHOR.image}
-                        alt={AUTHOR.name}
+                        alt={`${AUTHOR.name} — ${SITE_NAME} içerik editörü portresi`}
                         width={96}
                         height={96}
                         className="h-full w-full object-cover"
@@ -196,7 +207,7 @@ export default function HakkimizdaPage() {
                       <h3 className="text-lg font-bold text-navy">{AUTHOR.name}</h3>
                       <p className="text-sm font-medium text-accent">{AUTHOR.role}</p>
                       <p className="mt-2 text-sm text-muted">
-                        Saat hesaplama rehberleri, SSS metinleri ve kullanım kılavuzlarının editörü.
+                        Saat hesaplama rehberleri, sık sorulan sorular metinleri ve kullanım kılavuzlarının editörü.
                       </p>
                     </div>
                     <ArrowRight className="hidden h-5 w-5 text-accent sm:block" />

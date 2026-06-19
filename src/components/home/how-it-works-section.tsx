@@ -2,11 +2,12 @@
 
 import { HOW_IT_WORKS } from "@/lib/constants";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 export function HowItWorksSection() {
   return (
     <section id="nasil-calisir" className="section-padding">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="mx-auto max-w-2xl text-center">
           <h2 className="section-heading">Nasıl Çalışır?</h2>
           <p className="section-subheading">
@@ -31,11 +32,8 @@ export function HowItWorksSection() {
                         index % 2 === 1 ? "md:text-left" : "md:text-right"
                       }`}
                     >
-                      <span className="text-xs font-semibold text-primary sm:text-sm">
-                        Adım {item.step}
-                      </span>
-                      <h3 className="mt-0.5 text-base font-bold text-foreground sm:text-lg">
-                        {item.title}
+                      <h3 className="text-base font-bold text-foreground sm:text-lg">
+                        {capitalizeHeadingWords(item.title)}
                       </h3>
                       <p className="mt-1 text-sm text-muted">{item.description}</p>
                     </div>

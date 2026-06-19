@@ -1,62 +1,57 @@
-import Image from "next/image";
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+"use client";
+
+import { ArrowRight } from "lucide-react";
+import { FadeUp } from "@/components/motion";
+import { SEVENTY_TWO_HOURS_HERO } from "@/lib/seventy-two-hours-content";
+import { HeroHoursDaysVisual } from "@/components/pages/seventy-two-hours/hero-hours-days-visual";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 export function SeventyTwoHoursHeroSection() {
+  const { h1, paragraphs } = SEVENTY_TWO_HOURS_HERO;
+
   return (
-    <section className="relative overflow-hidden pt-24 pb-10 md:pt-28 md:pb-14 lg:pt-32">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute -top-20 left-0 h-64 w-64 rounded-full bg-[#bde3ff]/40 blur-[100px]" />
-        <div className="absolute bottom-0 right-0 h-56 w-56 rounded-full bg-primary/10 blur-[90px]" />
+    <section className="relative overflow-hidden pt-24 pb-12 md:pt-28 md:pb-16 lg:pt-32 lg:pb-20">
+      <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#e8f0f8] via-[#f8fafc] to-[#fff3eb]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_15%_25%,rgba(0,43,91,0.14),transparent_52%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_88%_72%,rgba(211,84,0,0.12),transparent_48%)]" />
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(90deg,rgba(0,43,91,0.035)_0px,rgba(0,43,91,0.035)_1px,transparent_1px,transparent_72px)]" />
+        <div className="absolute inset-0 bg-[repeating-linear-gradient(0deg,rgba(0,43,91,0.025)_0px,rgba(0,43,91,0.025)_1px,transparent_1px,transparent_72px)]" />
+        <div className="absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-primary/8 blur-[80px]" />
+        <div className="absolute -right-16 bottom-0 h-64 w-64 rounded-full bg-accent/10 blur-[70px]" />
+        <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-navy-200/60 to-transparent" />
       </div>
 
-      <div className="relative mx-auto max-w-6xl px-4 md:px-6">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted transition-colors hover:text-primary"
-        >
-          <ArrowLeft className="h-4 w-4" />
-          Ana Sayfa
-        </Link>
+      <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-6">
+        <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
+          <FadeUp>
+            <h1 className="text-3xl font-black leading-tight tracking-tight text-navy sm:text-4xl md:text-[2.5rem] md:leading-tight lg:text-[2.75rem]">
+              {capitalizeHeadingWords(h1)}
+            </h1>
 
-        <div className="mt-8 grid items-center gap-10 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          <div className="order-2 lg:order-1">
-            <h2 className="font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl md:text-[2.5rem] md:leading-tight">
-              72 saat kaç gündür?
-            </h2>
-            <div className="mt-5 space-y-4 text-sm leading-relaxed text-muted sm:text-base md:leading-7">
-              <p>
-                Bir gün 24 saate eşittir, dolayısıyla 72 saatte kaç gün
-                olduğunu hesaplamak istiyorsak, bir gün 24 saat içerdiğinden,
-                cevabı 72&apos;yi 24&apos;e bölerek bulabiliriz:{" "}
-                <span className="font-semibold text-foreground">
-                  72 ÷ 24 = 3
-                </span>
-                . 72 saat 3 güne eşittir.
-              </p>
-              <p>
-                Daha kolay dönüşümler için, bunları manuel olarak yapmak
-                istiyorsanız veya bir günde kaç dakika olduğunu merak
-                ediyorsanız ya da buna benzer daha fazla sorunuz varsa,
-                makaleyi okumaya devam edin. Bu hızlı saat-gün dönüşümü,
-                programları, son teslim tarihlerini ve seyahat sürelerini
-                hesaplamak için kullanışlıdır.
-              </p>
+            <div className="mt-5 space-y-4 text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
+              {paragraphs.map((paragraph, index) => (
+                <p key={index}>{paragraph}</p>
+              ))}
             </div>
-          </div>
 
-          <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
-            <div className="relative h-[280px] w-full max-w-[360px] sm:h-[320px] sm:max-w-[400px] lg:h-[360px] lg:max-w-[440px]">
-              <Image
-                src="/images/72-saat-hero-cutout.png"
-                alt="72 saat kaç gündür - takvim ve saat illüstrasyonu"
-                fill
-                priority
-                sizes="(max-width: 1024px) 360px, 440px"
-                className="object-contain object-center"
-              />
+            <div className="mt-7">
+              <a
+                href="#saatten-gune-hesaplayici"
+                className="inline-flex h-11 items-center justify-center gap-2 rounded-xl bg-accent px-6 text-sm font-semibold text-white shadow-[0_12px_28px_-8px_rgba(211,84,0,0.45)] transition-all duration-300 hover:scale-[1.03] hover:bg-accent-500 hover:shadow-glow active:scale-[0.98]"
+              >
+                Hesaplayıcıya Git
+                <ArrowRight className="h-4 w-4" />
+              </a>
             </div>
-          </div>
+          </FadeUp>
+
+          <FadeUp
+            delay={0.12}
+            className="flex w-full justify-center lg:justify-end"
+          >
+            <HeroHoursDaysVisual />
+          </FadeUp>
         </div>
       </div>
     </section>

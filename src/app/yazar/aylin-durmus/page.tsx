@@ -1,33 +1,48 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { MapPin, Mail, PenLine, CheckCircle2 } from "lucide-react";
 import { PageTransition, FadeUp } from "@/components/motion";
 import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generatePageMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { generateLegalPageMetadata, buildPageSchemas, generatePersonSchema } from "@/lib/seo";
 import { AUTHOR, LEGAL_LAST_UPDATED } from "@/lib/legal-pages-config";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
-import { SITE_NAME } from "@/lib/constants";
+import { SITE_NAME, SITE_URL } from "@/lib/constants";
 
-export const metadata: Metadata = generatePageMetadata({
-  title: `${AUTHOR.name} — Yazar`,
-  description: `${AUTHOR.name}, ${SITE_NAME} platformunun içerik editörü. Saat hesaplama rehberleri ve SSS içeriklerinin sorumlusu.`,
-  path: `/yazar/${AUTHOR.slug}`,
+const PAGE_PATH = `/yazar/${AUTHOR.slug}`;
+const PAGE_TITLE = `${AUTHOR.name} — Yazar`;
+const PAGE_DESCRIPTION = `${AUTHOR.name}, ${SITE_NAME} platformunun içerik editörü. Saat hesaplama rehberleri ve sık sorulan sorular içeriklerinin sorumlusu.`;
+
+export const metadata: Metadata = generateLegalPageMetadata({
+  title: PAGE_TITLE,
+  description: PAGE_DESCRIPTION,
+  path: PAGE_PATH,
 });
 
 export default function AuthorPage() {
   return (
     <PageTransition>
       <SchemaMarkup
-        data={generateBreadcrumbSchema([
-          { name: "Ana Sayfa", url: "/" },
-          { name: "Yazar", url: `/yazar/${AUTHOR.slug}` },
-          { name: AUTHOR.name, url: `/yazar/${AUTHOR.slug}` },
-        ])}
+        data={buildPageSchemas({
+          name: PAGE_TITLE,
+          description: PAGE_DESCRIPTION,
+          path: PAGE_PATH,
+          schemaType: "ProfilePage",
+          mainEntityId: `${SITE_URL}${PAGE_PATH}#person`,
+          primaryImage: AUTHOR.image,
+          primaryImageWidth: AUTHOR.imageWidth,
+          primaryImageHeight: AUTHOR.imageHeight,
+          breadcrumbs: [
+            { name: "Ana Sayfa", url: "/" },
+            { name: "Yazar", url: PAGE_PATH },
+            { name: AUTHOR.name, url: PAGE_PATH },
+          ],
+          additional: [generatePersonSchema(AUTHOR, PAGE_PATH)],
+        })}
       />
 
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="mx-auto w-full px-4 md:px-6">
           <FadeUp>
             <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white sm:rounded-[2rem] sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />
@@ -43,13 +58,12 @@ export default function AuthorPage() {
                 <div className="grid md:grid-cols-[280px_1fr]">
                   <div className="relative bg-gradient-to-br from-navy-50 to-accent/10 p-6 md:p-8">
                     <div className="relative mx-auto aspect-square max-w-[240px] overflow-hidden rounded-3xl border-4 border-white shadow-[0_20px_40px_-16px_rgba(0,43,91,0.35)]">
-                      <Image
+                      <LazyImage
                         src={AUTHOR.image}
                         alt={`${AUTHOR.name} — ${SITE_NAME} içerik editörü portresi`}
                         width={AUTHOR.imageWidth}
                         height={AUTHOR.imageHeight}
                         className="h-full w-full object-cover"
-                        priority
                       />
                     </div>
                   </div>
@@ -96,7 +110,7 @@ export default function AuthorPage() {
                       href="/#sik-sorulan-sorular"
                       className="mt-8 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white transition-all hover:bg-accent-600 hover:shadow-glow"
                     >
-                      SSS içeriklerini incele
+                      Sık sorulan soruları incele
                     </Link>
                   </div>
                 </div>

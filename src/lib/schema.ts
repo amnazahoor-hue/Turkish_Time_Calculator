@@ -12,7 +12,7 @@ export function getOrganizationSchema() {
     name: siteConfig.name,
     url: siteConfig.url,
     description: siteConfig.description,
-    logo: `${siteConfig.url}/branding/logo-icon.png`,
+    logo: `${siteConfig.url}/branding/logo-icon.webp`,
     sameAs: [],
     contactPoint: {
       "@type": "ContactPoint",

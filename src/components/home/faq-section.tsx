@@ -12,7 +12,7 @@ import { FadeUp } from "@/components/motion";
 export function FAQSection() {
   return (
     <section id="sik-sorulan-sorular" className="section-padding">
-      <div className="mx-auto max-w-3xl px-4 md:px-6">
+      <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="text-center">
           <h2 className="section-heading">Sık Sorulan Sorular</h2>
           <p className="section-subheading">

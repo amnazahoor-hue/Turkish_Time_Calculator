@@ -15,7 +15,7 @@ import {
   CALCULATOR_BENEFITS,
   TOOL_BENEFITS_SECTION,
 } from "@/lib/calculator-page-content";
-import { cn } from "@/lib/utils";
+import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
 const BENEFIT_ICONS: Record<string, LucideIcon> = {
   Zap,
@@ -35,6 +35,14 @@ const SPOKE_NODES = [
   { x: 762, y: 258, slot: "right" as const },
   { x: 762, y: 512, slot: "right" as const },
 ] as const;
+
+function getSpokeRotation(node: { x: number; y: number }) {
+  const dx = node.x - HUB.x;
+  const dy = node.y - HUB.y;
+  return Math.atan2(dy, dx) * (180 / Math.PI) + 90;
+}
+
+const SPOKE_ROTATIONS = SPOKE_NODES.map(getSpokeRotation);
 
 function getNodeStyle(node: (typeof SPOKE_NODES)[number]) {
   const left = `${(node.x / 1000) * 100}%`;
@@ -62,7 +70,13 @@ function getNodeStyle(node: (typeof SPOKE_NODES)[number]) {
   }
 }
 
-function BenefitHub({ active }: { active: boolean }) {
+function BenefitHub({
+  active,
+  rotation = 0,
+}: {
+  active: boolean;
+  rotation?: number;
+}) {
   return (
     <div
       className={cn(
@@ -72,10 +86,15 @@ function BenefitHub({ active }: { active: boolean }) {
           : "border-navy/15 hover:scale-105 hover:border-accent/30"
       )}
     >
-      <SiteLogo
-        size={68}
-        className="!ml-0 !mr-0 block shrink-0 object-center md:!h-[72px] md:!w-[72px]"
-      />
+      <div
+        className="transition-transform duration-500 ease-out will-change-transform"
+        style={{ transform: `rotate(${rotation}deg)` }}
+      >
+        <SiteLogo
+          size={68}
+          className="!ml-0 !mr-0 block shrink-0 object-center md:!h-[72px] md:!w-[72px]"
+        />
+      </div>
     </div>
   );
 }
@@ -167,7 +186,7 @@ function BenefitCard({
           isActive && "text-accent"
         )}
       >
-        {title}
+        {capitalizeHeadingWords(title)}
       </h3>
       <p className="mt-1.5 text-xs leading-relaxed text-muted sm:text-sm sm:leading-6">
         {description}
@@ -219,21 +238,29 @@ function MobileBenefit({
   description,
   icon,
   index,
+  onHover,
 }: {
   title: string;
   description: string;
   icon: LucideIcon;
   index: number;
+  onHover: (index: number | null) => void;
 }) {
   const Icon = icon;
 
   return (
-    <article className="group rounded-xl border border-navy-100 bg-white p-4 shadow-sm transition-all duration-300 hover:border-accent hover:shadow-md">
+    <article
+      className="group h-full rounded-xl border border-navy-100 bg-white p-4 shadow-sm transition-all duration-300 hover:border-accent hover:shadow-md md:p-5"
+      onMouseEnter={() => onHover(index)}
+      onMouseLeave={() => onHover(null)}
+      onFocus={() => onHover(index)}
+      onBlur={() => onHover(null)}
+    >
       <div className="flex items-start gap-3">
         <SpokeIcon icon={Icon} index={index} active={false} />
         <div className="min-w-0 flex-1">
           <h3 className="text-sm font-bold text-navy group-hover:text-accent">
-            {title}
+            {capitalizeHeadingWords(title)}
           </h3>
           <p className="mt-1.5 text-sm leading-relaxed text-muted">{description}</p>
         </div>
@@ -245,14 +272,16 @@ function MobileBenefit({
 export function ToolBenefitsSection() {
   const { title, intro } = TOOL_BENEFITS_SECTION;
   const [activeIndex, setActiveIndex] = useState<number | null>(null);
+  const hubRotation =
+    activeIndex !== null ? SPOKE_ROTATIONS[activeIndex] : 0;
 
   return (
-    <section className="relative w-full overflow-hidden bg-white py-12 md:py-16 lg:py-20">
+    <section className="relative w-full overflow-x-clip bg-background py-12 md:py-14 lg:py-20">
       <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6">
         <FadeUp>
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-2xl font-black tracking-tight text-navy sm:text-3xl md:text-4xl">
-              {title}
+              {capitalizeHeadingWords(title)}
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base md:text-[17px] md:leading-8">
               {intro}
@@ -260,8 +289,42 @@ export function ToolBenefitsSection() {
           </div>
         </FadeUp>
 
-        <div className="relative mx-auto mt-16 hidden w-full max-w-5xl md:mt-20 md:block lg:max-w-6xl">
-          <div className="relative h-[540px] w-full sm:h-[600px] lg:h-[680px]">
+        {/* Tablet + mobile: readable grid (hub diagram needs lg+ width) */}
+        <StaggerContainer
+          staggerDelay={0.07}
+          className="relative mx-auto mt-10 grid max-w-4xl grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-4 md:mt-14 xl:hidden"
+        >
+          <StaggerItem className="flex justify-center pb-1 sm:col-span-2 md:hidden">
+            <BenefitHub active={activeIndex !== null} rotation={hubRotation} />
+          </StaggerItem>
+          {CALCULATOR_BENEFITS.map((benefit, index) => {
+            const Icon = BENEFIT_ICONS[benefit.icon] ?? Zap;
+            const isLastAlone =
+              CALCULATOR_BENEFITS.length % 2 === 1 &&
+              index === CALCULATOR_BENEFITS.length - 1;
+
+            return (
+              <StaggerItem
+                key={benefit.title}
+                className={cn(
+                  isLastAlone && "sm:col-span-2 sm:mx-auto sm:max-w-md sm:w-full"
+                )}
+              >
+                <MobileBenefit
+                  title={benefit.title}
+                  description={benefit.description}
+                  icon={Icon}
+                  index={index}
+                  onHover={setActiveIndex}
+                />
+              </StaggerItem>
+            );
+          })}
+        </StaggerContainer>
+
+        {/* Desktop: hub + spoke diagram */}
+        <div className="relative mx-auto mt-16 hidden w-full max-w-5xl xl:mt-20 xl:block xl:max-w-6xl">
+          <div className="relative h-[680px] w-full">
             <SpokeLines activeIndex={activeIndex} />
 
             <div
@@ -271,7 +334,10 @@ export function ToolBenefitsSection() {
                 top: `${(HUB.y / DIAGRAM_HEIGHT) * 100}%`,
               }}
             >
-              <BenefitHub active={activeIndex !== null} />
+              <BenefitHub
+                active={activeIndex !== null}
+                rotation={hubRotation}
+              />
             </div>
 
             {CALCULATOR_BENEFITS.map((benefit, index) => {
@@ -298,28 +364,6 @@ export function ToolBenefitsSection() {
             })}
           </div>
         </div>
-
-        <StaggerContainer
-          staggerDelay={0.07}
-          className="relative mx-auto mt-10 max-w-lg space-y-3 md:hidden"
-        >
-          <StaggerItem className="flex justify-center pb-3">
-            <BenefitHub active={false} />
-          </StaggerItem>
-          {CALCULATOR_BENEFITS.map((benefit, index) => {
-            const Icon = BENEFIT_ICONS[benefit.icon] ?? Zap;
-            return (
-              <StaggerItem key={benefit.title}>
-                <MobileBenefit
-                  title={benefit.title}
-                  description={benefit.description}
-                  icon={Icon}
-                  index={index}
-                />
-              </StaggerItem>
-            );
-          })}
-        </StaggerContainer>
       </div>
     </section>
   );

@@ -2,28 +2,39 @@ import type { Metadata } from "next";
 import { PageTransition, FadeUp } from "@/components/motion";
 import { ContactForm, ContactInfo, MapPlaceholder } from "@/components/contact/contact-form";
 import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generatePageMetadata, generateBreadcrumbSchema } from "@/lib/seo";
+import { generateIndexablePageMetadata, buildPageSchemas } from "@/lib/seo";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 
-export const metadata: Metadata = generatePageMetadata({
+const PAGE = {
   title: "İletişim",
   description:
     "Saat Hesaplama ekibi ile iletişime geçin. Sorularınız, önerileriniz ve geri bildirimleriniz için bize ulaşın.",
   path: "/iletisim",
+} as const;
+
+export const metadata: Metadata = generateIndexablePageMetadata({
+  title: PAGE.title,
+  description: PAGE.description,
+  path: PAGE.path,
 });
 
 export default function IletisimPage() {
   return (
     <PageTransition>
       <SchemaMarkup
-        data={generateBreadcrumbSchema([
-          { name: "Ana Sayfa", url: "/" },
-          { name: "İletişim", url: "/iletisim" },
-        ])}
+        data={buildPageSchemas({
+          name: PAGE.title,
+          description: PAGE.description,
+          path: PAGE.path,
+          breadcrumbs: [
+            { name: "Ana Sayfa", url: "/" },
+            { name: PAGE.title, url: PAGE.path },
+          ],
+        })}
       />
 
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
-        <div className="mx-auto max-w-7xl px-4 md:px-6">
+        <div className="mx-auto w-full px-4 md:px-6">
           <FadeUp>
             <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white sm:rounded-[2rem] sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />

@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { CalendarClock, Timer, Globe } from "lucide-react";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import { TOOL_FEATURES_SECTION } from "@/lib/calculator-page-content";
-import { cn } from "@/lib/utils";
+import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
 const FEATURE_ILLUSTRATIONS = [
   CalendarIllustration,
@@ -108,7 +108,7 @@ function FeatureCard({
       </div>
 
       <div className="flex flex-col items-center px-5 pb-5 pt-4 text-center sm:px-6">
-        <h3 className="text-base font-bold text-navy sm:text-lg">{title}</h3>
+        <h3 className="text-base font-bold text-navy sm:text-lg">{capitalizeHeadingWords(title)}</h3>
         <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted sm:text-[15px] sm:leading-6">
           {description}
         </p>
@@ -122,7 +122,7 @@ export function ToolFeaturesSection() {
 
   return (
     <FadeUp>
-      <section className="relative">
+      <section className="relative overflow-x-clip">
         <div
           aria-hidden
           className="pointer-events-none absolute -left-16 top-8 h-48 w-48 rounded-full bg-teal-400/10 blur-3xl"
@@ -134,7 +134,7 @@ export function ToolFeaturesSection() {
 
         <div className="relative mx-auto max-w-3xl text-center">
           <h2 className="text-2xl font-black tracking-tight text-navy sm:text-3xl md:text-4xl">
-            {title}
+            {capitalizeHeadingWords(title)}
           </h2>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted sm:text-base md:text-[17px] md:leading-8">
             {intro}

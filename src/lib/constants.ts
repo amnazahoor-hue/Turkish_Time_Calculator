@@ -1,45 +1,34 @@
 export const SITE_NAME = "Saat Hesaplama";
 export const SITE_LOGO = "/images/logo.webp";
 export const SITE_URL = "https://isaathesaplama.tr";
+export const OG_IMAGE = "/branding/og-image.webp";
+export const OG_IMAGE_WIDTH = 1200;
+export const OG_IMAGE_HEIGHT = 630;
 export const SITE_DESCRIPTION =
   "Türkiye'nin en gelişmiş saat hesaplama aracı. Saat farkı, tarih ekleme, çıkarma ve çalışma süresi hesaplamalarını anında yapın.";
 
 export const NAV_LINKS = [
-  { label: "Araçlar", href: "/#araclar" },
-  { label: "Özellikler", href: "/#ozellikler" },
-  { label: "Blog", href: "/#blog" },
+  { label: "72 Saat Kaç Gündür", href: "/72-saat-kac-gun" },
+  { label: "Saat Ücreti Hesaplama", href: "/saat-ucreti-hesaplama" },
+  { label: "Hakkımızda", href: "/hakkimizda" },
+  { label: "İletişim", href: "/iletisim" },
 ] as const;
 
 export const TOOL_LINKS = [
   {
     label: "Saat Hesaplama",
-    href: "/saat-hesaplama",
-    description: "Genel saat hesaplama aracı",
-  },
-  {
-    label: "Saat Farkı Hesaplama",
-    href: "/saat-farki-hesaplama",
-    description: "İki zaman arasındaki farkı hesaplayın",
-  },
-  {
-    label: "Saat Ekleme",
-    href: "/saat-ekleme",
-    description: "Tarihe saat ve dakika ekleyin",
-  },
-  {
-    label: "Saat Çıkarma",
-    href: "/saat-cikarma",
-    description: "Tarihten saat ve dakika çıkarın",
-  },
-  {
-    label: "Çalışma Saati Hesaplama",
-    href: "/calisma-saati-hesaplama",
-    description: "Çalışma sürenizi hesaplayın",
+    href: "/",
+    description: "Ana saat hesaplama aracı",
   },
   {
     label: "72 Saat Kaç Gündür",
-    href: "/72-saat-kac-gundur",
+    href: "/72-saat-kac-gun",
     description: "72 saatin kaç güne denk geldiğini öğrenin",
+  },
+  {
+    label: "Saat Ücreti Hesaplama",
+    href: "/saat-ucreti-hesaplama",
+    description: "Saatlik ücret ve toplam kazancınızı hesaplayın",
   },
 ] as const;
 
@@ -92,22 +81,22 @@ export const FEATURES = [
 export const HOW_IT_WORKS = [
   {
     step: 1,
-    title: "Başlangıç tarihini girin",
+    title: "Başlangıç Tarihini Girin",
     description: "Hesaplama yapmak istediğiniz başlangıç tarih ve saatini seçin.",
   },
   {
     step: 2,
-    title: "Saat ve dakikaları ekleyin",
+    title: "Saat Ve Dakikaları Ekleyin",
     description: "İşlem için gerekli saat ve dakika değerlerini girin.",
   },
   {
     step: 3,
-    title: "İşlem seçin",
+    title: "İşlem Seçin",
     description: "Ekleme, çıkarma veya fark hesaplama işlemini seçin.",
   },
   {
     step: 4,
-    title: "Sonucu alın",
+    title: "Sonucu Alın",
     description: "Anında sonucu görüntüleyin, kopyalayın veya dışa aktarın.",
   },
 ] as const;

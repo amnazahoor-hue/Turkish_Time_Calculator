@@ -14,20 +14,24 @@ export function HeroSection() {
           loop
           muted
           playsInline
+          preload="metadata"
+          poster="/branding/og-image.webp"
           className="absolute inset-0 h-full w-full object-cover"
+          aria-hidden="true"
         >
-          <source src="/hero_Background.mp4" type="video/mp4" />
+          <source src="/hero-background.webm" type="video/webm" />
+          <source src="/hero-background.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-white/35" />
-        <div className="absolute inset-0 bg-gradient-to-r from-white/50 via-white/25 to-white/15" />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/20 via-transparent to-white/40" />
+        <div className="absolute inset-0 bg-white/50" />
+        <div className="absolute inset-0 bg-gradient-to-r from-white/60 via-white/35 to-white/25" />
+        <div className="absolute inset-0 bg-gradient-to-b from-white/30 via-transparent to-white/50" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-4 md:px-6">
-        <div className="grid items-center gap-8 md:gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-10">
+      <div className="relative z-10 mx-auto max-w-7xl px-4 md:px-6">
+        <div className="grid items-center gap-6 md:gap-10 lg:grid-cols-2 lg:gap-8 xl:gap-10">
           <FadeUp>
             <div className="mx-auto max-w-lg text-center lg:mx-0 lg:max-w-[520px] lg:text-left">
-              <h1 className="text-4xl font-bold tracking-tight sm:text-[2.5rem] md:text-[3rem] md:leading-tight lg:text-[3.5rem]">
+              <h1 className="text-3xl font-bold tracking-tight sm:text-[2.5rem] md:text-[3rem] md:leading-tight lg:text-[3.5rem]">
                 <span className="text-primary">Saat </span>
                 <span className="text-accent">Hesaplama</span>
               </h1>
@@ -39,17 +43,17 @@ export function HeroSection() {
                 çalıştığınızı öğrenebilirsiniz.
               </p>
 
-              <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:justify-center md:mt-6 lg:justify-start">
+              <div className="mt-5 flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:justify-center md:mt-6 lg:justify-start">
                 <Link
                   href="/#araclar"
-                  className="inline-flex h-[3.25rem] w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 text-lg font-semibold text-white transition-all duration-300 hover:scale-[1.03] hover:bg-accent-500 hover:shadow-glow active:scale-[0.98] sm:w-auto sm:min-w-[190px]"
+                  className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-accent px-5 text-base font-semibold text-white transition-all duration-300 hover:bg-accent-500 hover:shadow-glow active:scale-[0.98] sm:w-auto sm:px-6 sm:text-lg md:h-[3.25rem]"
                 >
                   Hesaplamaya Başla
                   <ArrowRight className="h-4 w-4" />
                 </Link>
                 <Link
                   href="/#araclar"
-                  className="inline-flex h-[3.25rem] w-full items-center justify-center rounded-xl border border-primary/20 bg-white/50 px-6 text-lg font-semibold text-primary backdrop-blur-sm transition-all duration-300 hover:scale-[1.03] hover:border-accent/40 hover:bg-white/80 hover:shadow-md active:scale-[0.98] sm:w-auto sm:min-w-[190px]"
+                  className="inline-flex h-12 w-full items-center justify-center rounded-xl border border-primary/20 bg-white/50 px-5 text-base font-semibold text-primary backdrop-blur-sm transition-all duration-300 hover:border-accent/40 hover:bg-white/80 hover:shadow-md active:scale-[0.98] sm:w-auto sm:px-6 sm:text-lg md:h-[3.25rem]"
                 >
                   Nasıl Çalışır?
                 </Link>

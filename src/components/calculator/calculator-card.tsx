@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calculator, Copy, Download, Check } from "lucide-react";
+import { Calculator } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,14 +16,21 @@ import {
   getDefaultDate,
   getDefaultTime,
 } from "@/lib/calculator";
-import { copyToClipboard, downloadTextFile } from "@/lib/utils";
+import { CalculatorResultActions } from "@/components/calculator/calculator-result-actions";
+import { CalculatorResetButton } from "@/components/calculator/calculator-reset-button";
+import { CALCULATOR_TAB_EXPORT_META } from "@/lib/calculator-export";
 import type { CalculatorTab } from "@/types";
 
+const tabTriggerClass =
+  "whitespace-normal rounded-none border-b-2 border-transparent px-1.5 py-2.5 text-center text-[11px] leading-tight text-white/60 shadow-none hover:!bg-white/10 hover:text-white/90 data-[state=active]:border-white data-[state=active]:bg-transparent data-[state=active]:font-semibold data-[state=active]:text-white data-[state=active]:shadow-none md:flex-1 md:whitespace-nowrap md:px-3 md:py-3 md:text-sm";
 const toolLabelClass =
-  "text-[10px] font-bold uppercase tracking-widest text-navy-400";
+  "text-[9px] font-bold uppercase tracking-widest text-navy-400 sm:text-[10px]";
 const toolInputClass =
-  "mt-1.5 border-navy-200 bg-navy-50/50 font-semibold text-gray-900 focus-visible:border-navy-300 focus-visible:ring-navy-300";
+  "mt-1 h-10 min-w-0 border-navy-200 bg-navy-50/50 px-2.5 text-sm font-semibold text-gray-900 focus-visible:border-navy-300 focus-visible:ring-navy-300 sm:mt-1.5 sm:h-11 sm:px-4";
 const toolHeadingClass = "text-sm font-semibold text-primary";
+const toolSectionClass = "space-y-2 sm:space-y-3";
+const toolFieldsRowClass = "grid grid-cols-2 gap-2 sm:gap-3";
+const toolGridClass = "grid gap-3 sm:grid-cols-2 sm:gap-4";
 
 interface CalculatorCardProps {
   defaultTab?: CalculatorTab;
@@ -43,10 +50,12 @@ export function CalculatorCard({
   const [minutes, setMinutes] = useState(30);
   const [breakMinutes, setBreakMinutes] = useState(60);
   const [result, setResult] = useState<string | null>(null);
-  const [copied, setCopied] = useState(false);
+  const [inputsSummary, setInputsSummary] = useState<string>("");
+  const [calculatedAt, setCalculatedAt] = useState<Date | null>(null);
 
   const handleCalculate = () => {
     let output = "";
+    let summary = "";
 
     switch (activeTab) {
       case "fark": {
@@ -57,16 +66,19 @@ export function CalculatorCard({
           endTime
         );
         output = `Saat Farkı: ${res.formatted}\nToplam: ${res.totalHours} saat (${res.totalMinutes} dakika)`;
+        summary = `Başlangıç: ${startDate} ${startTime}\nBitiş: ${endDate} ${endTime}`;
         break;
       }
       case "ekle": {
         const res = addTimeToDate(startDate, startTime, hours, minutes);
         output = `Yeni Tarih: ${res.formatted}`;
+        summary = `Tarih/Saat: ${startDate} ${startTime}\nEklenen: ${hours} saat ${minutes} dakika`;
         break;
       }
       case "cikar": {
         const res = subtractTimeFromDate(startDate, startTime, hours, minutes);
         output = `Yeni Tarih: ${res.formatted}`;
+        summary = `Tarih/Saat: ${startDate} ${startTime}\nÇıkarılan: ${hours} saat ${minutes} dakika`;
         break;
       }
       case "calisma": {
@@ -78,28 +90,31 @@ export function CalculatorCard({
           breakMinutes
         );
         output = `Çalışma Süresi: ${res.formatted}\nMola: ${res.breakMinutes} dakika\nNet Süre: ${res.totalMinutes} dakika`;
+        summary = `Giriş: ${startDate} ${startTime}\nÇıkış: ${endDate} ${endTime}\nMola: ${breakMinutes} dakika`;
         break;
       }
     }
 
     setResult(output);
-    setCopied(false);
+    setInputsSummary(summary);
+    setCalculatedAt(new Date());
   };
 
-  const handleCopy = async () => {
-    if (!result) return;
-    await copyToClipboard(result);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleExport = () => {
-    if (!result) return;
-    downloadTextFile(result, "saat-hesaplama-sonuc.txt");
+  const handleReset = () => {
+    setStartDate(getDefaultDate());
+    setStartTime(getDefaultTime());
+    setEndDate(getDefaultDate());
+    setEndTime("18:00");
+    setHours(2);
+    setMinutes(30);
+    setBreakMinutes(60);
+    setResult(null);
+    setInputsSummary("");
+    setCalculatedAt(null);
   };
 
   return (
-    <section id="araclar" className="bg-white py-10 md:py-14 lg:py-16">
+    <section id="araclar" className="scroll-mt-20 bg-white py-8 sm:py-10 md:scroll-mt-24 md:py-14 lg:py-16">
       <div className="mx-auto max-w-4xl px-4 md:px-6">
         {showTitle && (
           <FadeUp className="mb-6 text-center md:mb-8">
@@ -115,50 +130,40 @@ export function CalculatorCard({
         <FadeUp delay={0.1}>
           <HoverLift>
           <div className="overflow-hidden rounded-2xl border border-navy-100 bg-white shadow-lg transition-shadow duration-300 hover:shadow-[0_20px_50px_-12px_rgba(0,43,91,0.18)] md:rounded-3xl">
-            <div className="border-b border-navy-100 bg-primary px-4 py-3 sm:px-5 sm:py-4 md:px-6">
+            <div className="border-b border-navy-100 bg-primary px-3 py-2.5 sm:px-5 sm:py-4 md:px-6">
               <Tabs
                 value={activeTab}
                 onValueChange={(v) => {
                   setActiveTab(v as CalculatorTab);
                   setResult(null);
+                  setInputsSummary("");
+                  setCalculatedAt(null);
                 }}
               >
-                <TabsList className="grid h-auto grid-cols-2 gap-0 rounded-none border-0 bg-transparent p-0 sm:flex sm:gap-0">
-                  <TabsTrigger
-                    value="fark"
-                    className="rounded-none border-b-2 border-transparent px-2 py-3 text-xs text-white/60 shadow-none hover:text-white/80 data-[state=active]:border-accent data-[state=active]:bg-transparent data-[state=active]:font-semibold data-[state=active]:text-accent data-[state=active]:shadow-none sm:flex-1 sm:px-3 sm:text-sm"
-                  >
+                <TabsList className="grid h-auto grid-cols-2 gap-0 rounded-none border-0 bg-transparent p-0 md:flex md:gap-0">
+                  <TabsTrigger value="fark" className={tabTriggerClass}>
                     Saat Farkı
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="ekle"
-                    className="rounded-none border-b-2 border-transparent px-2 py-3 text-xs text-white/60 shadow-none hover:text-white/80 data-[state=active]:border-accent data-[state=active]:bg-transparent data-[state=active]:font-semibold data-[state=active]:text-accent data-[state=active]:shadow-none sm:flex-1 sm:px-3 sm:text-sm"
-                  >
+                  <TabsTrigger value="ekle" className={tabTriggerClass}>
                     Saat Ekle
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="cikar"
-                    className="rounded-none border-b-2 border-transparent px-2 py-3 text-xs text-white/60 shadow-none hover:text-white/80 data-[state=active]:border-accent data-[state=active]:bg-transparent data-[state=active]:font-semibold data-[state=active]:text-accent data-[state=active]:shadow-none sm:flex-1 sm:px-3 sm:text-sm"
-                  >
+                  <TabsTrigger value="cikar" className={tabTriggerClass}>
                     Saat Çıkar
                   </TabsTrigger>
-                  <TabsTrigger
-                    value="calisma"
-                    className="rounded-none border-b-2 border-transparent px-2 py-3 text-xs text-white/60 shadow-none hover:text-white/80 data-[state=active]:border-accent data-[state=active]:bg-transparent data-[state=active]:font-semibold data-[state=active]:text-accent data-[state=active]:shadow-none sm:flex-1 sm:px-3 sm:text-sm"
-                  >
+                  <TabsTrigger value="calisma" className={tabTriggerClass}>
                     Çalışma Süresi
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
 
-            <div className="p-4 sm:p-5 md:p-6">
+            <div className="p-3 sm:p-5 md:p-6">
               <Tabs value={activeTab}>
                 <TabsContent value="fark" className="mt-0">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-4">
+                  <div className={toolGridClass}>
+                    <div className={toolSectionClass}>
                       <h4 className={toolHeadingClass}>Başlangıç</h4>
-                      <div className="space-y-3">
+                      <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="start-date-fark" className={toolLabelClass}>
                             Tarih
@@ -185,9 +190,9 @@ export function CalculatorCard({
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-4">
+                    <div className={toolSectionClass}>
                       <h4 className={toolHeadingClass}>Bitiş</h4>
-                      <div className="space-y-3">
+                      <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="end-date-fark" className={toolLabelClass}>
                             Tarih
@@ -218,8 +223,8 @@ export function CalculatorCard({
                 </TabsContent>
 
                 <TabsContent value="ekle" className="mt-0">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-3">
+                  <div className={toolGridClass}>
+                    <div className={toolFieldsRowClass}>
                       <div>
                         <Label htmlFor="start-date-ekle" className={toolLabelClass}>
                           Tarih
@@ -245,7 +250,7 @@ export function CalculatorCard({
                         />
                       </div>
                     </div>
-                    <div className="space-y-3">
+                    <div className={toolFieldsRowClass}>
                       <div>
                         <Label htmlFor="hours-ekle" className={toolLabelClass}>
                           Eklenecek Saat
@@ -278,8 +283,8 @@ export function CalculatorCard({
                 </TabsContent>
 
                 <TabsContent value="cikar" className="mt-0">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-3">
+                  <div className={toolGridClass}>
+                    <div className={toolFieldsRowClass}>
                       <div>
                         <Label htmlFor="start-date-cikar" className={toolLabelClass}>
                           Tarih
@@ -305,7 +310,7 @@ export function CalculatorCard({
                         />
                       </div>
                     </div>
-                    <div className="space-y-3">
+                    <div className={toolFieldsRowClass}>
                       <div>
                         <Label htmlFor="hours-cikar" className={toolLabelClass}>
                           Çıkarılacak Saat
@@ -338,10 +343,10 @@ export function CalculatorCard({
                 </TabsContent>
 
                 <TabsContent value="calisma" className="mt-0">
-                  <div className="grid gap-4 sm:grid-cols-2">
-                    <div className="space-y-4">
+                  <div className={toolGridClass}>
+                    <div className={toolSectionClass}>
                       <h4 className={toolHeadingClass}>Giriş</h4>
-                      <div className="space-y-3">
+                      <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="start-date-calisma" className={toolLabelClass}>
                             Tarih
@@ -368,9 +373,9 @@ export function CalculatorCard({
                         </div>
                       </div>
                     </div>
-                    <div className="space-y-4">
+                    <div className={toolSectionClass}>
                       <h4 className={toolHeadingClass}>Çıkış</h4>
-                      <div className="space-y-3">
+                      <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="end-date-calisma" className={toolLabelClass}>
                             Tarih
@@ -398,7 +403,7 @@ export function CalculatorCard({
                       </div>
                     </div>
                   </div>
-                  <div className="mt-4">
+                  <div className="mt-3 sm:mt-4">
                     <Label htmlFor="break-minutes" className={toolLabelClass}>
                       Mola Süresi (dakika)
                     </Label>
@@ -414,17 +419,23 @@ export function CalculatorCard({
                 </TabsContent>
               </Tabs>
 
-              <motion.button
-                type="button"
-                onClick={handleCalculate}
-                whileHover={{ scale: 1.02, boxShadow: "0 8px 24px -4px rgba(211, 84, 0, 0.4)" }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2 }}
-                className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent py-3 text-sm font-semibold text-white transition-colors hover:bg-accent-500 sm:mt-8"
-              >
-                <Calculator className="h-4 w-4" />
-                Hesapla
-              </motion.button>
+              <div className="mt-4 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:gap-3">
+                <motion.button
+                  type="button"
+                  onClick={handleCalculate}
+                  whileHover={{ scale: 1.02, boxShadow: "0 8px 24px -4px rgba(100, 116, 139, 0.35)" }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2 }}
+                  className="inline-flex w-full flex-1 items-center justify-center gap-2 rounded-xl bg-accent py-2.5 text-sm font-semibold text-white transition-colors hover:bg-slate-600 sm:py-3"
+                >
+                  <Calculator className="h-4 w-4" />
+                  Hesapla
+                </motion.button>
+                <CalculatorResetButton
+                  onReset={handleReset}
+                  className="h-auto w-full py-2.5 sm:w-auto sm:py-3"
+                />
+              </div>
 
               <AnimatePresence mode="wait">
               {result && (
@@ -442,30 +453,16 @@ export function CalculatorCard({
                   <pre className="mt-3 whitespace-pre-wrap font-sans text-2xl font-bold text-accent md:text-4xl">
                     {result}
                   </pre>
-                  <div className="mt-4 flex flex-wrap gap-3">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={handleCopy}
-                      className="border-navy-200 bg-white text-foreground hover:border-navy-300 hover:bg-navy-50"
-                    >
-                      {copied ? (
-                        <Check className="h-4 w-4 text-green-600" />
-                      ) : (
-                        <Copy className="h-4 w-4" />
-                      )}
-                      {copied ? "Kopyalandı" : "Sonucu Kopyala"}
-                    </Button>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={handleExport}
-                      className="border-navy-200 bg-white text-foreground hover:border-navy-300 hover:bg-navy-50"
-                    >
-                      <Download className="h-4 w-4" />
-                      Dışa Aktar
-                    </Button>
-                  </div>
+                  <CalculatorResultActions
+                    className="mt-4"
+                    payload={{
+                      toolTitle: CALCULATOR_TAB_EXPORT_META[activeTab].toolTitle,
+                      toolPath: CALCULATOR_TAB_EXPORT_META[activeTab].toolPath,
+                      resultText: result,
+                      inputsSummary,
+                      calculatedAt: calculatedAt ?? undefined,
+                    }}
+                  />
                 </motion.div>
               )}
               </AnimatePresence>

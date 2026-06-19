@@ -6,8 +6,7 @@ import { motion } from "framer-motion";
 export function HeroCalculatorVisual() {
   return (
     <div
-      className="relative mx-auto aspect-square w-full max-w-[280px] sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px]"
-      aria-hidden
+      className="relative mx-auto aspect-square w-full max-w-[280px] overflow-hidden sm:max-w-[320px] md:max-w-[380px] lg:max-w-[420px]"
     >
       {/* Soft ambient glow — not a box background */}
       <motion.div
@@ -28,7 +27,8 @@ export function HeroCalculatorVisual() {
         >
           <Image
             src="/images/hero-hourglass.webp"
-            alt=""
+            alt="Saat hesaplama aracı — kum saati illüstrasyonu"
+            title="Saat hesaplama aracı — kum saati illüstrasyonu"
             width={900}
             height={900}
             priority

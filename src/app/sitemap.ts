@@ -3,19 +3,15 @@ import { SITE_URL } from "@/lib/constants";
 
 const routes = [
   "",
+  "/72-saat-kac-gun",
+  "/saat-ucreti-hesaplama",
   "/saat-hesaplama",
   "/saat-farki-hesaplama",
   "/saat-ekleme",
   "/saat-cikarma",
   "/calisma-saati-hesaplama",
-  "/72-saat-kac-gundur",
   "/hakkimizda",
   "/iletisim",
-  "/gizlilik-politikasi",
-  "/kullanim-kosullari",
-  "/cerez-politikasi",
-  "/sorumluluk-reddi",
-  "/yazar/aylin-durmus",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

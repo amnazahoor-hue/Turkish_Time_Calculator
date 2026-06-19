@@ -75,10 +75,10 @@ function ContentBand({
       className={cn(
 
         variant === "gray"
-          ? "section-band-gray"
+          ? "section-band-gray overflow-x-clip"
           : variant === "features"
-            ? "section-band-features"
-            : "section-band-white"
+            ? "section-band-features overflow-x-clip"
+            : "section-band-white overflow-x-clip"
 
       )}
 
@@ -132,7 +132,7 @@ export function CalculatorContentSection() {
 
         </FadeUp>
 
-        <div className="mt-6">
+        <div className="mt-5 md:mt-6">
 
           <FourStepCards steps={TIME_DIFFERENCE_STEPS} />
 
@@ -190,7 +190,7 @@ export function CalculatorContentSection() {
 
             {
 
-              title: "Başlangıç saatini belirleyin",
+              title: "Başlangıç Saatini Belirleyin",
 
               description: "İlk zaman değerinizi not alın.",
 
@@ -198,7 +198,7 @@ export function CalculatorContentSection() {
 
             {
 
-              title: "Saat ve dakika ekleyin",
+              title: "Saat Ve Dakika Ekleyin",
 
               description: "Önce saatleri, sonra dakikaları toplayın.",
 
@@ -206,7 +206,7 @@ export function CalculatorContentSection() {
 
             {
 
-              title: "Dönüşüm yapın",
+              title: "Dönüşüm Yapın",
 
               description: "60 dakikayı 1 saate çevirin ve sonucu yazın.",
 
@@ -260,7 +260,7 @@ export function CalculatorContentSection() {
 
 
 
-      <ContentBand variant="gray">
+      <ContentBand variant="gray" wide>
 
         <ToolFaqSection />
 

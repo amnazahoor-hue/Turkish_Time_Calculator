@@ -2,7 +2,7 @@
 
 import { BENEFITS } from "@/lib/constants";
 import { FadeUp, StaggerContainer, StaggerItem, GlowHover } from "@/components/motion";
-import { cn } from "@/lib/utils";
+import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
 const sizeClasses = {
   small: "sm:col-span-1",
@@ -13,7 +13,7 @@ const sizeClasses = {
 export function BenefitsSection() {
   return (
     <section className="section-padding">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="mx-auto max-w-2xl text-center">
           <h2 className="section-heading">Neden Saat Hesaplama?</h2>
           <p className="section-subheading">
@@ -36,7 +36,7 @@ export function BenefitsSection() {
                   )}
                 >
                   <h3 className="text-base font-bold text-foreground sm:text-lg">
-                    {benefit.title}
+                    {capitalizeHeadingWords(benefit.title)}
                   </h3>
                   <p className="mt-2 text-xs leading-relaxed text-muted sm:text-sm">
                     {benefit.description}

@@ -1,233 +1,163 @@
 "use client";
 
+import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
-import { CalendarDays, Clock, Equal, Sun, Timer, X } from "lucide-react";
+import { Clock, TrendingUp } from "lucide-react";
 import { SectionTitle } from "@/components/calculator/content-layouts";
 import { FadeUp } from "@/components/motion";
+import { cn } from "@/lib/utils";
 
-function MinutesInDayVisual() {
+function InfographicStepCard({
+  number,
+  text,
+  detail,
+  icon: Icon,
+  headerClass,
+  numberClass,
+  numberSide,
+}: {
+  number: number;
+  text: string;
+  detail?: string;
+  icon: typeof Clock;
+  headerClass: string;
+  numberClass: string;
+  numberSide: "left" | "right";
+}) {
   return (
-    <div className="relative mx-auto w-full max-w-sm">
-      <motion.div
-        animate={{ scale: [1, 1.1, 1], opacity: [0.25, 0.45, 0.25] }}
-        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -right-4 top-0 h-20 w-20 rounded-full bg-primary/20 blur-3xl"
-      />
-      <motion.div
-        animate={{ y: [0, 8, 0], opacity: [0.2, 0.4, 0.2] }}
-        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-        className="absolute -left-4 bottom-4 h-24 w-24 rounded-full bg-secondary/15 blur-3xl"
-      />
-
-      <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-white p-5 shadow-premium sm:rounded-3xl sm:p-6">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/[0.04] via-transparent to-secondary/[0.06]" />
-
-        <div className="relative space-y-4">
-          <div className="flex items-center gap-3">
-            <motion.div
-              animate={{ rotate: [0, 6, -6, 0] }}
-              transition={{ duration: 6, repeat: Infinity }}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-primary shadow-glow"
-            >
-              <Sun className="h-5 w-5 text-white" />
-            </motion.div>
-            <div>
-              <p className="text-sm font-semibold text-foreground">1 Gün</p>
-              <p className="text-xs text-muted">24 saatlik döngü</p>
-            </div>
-          </div>
-
-          <motion.div
-            animate={{ y: [0, -4, 0] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut" }}
-            className="rounded-xl border border-border/60 bg-white/90 p-4"
+    <>
+      {/* Mobile: compact card — no oversized side numbers */}
+      <div className="md:hidden">
+        <div className="overflow-hidden rounded-2xl border border-navy-100/60 bg-white shadow-[0_8px_28px_-10px_rgba(0,43,91,0.18)]">
+          <div
+            className={cn(
+              "flex items-center gap-3 px-4 py-3.5",
+              headerClass
+            )}
           >
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-primary" />
-                <span className="text-sm font-medium text-foreground">Saat</span>
-              </div>
-              <span className="text-2xl font-black tabular-nums text-foreground">24</span>
-            </div>
-          </motion.div>
-
-          <div className="flex justify-center">
-            <motion.div
-              animate={{ scale: [1, 1.08, 1] }}
-              transition={{ duration: 1.8, repeat: Infinity }}
-              className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-primary/25 bg-white"
-            >
-              <X className="h-4 w-4 text-primary" />
-            </motion.div>
+            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-white/20 text-base font-black text-white">
+              {number}
+            </span>
+            <Icon className="h-5 w-5 shrink-0 text-white/90" strokeWidth={2} />
           </div>
-
-          <motion.div
-            animate={{ y: [0, 4, 0] }}
-            transition={{ duration: 2.8, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
-            className="rounded-xl border border-dashed border-primary/30 bg-primary/5 px-4 py-3 text-center"
-          >
-            <p className="text-xs font-semibold uppercase tracking-wider text-muted">
-              24 × 60 dakika
+          <div className="px-4 py-4">
+            <p className="text-sm font-semibold leading-relaxed text-navy">
+              {text}
             </p>
-            <p className="mt-1 text-sm font-semibold text-foreground">60 dk = 1 saat</p>
-          </motion.div>
-
-          <div className="flex justify-center">
-            <motion.div
-              animate={{ y: [0, 4, 0] }}
-              transition={{ duration: 1.5, repeat: Infinity }}
-              className="flex h-8 w-8 items-center justify-center rounded-full bg-primary/10"
-            >
-              <Equal className="h-4 w-4 text-primary" />
-            </motion.div>
+            {detail && (
+              <p className="mt-2 text-sm leading-relaxed text-foreground/70">
+                {detail}
+              </p>
+            )}
           </div>
-
-          <motion.div
-            animate={{
-              boxShadow: [
-                "0 0 0 0 rgba(255, 90, 44, 0)",
-                "0 0 24px 0 rgba(255, 90, 44, 0.18)",
-                "0 0 0 0 rgba(255, 90, 44, 0)",
-              ],
-            }}
-            transition={{ duration: 2.5, repeat: Infinity }}
-            className="rounded-xl border border-primary/25 bg-gradient-to-br from-primary/10 to-secondary/10 p-4"
-          >
-            <p className="text-[10px] font-semibold uppercase tracking-wider text-primary">
-              Sonuç
-            </p>
-            <motion.p
-              animate={{ scale: [1, 1.03, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="mt-1 text-3xl font-black tabular-nums text-foreground"
-            >
-              1440
-            </motion.p>
-            <p className="mt-1 text-sm font-medium text-muted">dakika / gün</p>
-          </motion.div>
         </div>
       </div>
-    </div>
-  );
-}
 
-function ThreeHoursMinutesVisual() {
-  return (
-    <div className="relative mx-auto w-full max-w-sm">
-      <motion.div
-        animate={{ rotate: 360 }}
-        transition={{ duration: 28, repeat: Infinity, ease: "linear" }}
-        className="absolute inset-0 m-auto h-56 w-56 rounded-full border border-dashed border-primary/15"
-      />
+      {/* Desktop: side-number infographic */}
+      <div className="relative hidden overflow-hidden md:block">
+        <div
+          className={cn(
+            "flex items-stretch gap-4",
+            numberSide === "right" && "flex-row-reverse"
+          )}
+        >
+          <span
+            className={cn(
+              "pointer-events-none shrink-0 select-none self-center text-[6rem] font-black leading-none md:text-[7rem]",
+              numberClass
+            )}
+            aria-hidden
+          >
+            {number}
+          </span>
 
-      <div className="relative overflow-hidden rounded-2xl border border-border/50 bg-white p-5 shadow-premium sm:rounded-3xl sm:p-6">
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary/[0.05] via-transparent to-primary/[0.05]" />
-
-        <div className="relative">
-          <div className="flex items-center gap-3">
-            <motion.div
-              animate={{ y: [0, -5, 0] }}
-              transition={{ duration: 2.5, repeat: Infinity }}
-              className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-primary shadow-glow"
-            >
-              <Timer className="h-5 w-5 text-white" />
-            </motion.div>
-            <div>
-              <p className="text-sm font-semibold text-foreground">3 Saat Dönüşümü</p>
-              <p className="text-xs text-muted">Saat → dakika</p>
-            </div>
-          </div>
-
-          <div className="mt-5 grid grid-cols-3 gap-2.5">
-            {[1, 2, 3].map((hour) => (
-              <motion.div
-                key={hour}
-                animate={{ y: [0, hour % 2 === 0 ? -4 : 4, 0] }}
-                transition={{
-                  duration: 2.2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                  delay: hour * 0.15,
-                }}
-                className="rounded-xl border border-border/60 bg-white/90 p-3 text-center"
+          <div className="min-w-0 flex-1">
+            <div className="overflow-hidden rounded-[1.5rem] shadow-[0_18px_40px_-14px_rgba(0,43,91,0.28)]">
+              <div
+                className={cn(
+                  "relative px-6 pb-6 pt-4",
+                  headerClass
+                )}
               >
-                <p className="text-[10px] font-semibold uppercase tracking-wider text-muted">
-                  Saat {hour}
+                <div
+                  aria-hidden
+                  className="absolute -bottom-px left-0 right-0 h-6 bg-white"
+                  style={{
+                    borderTopLeftRadius: "50% 100%",
+                    borderTopRightRadius: "50% 100%",
+                  }}
+                />
+              </div>
+
+              <div className="relative bg-white px-6 pb-8 pt-2">
+                <p className="text-base font-semibold leading-relaxed text-navy sm:leading-7">
+                  {text}
                 </p>
-                <p className="mt-1 text-xl font-black tabular-nums text-foreground">60</p>
-                <p className="text-[10px] text-muted">dakika</p>
-              </motion.div>
-            ))}
+                {detail && (
+                  <p className="mt-3 text-[15px] leading-relaxed text-foreground/70">
+                    {detail}
+                  </p>
+                )}
+                <div className="mt-6 flex justify-center border-t border-navy-100/80 pt-5">
+                  <span className="flex h-14 w-14 items-center justify-center rounded-xl bg-background text-primary">
+                    <Icon className="h-7 w-7" strokeWidth={1.75} />
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
-
-          <div className="mt-4 flex items-center justify-center gap-2 text-sm font-semibold text-foreground">
-            <span className="rounded-lg bg-slate-100 px-3 py-1.5 tabular-nums">3</span>
-            <X className="h-4 w-4 text-primary" />
-            <span className="rounded-lg bg-slate-100 px-3 py-1.5 tabular-nums">60</span>
-            <Equal className="h-4 w-4 text-primary" />
-            <motion.span
-              animate={{ scale: [1, 1.06, 1] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="rounded-lg bg-gradient-to-br from-primary/15 to-secondary/15 px-3 py-1.5 tabular-nums text-primary"
-            >
-              180
-            </motion.span>
-          </div>
-
-          <motion.div
-            animate={{ opacity: [0.7, 1, 0.7] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="mt-4 rounded-xl border border-primary/20 bg-[#fff5eb] px-4 py-3 text-center"
-          >
-            <p className="text-sm font-bold text-primary">3 saat = 180 dakika</p>
-          </motion.div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
 
 const DAY_STEPS = [
-  { number: 1, text: "Bir günde 24 saat vardır." },
-  { number: 2, text: "Bir günde 1440 dakika vardır." },
+  {
+    number: 1,
+    text: "Bir günde 24 saat vardır.",
+    detail: "Bir tam gün, 24 saatlik standart zaman dilimine eşittir.",
+    icon: Clock,
+    headerClass: "bg-primary",
+    numberClass: "text-primary/20",
+    numberSide: "left" as const,
+  },
+  {
+    number: 2,
+    text: "Bir günde 1440 dakika vardır.",
+    detail: "24 saat × 60 dakika = 1440 dakika",
+    icon: TrendingUp,
+    headerClass: "bg-accent",
+    numberClass: "text-accent/25",
+    numberSide: "right" as const,
+  },
 ];
 
 export function MinutesInDaySection() {
   return (
-    <article className="overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm md:rounded-3xl">
-      <div className="h-1 bg-gradient-primary" />
-      <div className="grid items-center gap-8 p-5 sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-10 xl:gap-14">
-        <FadeUp className="flex flex-col justify-center">
-          <SectionTitle>Bir günde kaç dakika vardır?</SectionTitle>
-          <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base md:leading-7">
-            Bir günde kaç dakika olduğunu hesaplamak için, günü saatlere ve
-            saatleri dakikalara bölün. Cevabı bulacaksınız.
-          </p>
+    <article>
+      <FadeUp className="text-center sm:text-center">
+        <SectionTitle className="mx-auto text-lg sm:text-2xl md:text-3xl">
+          Bir günde kaç dakika vardır?
+        </SectionTitle>
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-foreground/75 sm:mt-4 sm:text-base md:leading-7">
+          Bir günde kaç dakika olduğunu hesaplamak için, günü saatlere ve
+          saatleri dakikalara bölün. Cevabı bulacaksınız.
+        </p>
+      </FadeUp>
 
-          <div className="mt-6 space-y-3">
-            {DAY_STEPS.map((step, index) => (
-              <motion.div
-                key={step.number}
-                initial={{ opacity: 0, x: -12 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="flex items-start gap-4 rounded-2xl border border-border/50 bg-slate-50/80 p-4"
-              >
-                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-gradient-primary text-sm font-bold text-white shadow-glow">
-                  {step.number}
-                </span>
-                <p className="pt-2 text-sm font-medium leading-relaxed text-foreground sm:text-base">
-                  {step.text}
-                </p>
-              </motion.div>
-            ))}
-          </div>
-        </FadeUp>
-
-        <div className="flex items-center justify-center lg:justify-end">
-          <MinutesInDayVisual />
-        </div>
+      <div className="mt-5 grid gap-4 sm:mt-8 sm:gap-6 md:mt-12 md:grid-cols-2 md:gap-8 lg:gap-10">
+        {DAY_STEPS.map((step, index) => (
+          <motion.div
+            key={step.number}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: index * 0.12, duration: 0.45 }}
+          >
+            <InfographicStepCard {...step} />
+          </motion.div>
+        ))}
       </div>
     </article>
   );
@@ -235,44 +165,46 @@ export function MinutesInDaySection() {
 
 export function ThreeHoursMinutesSection() {
   return (
-    <article className="overflow-hidden rounded-2xl border border-border/50 bg-white shadow-sm md:rounded-3xl">
-      <div className="h-1 bg-gradient-to-r from-secondary to-primary" />
-      <div className="grid items-center gap-8 p-5 sm:p-6 md:p-8 lg:grid-cols-2 lg:gap-10 xl:gap-14">
-        <div className="order-2 flex items-center justify-center lg:order-1 lg:justify-start">
-          <ThreeHoursMinutesVisual />
+    <article className="grid items-center gap-6 sm:gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-14">
+      <FadeUp className="flex flex-col justify-center lg:order-2">
+        <SectionTitle className="text-lg sm:text-2xl md:text-3xl">
+          3 saatte kaç dakika vardır?
+        </SectionTitle>
+        <p className="mt-3 text-sm leading-relaxed text-muted sm:mt-4 sm:text-base md:leading-7">
+          Bir saatte 60 dakika vardır. Dolayısıyla, 3 saat için dakikaları
+          saat sayısıyla çarpmanız yeterlidir.{" "}
+          <span className="font-semibold text-foreground">3 × 60 = 180</span>
+        </p>
+
+        <p className="mt-4 rounded-xl bg-primary/5 px-4 py-3 text-sm leading-relaxed text-foreground/75 sm:mt-6 sm:bg-transparent sm:p-0 sm:text-[15px] sm:leading-7">
+          <span className="font-semibold text-navy">Cevap:</span>{" "}
+          <span className="font-bold text-navy">3 saat = 180 dakika</span>
+        </p>
+
+        <p className="mt-4 text-sm leading-relaxed text-muted sm:mt-6 sm:text-base md:leading-7">
+          Bu dönüşüm, programları, egzersiz sürelerini, seyahat sürelerini ve
+          diğer zamana dayalı faaliyetleri hesaplamak için kullanışlıdır.
+        </p>
+      </FadeUp>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.45 }}
+        className="flex items-center justify-center lg:order-1 lg:justify-start"
+      >
+        <div className="relative mx-auto w-full max-w-[280px] sm:max-w-md lg:max-w-none">
+          <LazyImage
+            src="/images/three-hours-minutes-visual.webp"
+            alt="3 saatin 180 dakikaya dönüşümünü gösteren illüstrasyon"
+            width={800}
+            height={533}
+            sizes="(max-width: 640px) 280px, (max-width: 1024px) 100vw, 45vw"
+            className="h-auto w-full rounded-xl [object-fit:contain] drop-shadow-[0_12px_32px_rgba(0,43,91,0.14)] sm:rounded-2xl sm:drop-shadow-[0_20px_48px_rgba(0,43,91,0.18)] md:rounded-3xl"
+          />
         </div>
-
-        <FadeUp className="order-1 flex flex-col justify-center lg:order-2">
-          <SectionTitle>3 saatte kaç dakika vardır?</SectionTitle>
-          <p className="mt-4 text-sm leading-relaxed text-muted sm:text-base md:leading-7">
-            Bir saatte 60 dakika vardır. Dolayısıyla, 3 saat için dakikaları
-            saat sayısıyla çarpmanız yeterlidir.{" "}
-            <span className="font-semibold text-foreground">3 × 60 = 180</span>
-          </p>
-
-          <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mt-6 rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/5 to-secondary/5 p-5"
-          >
-            <div className="flex items-center gap-2 text-primary">
-              <CalendarDays className="h-4 w-4" />
-              <p className="text-xs font-semibold uppercase tracking-wider">
-                Cevap
-              </p>
-            </div>
-            <p className="mt-2 text-lg font-bold text-foreground sm:text-xl">
-              3 saat = 180 dakika
-            </p>
-          </motion.div>
-
-          <p className="mt-6 text-sm leading-relaxed text-muted sm:text-base md:leading-7">
-            Bu dönüşüm, programları, egzersiz sürelerini, seyahat sürelerini ve
-            diğer zamana dayalı faaliyetleri hesaplamak için kullanışlıdır.
-          </p>
-        </FadeUp>
-      </div>
+      </motion.div>
     </article>
   );
 }

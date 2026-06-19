@@ -25,7 +25,7 @@ export const AUTHOR = {
   bio: [
     "Aylin Durmuş, Saat Hesaplama platformunun içerik ve kullanıcı rehberlerinden sorumlu editördür. Mesai süresi, vardiya planlaması ve günlük zaman aritmetiği konularında sade, uygulanabilir açıklamalar hazırlar.",
     "Üniversite yıllarında endüstri mühendisliği ve veri okuryazarlığı derslerinde edindiği disiplini, bugün saat farkı, tarih ekleme/çıkarma ve çalışma süresi hesaplama rehberlerine taşır. Amacı, karmaşık zaman matematiğini herkesin anlayacağı Türkçe içeriklere dönüştürmektir.",
-    "Aylin, hesaplama sonuçlarının resmi bordro, hukuki süre veya tıbbi zamanlama yerine geçmediğini vurgular; kullanıcıların kritik kararlarda uzman doğrulaması almasını önerir. Platformdaki SSS, kullanım kılavuzları ve yasal özet metinlerin büyük bölümünü o koordine eder.",
+    "Aylin, hesaplama sonuçlarının resmi bordro, hukuki süre veya tıbbi zamanlama yerine geçmediğini vurgular; kullanıcıların kritik kararlarda uzman doğrulaması almasını önerir. Platformdaki sık sorulan sorular, kullanım kılavuzları ve yasal özet metinlerin büyük bölümünü o koordine eder.",
   ],
   expertise: [
     "Saat farkı ve süre hesaplama",

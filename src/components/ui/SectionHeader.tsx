@@ -34,7 +34,6 @@ export default function SectionHeader({
       <h2 id={titleId} className="section-heading">
         {title}
       </h2>
-      <div className="section-heading-accent" aria-hidden="true" />
       {subtitle && <p className="section-subheading">{subtitle}</p>}
     </motion.div>
   );

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown, MessageCircle, ShieldCheck, Zap } from "lucide-react";
@@ -44,9 +44,9 @@ export default function FAQ() {
             className="faq-aside"
           >
             <div className="faq-aside-visual">
-              <Image
-                src="/images/faq-hero.svg"
-                alt="Time calculator help illustration with clock and FAQ badge"
+              <LazyImage
+                src="/images/faq-hero.webp"
+                alt="Saat hesaplama yardımı — saat ve SSS illüstrasyonu"
                 width={320}
                 height={280}
                 className="faq-aside-image"
@@ -103,12 +103,11 @@ export default function FAQ() {
                   aria-controls={`faq-answer-${index}`}
                 >
                   <span className="faq-trigger__thumb">
-                    <Image
+                    <LazyImage
                       src={item.image}
-                      alt=""
+                      alt={`${item.question} — sık sorulan sorular ikonu`}
                       width={48}
                       height={48}
-                      aria-hidden="true"
                     />
                   </span>
                   <span className="faq-trigger__content">

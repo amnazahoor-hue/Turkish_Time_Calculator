@@ -40,7 +40,7 @@ export const MANUAL_ADD_EXAMPLE = {
 };
 
 export const MANUAL_ADD_OVERLAP = {
-  title: "Saat Manuel olarak nasıl eklerim?",
+  title: "Saat Manuel Olarak Nasıl Eklerim?",
   intro:
     "Zamanı manuel olarak eklemek, çevrimiçi bir zaman hesap makinesi kullanmadan saat ve dakikaları hesaplamak anlamına gelir. Hesaplamaları kendiniz yapıyorsunuz. Orijinal zamana göre gerekli saatleri ekleyin. Ardından dakikaları ekleyin. Toplam dakika bir saatten fazla ise, her 60 dakikayı bir saate çevirin ve saat toplamına ekleyin.",
   exampleRows: [
@@ -108,7 +108,7 @@ export const CALCULATOR_USES = [
 ] as const;
 
 export const TOOL_FEATURES_SECTION = {
-  title: "Saat hesaplama aracının özellikleri",
+  title: "Saat Hesaplama Aracının Özellikleri",
   intro:
     "Bu zaman hesap makinesinde bulunan bazı gelişmiş özellikler şunlardır:",
   items: [
@@ -131,12 +131,12 @@ export const TOOL_FEATURES_SECTION = {
 } as const;
 
 export const TOOL_USES_SECTION = {
-  title: "Saat hesaplama aracının kullanım alanları",
+  title: "Saat Hesaplama Aracının Kullanım Alanları",
   intro:
     "Saat hesaplama makinesi, size birden fazla işlev sunan ücretsiz bir araçtır. En yaygın kullanım alanlarından bazıları şunlardır:",
   items: [
     {
-      title: "Çalışma süresini hesapla",
+      title: "Çalışma Süresini Hesapla",
       description:
         "Giriş ve çıkış saatlerinden günlük mesai, vardiya ve fazla mesai süresini saniyeler içinde hesaplayın.",
     },
@@ -171,7 +171,7 @@ export const CALCULATOR_BENEFITS = [
     icon: "Zap",
   },
   {
-    title: "Daha fazla hassasiyet",
+    title: "Daha Fazla Hassasiyet",
     description:
       "Bu dönüştürücü doğru cevaplar verir ve karmaşık görevler için bile ona tamamen güvenebilirsiniz.",
     icon: "Target",
@@ -183,13 +183,13 @@ export const CALCULATOR_BENEFITS = [
     icon: "Clock",
   },
   {
-    title: "Çoklu görev yapmaya yardımcı olur",
+    title: "Çoklu Görev Yapmaya Yardımcı Olur",
     description:
       "Toplantıları, etkinlikleri ve son teslim tarihlerini daha etkili bir şekilde planlayın.",
     icon: "Layers",
   },
   {
-    title: "Faturaları ödemede faydalı",
+    title: "Faturaları Ödemede Faydalı",
     description:
       "Bu, maaş bordrosu işlemleri ve proje faturalandırması için çok yardımcı olur ve zamandan ve enerjiden tasarruf etmenizi sağlar.",
     icon: "Receipt",

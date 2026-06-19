@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fadeUp, stagger, noMotion } from "@/lib/animations";
@@ -9,21 +9,21 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 const steps = [
   {
     step: "1",
-    image: "/images/step-choose-mode.svg",
+    image: "/images/step-choose-mode.webp",
     title: "Choose a Mode",
     description:
       "Select duration calculation or add/subtract time — whichever fits your task.",
   },
   {
     step: "2",
-    image: "/images/step-enter-times.svg",
+    image: "/images/step-enter-times.webp",
     title: "Enter Times",
     description:
       "Input start and end times, or a base time plus the hours and minutes to add or subtract.",
   },
   {
     step: "3",
-    image: "/images/step-calculate.svg",
+    image: "/images/step-calculate.webp",
     title: "Click Calculate",
     description:
       "Press Calculate when your times are ready — copy the result for work hours, shifts, or scheduling.",
@@ -65,12 +65,11 @@ export default function HowToUse() {
             >
               <div className="step-number-badge mx-auto">{item.step}</div>
               <div className="step-icon-wrap step-icon-wrap--color">
-                <Image
+                <LazyImage
                   src={item.image}
-                  alt=""
+                  alt={`${item.title} — adım ${item.step} görseli`}
                   width={80}
                   height={80}
-                  aria-hidden="true"
                   className="step-icon-image"
                 />
               </div>

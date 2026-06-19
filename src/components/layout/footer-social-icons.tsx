@@ -51,7 +51,7 @@ export function FooterSocialIcons({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "mt-6 flex flex-nowrap items-center gap-3 overflow-x-auto",
+        "mt-6 flex flex-wrap items-center gap-3",
         className
       )}
       aria-label="Sosyal medya bağlantıları"

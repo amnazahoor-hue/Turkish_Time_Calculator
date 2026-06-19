@@ -1,6 +1,6 @@
 "use client";
 
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import { FadeUp } from "@/components/motion";
 import { SectionTitle } from "@/components/calculator/content-layouts";
 import { MANUAL_SUBTRACT_OVERLAP } from "@/lib/calculator-page-content";
@@ -8,7 +8,7 @@ import { MANUAL_SUBTRACT_OVERLAP } from "@/lib/calculator-page-content";
 function ManualTimeImage() {
   return (
     <div className="relative mx-auto w-full max-w-md lg:mx-0 lg:max-w-none">
-      <Image
+      <LazyImage
         src="/images/image1.webp"
         alt="Saat hesaplama manuel yöntem görseli"
         width={800}
@@ -36,10 +36,7 @@ export function ManualSubtractSection() {
 
           {exampleRows.length > 0 && (
             <div className="mt-6 rounded-2xl border border-border/60 bg-slate-50/80 p-5">
-              <p className="text-xs font-semibold uppercase tracking-wider text-foreground">
-                Örnek
-              </p>
-              <ul className="mt-3 space-y-2.5 text-sm leading-relaxed text-foreground">
+              <ul className="space-y-2.5 text-sm leading-relaxed text-foreground">
                 {exampleRows.map((row) => (
                   <li key={row.label}>
                     <span className="font-medium">{row.label}</span>

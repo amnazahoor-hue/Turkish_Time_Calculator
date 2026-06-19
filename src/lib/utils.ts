@@ -5,6 +5,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+/** Capitalizes the first letter of each word in visible headings (Turkish-aware). */
+export function capitalizeHeadingWords(text: string): string {
+  return text.replace(
+    /([^\p{L}]*)(\p{L})/gu,
+    (_, prefix, letter) => prefix + letter.toLocaleUpperCase("tr-TR")
+  );
+}
+
 export function formatTurkishDate(date: Date): string {
   return date.toLocaleDateString("tr-TR", {
     day: "numeric",

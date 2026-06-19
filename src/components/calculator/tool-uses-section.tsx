@@ -12,7 +12,7 @@ import {
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import { SiteLogo } from "@/components/layout/site-logo";
 import { TOOL_USES_SECTION } from "@/lib/calculator-page-content";
-import { cn } from "@/lib/utils";
+import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
 const USE_ICONS: LucideIcon[] = [
   Briefcase,
@@ -54,7 +54,7 @@ function UseGridCell({
       </div>
 
       <h3 className="mt-4 text-[15px] font-bold leading-snug text-white sm:text-base">
-        {title}
+        {capitalizeHeadingWords(title)}
       </h3>
       <p className="mt-2 text-sm leading-relaxed text-white/55 sm:text-[15px] sm:leading-6">
         {description}
@@ -102,7 +102,7 @@ export function ToolUsesSection() {
             <div className="relative grid lg:grid-cols-[2fr_3fr]">
               <div className="flex flex-col justify-center border-b border-white/10 px-7 py-10 sm:px-10 sm:py-12 lg:border-b-0 lg:border-r lg:py-14 lg:pl-12 lg:pr-10 xl:pl-14">
                 <h2 className="text-2xl font-black leading-[1.15] tracking-tight text-white sm:text-3xl md:text-[2.25rem] lg:text-4xl xl:text-[2.65rem]">
-                  {title}
+                  {capitalizeHeadingWords(title)}
                 </h2>
                 <p className="mt-5 max-w-md text-sm leading-relaxed text-white/55 sm:text-[15px] sm:leading-7">
                   {intro}

@@ -19,11 +19,10 @@ async function generate() {
     const input = path.join(BRANDING, svg);
     const pipeline = sharp(input).resize(width, height);
     await pipeline.clone().webp({ quality: 90 }).toFile(path.join(BRANDING, `${name}.webp`));
-    await pipeline.clone().png().toFile(path.join(BRANDING, `${name}.png`));
-    console.log(`✓ ${name}.webp + ${name}.png`);
+    console.log(`✓ ${name}.webp`);
   }
 
-  const favicon32 = path.join(BRANDING, "favicon-32.png");
+  const favicon32 = path.join(BRANDING, "favicon-32.webp");
   const faviconIco = path.join(BRANDING, "favicon.ico");
   const icoBuffer = await pngToIco(favicon32);
   fs.writeFileSync(faviconIco, icoBuffer);
@@ -34,8 +33,7 @@ async function generate() {
     background: { r: 240, g: 249, b: 255, alpha: 1 },
   });
   await ogBase.clone().webp({ quality: 85 }).toFile(path.join(BRANDING, "og-image.webp"));
-  await ogBase.clone().png().toFile(path.join(BRANDING, "og-image.png"));
-  console.log("✓ og-image.webp + og-image.png");
+  console.log("✓ og-image.webp");
 }
 
 generate().catch((err) => {

@@ -23,21 +23,27 @@
 
   html {
     scroll-behavior: smooth;
+    overflow-x: clip;
+    max-width: 100%;
+    scroll-padding-top: 3.5rem;
+  }
+
+  @media (min-width: 768px) {
+    html {
+      scroll-padding-top: 4rem;
+    }
   }
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
+    overflow-x: clip;
+    max-width: 100%;
   }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
-  }
-
-  .object-contain {
-    object-fit: contain;
-    margin-left: -1rem;
   }
 }
 
@@ -72,6 +78,10 @@
 
   .section-content-gap {
     @apply mt-8 md:mt-10;
+  }
+
+  .site-shell {
+    @apply w-full;
   }
 
   .hover-card {

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
+import { LazyImage } from "@/components/ui/lazy-image";
 import {
   ArrowLeftRight,
   Clock,
@@ -274,10 +274,10 @@ export default function ToolSection() {
             titleId="tool-heading"
             align="left"
           />
-          <div className="tool-section-art" aria-hidden="true">
-            <Image
-              src="/images/tool-calculator.svg"
-              alt=""
+          <div className="tool-section-art">
+            <LazyImage
+              src="/images/tool-calculator.webp"
+              alt="Saat hesaplama aracı illüstrasyonu"
               width={200}
               height={160}
               className="tool-section-image"

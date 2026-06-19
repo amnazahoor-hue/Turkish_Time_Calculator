@@ -52,42 +52,42 @@ export const faqItems = [
     question: "How do I calculate the time difference?",
     answer:
       "Enter your start and end times, then click Calculate. Use quick presets like Work day or Night shift for common scenarios.",
-    image: "/images/faq-time-diff.svg",
+    image: "/images/faq-time-diff.webp",
     category: "Basics",
   },
   {
     question: "How do I add or subtract hours and minutes?",
     answer:
       "Switch to Add / Subtract mode, set a starting time, choose Add or Subtract, enter hours and minutes, then click Calculate to see the new time.",
-    image: "/images/faq-add-subtract.svg",
+    image: "/images/faq-add-subtract.webp",
     category: "Basics",
   },
   {
     question: "How are overnight shifts calculated?",
     answer:
       "When the end time is earlier than the start time, the tool detects an overnight shift automatically. For example, 10:00 PM to 6:00 AM correctly returns 8 hours.",
-    image: "/images/faq-overnight.svg",
+    image: "/images/faq-overnight.webp",
     category: "Shifts",
   },
   {
     question: "Can I use this for work hours and payroll?",
     answer:
       "Yes — track clock-in and clock-out times for daily work duration. Ideal for HR reference, shift logs, and payroll prep. Always verify against your employer's policies.",
-    image: "/images/faq-payroll.svg",
+    image: "/images/faq-payroll.webp",
     category: "Work",
   },
   {
     question: "Is this time calculator free?",
     answer:
       "Completely free with no sign-up, no ads, and no app download. All calculations run instantly in your browser — use it as often as you need.",
-    image: "/images/faq-free.svg",
+    image: "/images/faq-free.webp",
     category: "General",
   },
   {
     question: "Does it work on mobile devices?",
     answer:
       "Yes. The calculator uses native time pickers on phones and tablets, with a responsive layout that adapts to every screen size.",
-    image: "/images/faq-mobile.svg",
+    image: "/images/faq-mobile.webp",
     category: "General",
   },
 ];

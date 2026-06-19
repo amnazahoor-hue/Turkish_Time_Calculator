@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronRight } from "lucide-react";
 import { SiteLogo } from "@/components/layout/site-logo";
 import { NAV_LINKS, SITE_NAME } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -30,44 +30,47 @@ export function Header() {
   }, [isMobileOpen]);
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50">
+    <header className="fixed top-0 z-50 w-full overflow-x-clip">
       <div
         className={cn(
-          "border-b border-transparent bg-transparent transition-all duration-300",
-          isScrolled && "border-navy-100/50 backdrop-blur-sm"
+          "border-b bg-white/95 backdrop-blur-md transition-all duration-300",
+          isScrolled || isMobileOpen
+            ? "border-navy-100/60 shadow-sm"
+            : "border-navy-100/40 xl:border-transparent xl:shadow-none",
+          !isScrolled && !isMobileOpen && "xl:bg-transparent xl:backdrop-blur-none"
         )}
       >
-        <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-4 md:h-16 md:px-6">
+        <div className="mx-auto flex h-14 w-full max-w-7xl items-center justify-between gap-2 px-4 md:h-16 md:px-6 xl:gap-4">
           <Link
             href="/"
             aria-label="Ana Sayfa"
-            className="group flex items-center gap-1.5"
+            className="group flex min-w-0 shrink items-center gap-2 overflow-hidden"
           >
             <SiteLogo
-              size={44}
-              className="transition-transform duration-300 group-hover:scale-105"
+              size={40}
+              className="h-9 w-9 shrink-0 transition-transform duration-300 group-hover:scale-105 md:h-10 md:w-10 xl:h-11 xl:w-11"
             />
-            <span className="text-base font-semibold text-primary md:text-lg">
+            <span className="truncate text-xs font-semibold text-primary sm:text-sm xl:text-lg">
               {SITE_NAME}
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden min-w-0 flex-1 items-center justify-end gap-1 xl:flex">
             {NAV_LINKS.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
-                className="rounded-lg px-4 py-2 text-sm font-medium text-foreground/90 nav-link-hover"
+                className="whitespace-nowrap rounded-lg px-3 py-2 text-sm font-medium text-foreground/90 nav-link-hover"
               >
                 {link.label}
               </Link>
             ))}
           </nav>
 
-          <div className="hidden lg:flex">
+          <div className="hidden shrink-0 xl:flex">
             <Link
               href="/#araclar"
-              className="inline-flex h-9 items-center justify-center rounded-xl bg-accent px-5 text-sm font-semibold text-white transition-all duration-300 hover:scale-105 hover:bg-accent-500 hover:shadow-glow active:scale-95"
+              className="inline-flex h-9 items-center justify-center rounded-xl bg-accent px-5 text-sm font-semibold text-white transition-all duration-300 hover:bg-accent-500 hover:shadow-glow active:scale-95"
             >
               Hesaplamaya Başla
             </Link>
@@ -75,14 +78,15 @@ export function Header() {
 
           <button
             type="button"
-            className="flex h-10 w-10 items-center justify-center rounded-xl text-primary lg:hidden"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-navy-50 text-primary transition-colors hover:bg-navy-100 active:scale-95 xl:hidden"
             onClick={() => setIsMobileOpen(!isMobileOpen)}
             aria-label={isMobileOpen ? "Menüyü kapat" : "Menüyü aç"}
+            aria-expanded={isMobileOpen}
           >
             {isMobileOpen ? (
-              <X className="h-5 w-5" />
+              <X className="h-5 w-5" strokeWidth={2.25} />
             ) : (
-              <Menu className="h-5 w-5" />
+              <Menu className="h-5 w-5" strokeWidth={2.25} />
             )}
           </button>
         </div>
@@ -90,36 +94,48 @@ export function Header() {
 
       <AnimatePresence>
         {isMobileOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.2 }}
-            className="border-b border-navy-100/60 bg-white/80 backdrop-blur-xl lg:hidden"
-          >
-            <nav className="mx-auto flex max-w-7xl flex-col p-4">
-              {NAV_LINKS.map((link) => (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  onClick={() => setIsMobileOpen(false)}
-                  className="flex items-center justify-between rounded-xl px-4 py-3.5 text-sm font-medium text-foreground transition-all duration-200 hover:translate-x-1 hover:bg-navy-50 hover:text-primary"
-                >
-                  {link.label}
-                  <ChevronDown className="h-4 w-4 -rotate-90 text-accent" />
-                </Link>
-              ))}
-              <div className="mt-4 border-t border-navy-100 pt-4">
-                <Link
-                  href="/#araclar"
-                  onClick={() => setIsMobileOpen(false)}
-                  className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-accent text-sm font-semibold text-white transition-colors hover:bg-accent-500"
-                >
-                  Hesaplamaya Başla
-                </Link>
-              </div>
-            </nav>
-          </motion.div>
+          <>
+            <motion.button
+              type="button"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 top-14 z-40 bg-navy/20 backdrop-blur-[2px] md:top-16 xl:hidden"
+              aria-label="Menüyü kapat"
+              onClick={() => setIsMobileOpen(false)}
+            />
+            <motion.div
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.2 }}
+              className="relative z-50 border-b border-navy-100/60 bg-white shadow-lg xl:hidden"
+            >
+              <nav className="mx-auto flex w-full max-w-7xl flex-col px-4 py-3 md:px-6">
+                {NAV_LINKS.map((link) => (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setIsMobileOpen(false)}
+                    className="flex items-center justify-between rounded-xl px-3 py-3.5 text-sm font-medium text-foreground transition-colors hover:bg-navy-50 hover:text-primary"
+                  >
+                    {link.label}
+                    <ChevronRight className="h-4 w-4 shrink-0 text-accent" />
+                  </Link>
+                ))}
+                <div className="mt-2 border-t border-navy-100 pt-3 pb-1">
+                  <Link
+                    href="/#araclar"
+                    onClick={() => setIsMobileOpen(false)}
+                    className="inline-flex h-11 w-full items-center justify-center rounded-xl bg-accent text-sm font-semibold text-white transition-colors hover:bg-accent-500"
+                  >
+                    Hesaplamaya Başla
+                  </Link>
+                </div>
+              </nav>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

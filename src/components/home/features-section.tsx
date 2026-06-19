@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { FEATURES } from "@/lib/constants";
 import { FadeUp, StaggerContainer, StaggerItem, GlowHover } from "@/components/motion";
-import { cn } from "@/lib/utils";
+import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
 const iconMap: Record<string, LucideIcon> = {
   Zap,
@@ -25,7 +25,7 @@ const iconMap: Record<string, LucideIcon> = {
 export function FeaturesSection() {
   return (
     <section id="ozellikler" className="section-padding">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="mx-auto max-w-2xl text-center">
           <h2 className="section-heading">Güçlü Özellikler</h2>
           <p className="section-subheading">
@@ -50,7 +50,7 @@ export function FeaturesSection() {
                       <Icon className="h-5 w-5 text-primary" />
                     </div>
                     <h3 className="mt-3 text-base font-semibold text-foreground sm:mt-4 sm:text-lg">
-                      {feature.title}
+                      {capitalizeHeadingWords(feature.title)}
                     </h3>
                     <p className="mt-1.5 text-xs leading-relaxed text-muted sm:mt-2 sm:text-sm">
                       {feature.description}

@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { USE_CASES } from "@/lib/constants";
 import { FadeUp, StaggerContainer, StaggerItem, HoverLift } from "@/components/motion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 const iconMap: Record<string, LucideIcon> = {
   User,
@@ -20,7 +21,7 @@ const iconMap: Record<string, LucideIcon> = {
 export function UseCasesSection() {
   return (
     <section className="section-padding">
-      <div className="mx-auto max-w-7xl px-4 md:px-6">
+      <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="mx-auto max-w-2xl text-center">
           <h2 className="section-heading">Kimler Kullanıyor?</h2>
           <p className="section-subheading">
@@ -39,7 +40,7 @@ export function UseCasesSection() {
                       <Icon className="h-5 w-5 sm:h-6 sm:w-6" />
                     </div>
                     <h3 className="mt-3 text-base font-bold text-foreground sm:mt-4 sm:text-lg">
-                      {useCase.title}
+                      {capitalizeHeadingWords(useCase.title)}
                     </h3>
                     <p className="mt-1.5 text-xs leading-relaxed text-muted sm:mt-2 sm:text-sm">
                       {useCase.description}
