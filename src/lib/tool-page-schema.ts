@@ -13,23 +13,8 @@ export interface ToolPageSchemaInput {
   faqs: { question: string; answer: string }[];
 }
 
-/** Canonical base URL for schema fields — must match the public page URL. */
+/** Canonical production URL for all JSON-LD schema fields. */
 export function getSchemaBaseUrl(): string {
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
-  }
-
-  const productionUrl = process.env.VERCEL_PROJECT_PRODUCTION_URL;
-  if (productionUrl) {
-    return productionUrl.startsWith("http")
-      ? productionUrl.replace(/\/$/, "")
-      : `https://${productionUrl}`.replace(/\/$/, "");
-  }
-
-  if (process.env.VERCEL_URL) {
-    return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
-  }
-
   return SITE_URL.replace(/\/$/, "");
 }
 
