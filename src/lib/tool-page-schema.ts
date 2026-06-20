@@ -3,12 +3,7 @@ import {
   SITE_URL,
   SITE_LOGO,
   SITE_DESCRIPTION,
-  OG_IMAGE,
-  OG_IMAGE_WIDTH,
-  OG_IMAGE_HEIGHT,
 } from "./constants";
-import { AUTHOR } from "./legal-pages-config";
-import { toSchemaGraph } from "./seo";
 
 export interface ToolPageSchemaInput {
   name: string;
@@ -18,9 +13,7 @@ export interface ToolPageSchemaInput {
   faqs: { question: string; answer: string }[];
 }
 
-const AUTHOR_PATH = `/yazar/${AUTHOR.slug}`;
-
-/** Canonical base URL for schema @id fields — must match the public page URL. */
+/** Canonical base URL for schema fields — must match the public page URL. */
 export function getSchemaBaseUrl(): string {
   if (process.env.NEXT_PUBLIC_SITE_URL) {
     return process.env.NEXT_PUBLIC_SITE_URL.replace(/\/$/, "");
@@ -40,14 +33,6 @@ export function getSchemaBaseUrl(): string {
   return SITE_URL.replace(/\/$/, "");
 }
 
-/** Single @graph payload — validators show each type separately instead of merging into FAQPage. */
-export function buildToolPageJsonLdGraph(
-  input: ToolPageSchemaInput,
-  baseUrl: string = getSchemaBaseUrl()
-): Record<string, unknown> {
-  return toSchemaGraph(buildToolPageJsonLdScripts(input, baseUrl));
-}
-
 function cleanSchemaText(value: string): string {
   return value.replace(/[\u200B-\u200D\uFEFF]/g, "").trim();
 }
@@ -57,7 +42,10 @@ function pageUrl(baseUrl: string, path: string) {
   return `${baseUrl}${path}`;
 }
 
-/** Tool pages only: Organization, WebSite, WebPage, BreadcrumbList, Person, FAQPage. */
+/**
+ * Tool pages: 5 independent schemas (no @id cross-links).
+ * Validator shows Organization, WebSite, WebPage, BreadcrumbList, FAQPage separately.
+ */
 export function buildToolPageJsonLdScripts(
   input: ToolPageSchemaInput,
   baseUrl: string = getSchemaBaseUrl()
@@ -65,66 +53,36 @@ export function buildToolPageJsonLdScripts(
   const { name, description, path, breadcrumbs, faqs } = input;
   const pageName = cleanSchemaText(name);
   const pageDescription = cleanSchemaText(description);
-
   const url = pageUrl(baseUrl, path);
-  const orgId = `${baseUrl}/#organization`;
-  const websiteId = `${baseUrl}/#website`;
-  const authorUrl = `${baseUrl}${AUTHOR_PATH}`;
-  const authorId = `${authorUrl}#person`;
-  const webPageId = `${url}#webpage`;
-  const breadcrumbId = `${url}#breadcrumb`;
-  const faqId = `${url}#faqpage`;
 
   return [
     {
       "@context": "https://schema.org",
       "@type": "Organization",
-      "@id": orgId,
       name: SITE_NAME,
       url: `${baseUrl}/`,
       logo: `${baseUrl}${SITE_LOGO}`,
       description: SITE_DESCRIPTION,
-      contactPoint: {
-        "@type": "ContactPoint",
-        contactType: "customer service",
-        email: "info@saathesaplama.com",
-        url: `${baseUrl}/iletisim`,
-        availableLanguage: "Turkish",
-      },
     },
     {
       "@context": "https://schema.org",
       "@type": "WebSite",
-      "@id": websiteId,
       name: SITE_NAME,
       url: `${baseUrl}/`,
       description: SITE_DESCRIPTION,
       inLanguage: "tr-TR",
-      publisher: { "@id": orgId },
     },
     {
       "@context": "https://schema.org",
       "@type": "WebPage",
-      "@id": webPageId,
       url,
       name: pageName,
       description: pageDescription,
       inLanguage: "tr-TR",
-      isPartOf: { "@id": websiteId },
-      publisher: { "@id": orgId },
-      author: { "@id": authorId },
-      breadcrumb: { "@id": breadcrumbId },
-      primaryImageOfPage: {
-        "@type": "ImageObject",
-        url: `${baseUrl}${OG_IMAGE}`,
-        width: OG_IMAGE_WIDTH,
-        height: OG_IMAGE_HEIGHT,
-      },
     },
     {
       "@context": "https://schema.org",
       "@type": "BreadcrumbList",
-      "@id": breadcrumbId,
       itemListElement: breadcrumbs.map((item, index) => ({
         "@type": "ListItem",
         position: index + 1,
@@ -134,21 +92,7 @@ export function buildToolPageJsonLdScripts(
     },
     {
       "@context": "https://schema.org",
-      "@type": "Person",
-      "@id": authorId,
-      name: AUTHOR.name,
-      url: authorUrl,
-      jobTitle: AUTHOR.role,
-      worksFor: { "@id": orgId },
-    },
-    {
-      "@context": "https://schema.org",
       "@type": "FAQPage",
-      "@id": faqId,
-      url,
-      name: `${pageName} — Sık Sorulan Sorular`,
-      inLanguage: "tr-TR",
-      isPartOf: { "@id": webPageId },
       mainEntity: faqs.map((faq) => ({
         "@type": "Question",
         name: cleanSchemaText(faq.question),

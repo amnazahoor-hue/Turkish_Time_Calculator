@@ -1,19 +1,9 @@
 import {
-  buildToolPageJsonLdGraph,
+  buildToolPageJsonLdScripts,
   type ToolPageSchemaInput,
 } from "@/lib/tool-page-schema";
-
-function serializeJsonLd(schema: Record<string, unknown>): string {
-  return JSON.stringify(schema).replace(/</g, "\\u003c");
-}
+import { StandaloneJsonLd } from "./standalone-json-ld";
 
 export function ToolPageJsonLd(props: ToolPageSchemaInput) {
-  const graph = buildToolPageJsonLdGraph(props);
-
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: serializeJsonLd(graph) }}
-    />
-  );
+  return <StandaloneJsonLd scripts={buildToolPageJsonLdScripts(props)} />;
 }
