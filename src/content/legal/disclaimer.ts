@@ -1,5 +1,5 @@
 import type { LegalSection } from "@/components/LegalPageLayout";
-import type { LegalFaqItem } from "@/lib/schema";
+import type { FAQItem } from "@/types";
 
 export const disclaimerSections: LegalSection[] = [
   {
@@ -76,7 +76,7 @@ export const disclaimerSections: LegalSection[] = [
   },
 ];
 
-export const disclaimerFaq: LegalFaqItem[] = [
+export const disclaimerFaq: FAQItem[] = [
   {
     question: "Do time calculator results have official legal status?",
     answer:

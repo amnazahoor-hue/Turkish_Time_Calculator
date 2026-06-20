@@ -11,10 +11,8 @@ import {
   WorkingHoursSection,
 } from "@/components/pages/saat-ucreti/content-sections";
 import { SaatUcretiFaqSection } from "@/components/pages/saat-ucreti/faq-section";
-import { ToolPageJsonLd } from "@/components/seo/tool-page-json-ld";
 import { generatePageMetadata } from "@/lib/seo";
 import { HOURLY_WAGE_PAGE } from "@/lib/pages-seo";
-import { SAAT_UCRETI_FAQS } from "@/lib/saat-ucreti-content";
 
 const PAGE_PATH = HOURLY_WAGE_PAGE.path;
 
@@ -28,16 +26,6 @@ export const metadata: Metadata = generatePageMetadata({
 export default function SaatUcretiHesaplamaPage() {
   return (
     <PageTransition>
-      <ToolPageJsonLd
-        name={HOURLY_WAGE_PAGE.title}
-        description={HOURLY_WAGE_PAGE.description}
-        path={PAGE_PATH}
-        breadcrumbs={[
-          { name: "Ana Sayfa", url: "/" },
-          { name: "Saat Ücreti Hesaplama", url: PAGE_PATH },
-        ]}
-        faqs={SAAT_UCRETI_FAQS}
-      />
       <SaatUcretiHeroSection />
       <HowHourlyCalculatedSection />
       <SalaryToHourlyCalculatorSection />

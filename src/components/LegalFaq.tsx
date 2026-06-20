@@ -4,10 +4,10 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { DURATION, EASE_OUT, faqCollapse } from "@/lib/animations";
-import type { LegalFaqItem } from "@/lib/schema";
+import type { FAQItem } from "@/types";
 
 interface LegalFaqProps {
-  items: LegalFaqItem[];
+  items: FAQItem[];
 }
 
 export default function LegalFaq({ items }: LegalFaqProps) {

@@ -1,5 +1,5 @@
 import type { LegalSection } from "@/components/LegalPageLayout";
-import type { LegalFaqItem } from "@/lib/schema";
+import type { FAQItem } from "@/types";
 
 export const privacySections: LegalSection[] = [
   {
@@ -120,7 +120,7 @@ export const privacySections: LegalSection[] = [
   },
 ];
 
-export const privacyFaq: LegalFaqItem[] = [
+export const privacyFaq: FAQItem[] = [
   {
     question: "Are my time calculator inputs stored on your servers?",
     answer:

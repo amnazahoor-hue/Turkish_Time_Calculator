@@ -1,5 +1,5 @@
 import type { LegalSection } from "@/components/LegalPageLayout";
-import type { LegalFaqItem } from "@/lib/schema";
+import type { FAQItem } from "@/types";
 
 export const termsSections: LegalSection[] = [
   {
@@ -102,7 +102,7 @@ export const termsSections: LegalSection[] = [
   },
 ];
 
-export const termsFaq: LegalFaqItem[] = [
+export const termsFaq: FAQItem[] = [
   {
     question: "Do I have to pay to use the Site?",
     answer:

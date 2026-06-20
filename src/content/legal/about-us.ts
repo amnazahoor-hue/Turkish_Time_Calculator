@@ -1,5 +1,5 @@
 import type { LegalSection } from "@/components/LegalPageLayout";
-import type { LegalFaqItem } from "@/lib/schema";
+import type { FAQItem } from "@/types";
 
 export const aboutSections: LegalSection[] = [
   {
@@ -106,7 +106,7 @@ export const aboutSections: LegalSection[] = [
   },
 ];
 
-export const aboutFaq: LegalFaqItem[] = [
+export const aboutFaq: FAQItem[] = [
   {
     question: "Who operates Time Calculator?",
     answer:

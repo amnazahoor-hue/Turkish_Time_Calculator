@@ -3,11 +3,10 @@ import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { MapPin, Mail, PenLine, CheckCircle2 } from "lucide-react";
 import { PageTransition, FadeUp } from "@/components/motion";
-import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generateLegalPageMetadata, buildPageSchemas, generatePersonSchema } from "@/lib/seo";
+import { generateLegalPageMetadata } from "@/lib/seo";
 import { AUTHOR, LEGAL_LAST_UPDATED } from "@/lib/legal-pages-config";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
-import { SITE_NAME, SITE_URL } from "@/lib/constants";
+import { SITE_NAME } from "@/lib/constants";
 
 const PAGE_PATH = `/yazar/${AUTHOR.slug}`;
 const PAGE_TITLE = `${AUTHOR.name} — Yazar`;
@@ -22,25 +21,6 @@ export const metadata: Metadata = generateLegalPageMetadata({
 export default function AuthorPage() {
   return (
     <PageTransition>
-      <SchemaMarkup
-        data={buildPageSchemas({
-          name: PAGE_TITLE,
-          description: PAGE_DESCRIPTION,
-          path: PAGE_PATH,
-          schemaType: "ProfilePage",
-          mainEntityId: `${SITE_URL}${PAGE_PATH}#person`,
-          primaryImage: AUTHOR.image,
-          primaryImageWidth: AUTHOR.imageWidth,
-          primaryImageHeight: AUTHOR.imageHeight,
-          breadcrumbs: [
-            { name: "Ana Sayfa", url: "/" },
-            { name: "Yazar", url: PAGE_PATH },
-            { name: AUTHOR.name, url: PAGE_PATH },
-          ],
-          additional: [generatePersonSchema(AUTHOR, PAGE_PATH)],
-        })}
-      />
-
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
           <FadeUp>

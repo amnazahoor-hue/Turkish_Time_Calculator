@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { PageTransition } from "@/components/motion";
-import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generateLegalPageMetadata, buildPageSchemas } from "@/lib/seo";
+import { generateLegalPageMetadata } from "@/lib/seo";
 import { SITE_NAME } from "@/lib/constants";
 import { LegalHubLayout } from "@/components/legal/legal-hub-layout";
 import { privacySectionsTr } from "@/lib/legal-content-tr";
@@ -21,17 +20,6 @@ export const metadata: Metadata = generateLegalPageMetadata({
 export default function GizlilikPolitikasiPage() {
   return (
     <PageTransition>
-      <SchemaMarkup
-        data={buildPageSchemas({
-          name: PAGE.title,
-          description: PAGE.description,
-          path: PAGE.path,
-          breadcrumbs: [
-            { name: "Ana Sayfa", url: "/" },
-            { name: PAGE.title, url: PAGE.path },
-          ],
-        })}
-      />
       <LegalHubLayout
         title="Gizlilik Politikası"
         description="Saat hesaplama aracını kullanırken hangi verilerin işlendiğini, hesaplama girdilerinizin nasıl korunduğunu ve KVKK kapsamındaki haklarınızı öğrenin."

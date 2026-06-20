@@ -1,12 +1,7 @@
 import Link from "next/link";
-import JsonLd from "@/components/JsonLd";
 import LegalFaq from "@/components/LegalFaq";
 import { LEGAL_LAST_UPDATED } from "@/lib/legal-metadata";
-import {
-  getBreadcrumbSchemaForPage,
-  getFAQSchemaFromItems,
-  type LegalFaqItem,
-} from "@/lib/schema";
+import type { FAQItem } from "@/types";
 
 export interface LegalSection {
   id: string;
@@ -21,7 +16,7 @@ interface LegalPageLayoutProps {
   path: string;
   breadcrumbLabel: string;
   sections: LegalSection[];
-  faq?: LegalFaqItem[];
+  faq?: FAQItem[];
   children?: React.ReactNode;
 }
 
@@ -51,9 +46,6 @@ export default function LegalPageLayout({
 
   return (
     <>
-      <JsonLd data={getBreadcrumbSchemaForPage(breadcrumbLabel, path)} />
-      {faq && faq.length > 0 && <JsonLd data={getFAQSchemaFromItems(faq)} />}
-
       <article className="section-container section-bg-legal max-w-3xl mx-auto">
         <nav aria-label="Breadcrumb" className="mb-6">
           <ol className="flex flex-wrap items-center gap-2 text-small text-text-secondary">

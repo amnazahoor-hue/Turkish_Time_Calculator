@@ -9,12 +9,8 @@ import {
 import { HoursDaysConversionTableSection } from "@/components/pages/seventy-two-hours/hours-days-conversion-table-section";
 import { SeventyTwoHoursSolutionSection } from "@/components/pages/seventy-two-hours/solution-section";
 import { SeventyTwoHoursFaqSection } from "@/components/pages/seventy-two-hours/faq-section";
-import { ToolPageJsonLd } from "@/components/seo/tool-page-json-ld";
 import { generatePageMetadata } from "@/lib/seo";
-import {
-  SEVENTY_TWO_HOURS_PAGE,
-  SEVENTY_TWO_HOURS_FAQS,
-} from "@/lib/seventy-two-hours-content";
+import { SEVENTY_TWO_HOURS_PAGE } from "@/lib/seventy-two-hours-content";
 
 const PAGE_PATH = SEVENTY_TWO_HOURS_PAGE.path;
 
@@ -28,16 +24,6 @@ export const metadata: Metadata = generatePageMetadata({
 export default function YetmisIkiSaatKacGunPage() {
   return (
     <PageTransition>
-      <ToolPageJsonLd
-        name={SEVENTY_TWO_HOURS_PAGE.title}
-        description={SEVENTY_TWO_HOURS_PAGE.description}
-        path={PAGE_PATH}
-        breadcrumbs={[
-          { name: "Ana Sayfa", url: "/" },
-          { name: "72 Saat Kaç Gündür", url: PAGE_PATH },
-        ]}
-        faqs={SEVENTY_TWO_HOURS_FAQS}
-      />
       <SeventyTwoHoursHeroSection />
       <HoursToDaysCalculatorSection />
       <section className="overflow-hidden bg-background py-8 sm:py-10 md:py-14 lg:py-16">

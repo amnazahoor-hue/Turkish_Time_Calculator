@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { PageTransition, FadeUp } from "@/components/motion";
 import { ContactForm, ContactInfo } from "@/components/iletisim/contact-form";
-import { SchemaMarkup } from "@/components/seo/schema-markup";
-import { generateIndexablePageMetadata, buildPageSchemas } from "@/lib/seo";
+import { generateIndexablePageMetadata } from "@/lib/seo";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 
 const PAGE = {
@@ -21,18 +20,6 @@ export const metadata: Metadata = generateIndexablePageMetadata({
 export default function IletisimPage() {
   return (
     <PageTransition>
-      <SchemaMarkup
-        data={buildPageSchemas({
-          name: PAGE.title,
-          description: PAGE.description,
-          path: PAGE.path,
-          breadcrumbs: [
-            { name: "Ana Sayfa", url: "/" },
-            { name: PAGE.title, url: PAGE.path },
-          ],
-        })}
-      />
-
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
         <div className="mx-auto w-full px-4 md:px-6">
           <FadeUp>
