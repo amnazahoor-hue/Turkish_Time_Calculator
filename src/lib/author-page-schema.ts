@@ -1,12 +1,6 @@
-import {
-  SITE_NAME,
-  SITE_LOGO,
-  SITE_DESCRIPTION,
-  OG_IMAGE,
-  OG_IMAGE_WIDTH,
-  OG_IMAGE_HEIGHT,
-} from "./constants";
+import { SITE_NAME, SITE_LOGO, SITE_DESCRIPTION } from "./constants";
 import { AUTHOR } from "./legal-pages-config";
+import { toSchemaGraph } from "./seo";
 import { getSchemaBaseUrl } from "./tool-page-schema";
 
 export interface AuthorPageSchemaInput {
@@ -122,4 +116,12 @@ export function buildAuthorPageJsonLdScripts(
       })),
     },
   ];
+}
+
+/** Single @graph payload for author profile — separate from tool page schema. */
+export function buildAuthorPageJsonLdGraph(
+  input: AuthorPageSchemaInput,
+  baseUrl: string = getSchemaBaseUrl()
+): Record<string, unknown> {
+  return toSchemaGraph(buildAuthorPageJsonLdScripts(input, baseUrl));
 }

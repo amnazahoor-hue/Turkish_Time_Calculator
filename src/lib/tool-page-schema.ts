@@ -1,5 +1,6 @@
 import {
   SITE_NAME,
+  SITE_URL,
   SITE_LOGO,
   SITE_DESCRIPTION,
   OG_IMAGE,
@@ -7,6 +8,7 @@ import {
   OG_IMAGE_HEIGHT,
 } from "./constants";
 import { AUTHOR } from "./legal-pages-config";
+import { toSchemaGraph } from "./seo";
 
 export interface ToolPageSchemaInput {
   name: string;
@@ -35,7 +37,15 @@ export function getSchemaBaseUrl(): string {
     return `https://${process.env.VERCEL_URL}`.replace(/\/$/, "");
   }
 
-  return "https://isaathesaplama.tr";
+  return SITE_URL.replace(/\/$/, "");
+}
+
+/** Single @graph payload — validators show each type separately instead of merging into FAQPage. */
+export function buildToolPageJsonLdGraph(
+  input: ToolPageSchemaInput,
+  baseUrl: string = getSchemaBaseUrl()
+): Record<string, unknown> {
+  return toSchemaGraph(buildToolPageJsonLdScripts(input, baseUrl));
 }
 
 function cleanSchemaText(value: string): string {
