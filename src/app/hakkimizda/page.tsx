@@ -3,7 +3,8 @@ import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { Target, Eye, Heart, Award, TrendingUp, ArrowRight } from "lucide-react";
 import { PageTransition, FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
-import { generateIndexablePageMetadata } from "@/lib/seo";
+import { SchemaMarkup } from "@/components/seo/schema-markup";
+import { generateIndexablePageMetadata, buildPageSchemas } from "@/lib/seo";
 import { TRUST_STATS, SITE_NAME } from "@/lib/constants";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 import { AUTHOR } from "@/lib/legal-pages-config";
@@ -54,6 +55,17 @@ const timeline = [
 export default function HakkimizdaPage() {
   return (
     <PageTransition>
+      <SchemaMarkup
+        data={buildPageSchemas({
+          name: PAGE.title,
+          description: PAGE.description,
+          path: PAGE.path,
+          breadcrumbs: [
+            { name: "Ana Sayfa", url: "/" },
+            { name: PAGE.title, url: PAGE.path },
+          ],
+        })}
+      />
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
         <div className="mx-auto w-full px-4 md:px-6">
           <FadeUp>

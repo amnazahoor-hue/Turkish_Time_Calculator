@@ -3,6 +3,7 @@ import { LazyImage } from "@/components/ui/lazy-image";
 import Link from "next/link";
 import { MapPin, Mail, PenLine, CheckCircle2 } from "lucide-react";
 import { PageTransition, FadeUp } from "@/components/motion";
+import { AuthorPageJsonLd } from "@/components/seo/author-page-json-ld";
 import { generateLegalPageMetadata } from "@/lib/seo";
 import { AUTHOR, LEGAL_LAST_UPDATED } from "@/lib/legal-pages-config";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
@@ -21,6 +22,16 @@ export const metadata: Metadata = generateLegalPageMetadata({
 export default function AuthorPage() {
   return (
     <PageTransition>
+      <AuthorPageJsonLd
+        pageTitle={PAGE_TITLE}
+        pageDescription={PAGE_DESCRIPTION}
+        path={PAGE_PATH}
+        breadcrumbs={[
+          { name: "Ana Sayfa", url: "/" },
+          { name: "Yazar", url: PAGE_PATH },
+          { name: AUTHOR.name, url: PAGE_PATH },
+        ]}
+      />
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
           <FadeUp>
