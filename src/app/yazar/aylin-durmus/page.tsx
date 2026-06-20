@@ -26,11 +26,6 @@ export default function AuthorPage() {
         pageTitle={PAGE_TITLE}
         pageDescription={PAGE_DESCRIPTION}
         path={PAGE_PATH}
-        breadcrumbs={[
-          { name: "Ana Sayfa", url: "/" },
-          { name: "Yazar", url: PAGE_PATH },
-          { name: AUTHOR.name, url: PAGE_PATH },
-        ]}
       />
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
         <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
