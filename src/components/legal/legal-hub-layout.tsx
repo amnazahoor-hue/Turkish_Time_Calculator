@@ -174,7 +174,7 @@ export function LegalPageSidebar() {
           className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white transition-all hover:bg-accent-600 hover:shadow-glow"
         >
           <Mail className="h-4 w-4" />
-          İletişime Geç
+          Bize Ulaşın
         </Link>
       </div>
     </aside>

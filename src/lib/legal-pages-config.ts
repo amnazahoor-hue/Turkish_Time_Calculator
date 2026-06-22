@@ -9,7 +9,7 @@ export const LEGAL_NAV = [
 
 export const COMPANY_NAV = [
   { href: "/hakkimizda", label: "Hakkımızda" },
-  { href: "/iletisim", label: "İletişim" },
+  { href: "/iletisim", label: "Bize Ulaşın" },
   { href: "/yazar/aylin-durmus", label: "Yazar — Aylin Durmuş" },
 ] as const;
 

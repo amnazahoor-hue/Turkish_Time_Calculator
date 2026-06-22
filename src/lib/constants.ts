@@ -11,7 +11,7 @@ export const NAV_LINKS = [
   { label: "72 Saat Kaç Gündür", href: "/72-saat-kac-gun" },
   { label: "Saat Ücreti Hesaplama", href: "/saat-ucreti-hesaplama" },
   { label: "Hakkımızda", href: "/hakkimizda" },
-  { label: "İletişim", href: "/iletisim" },
+  { label: "Bize Ulaşın", href: "/iletisim" },
 ] as const;
 
 export const TOOL_LINKS = [
@@ -175,7 +175,7 @@ export const FOOTER_LINKS = {
   tools: TOOL_LINKS,
   company: [
     { label: "Hakkımızda", href: "/hakkimizda" },
-    { label: "İletişim", href: "/iletisim" },
+    { label: "Bize Ulaşın", href: "/iletisim" },
     { label: "Yazar — Aylin Durmuş", href: "/yazar/aylin-durmus" },
   ],
   legal: [

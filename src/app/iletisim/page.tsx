@@ -6,9 +6,9 @@ import { capitalizeHeadingWords } from "@/lib/utils";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 
 const PAGE = {
-  title: "İletişim",
+  title: "Bize Ulaşın",
   description:
-    "Saat Hesaplama ekibi ile iletişime geçin. Sorularınız, önerileriniz ve geri bildirimleriniz için bize ulaşın.",
+    "Saat Hesaplama ekibine ulaşın. Sorularınız, önerileriniz ve geri bildirimleriniz için bize yazın.",
   path: "/iletisim",
 } as const;
 
@@ -22,11 +22,11 @@ export default function IletisimPage() {
   return (
     <PageTransition>
       <article className="pt-24 pb-12 md:pt-28 md:pb-16">
-        <div className="mx-auto w-full px-4 md:px-6">
+        <div className="mx-auto w-full max-w-6xl px-4 md:px-6">
           <FadeUp>
             <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white sm:rounded-[2rem] sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />
-              <h1 className="text-2xl font-black sm:text-3xl md:text-4xl">{capitalizeHeadingWords("İletişim")}</h1>
+              <h1 className="text-2xl font-black sm:text-3xl md:text-4xl">Bize Ulaşın</h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">
                 Saat hesaplama aracı, içerik veya yasal metinler hakkında sorularınız için bize
                 yazın. En kısa sürede dönüş yapıyoruz.
@@ -49,7 +49,7 @@ export default function IletisimPage() {
               </div>
               <div>
                 <FadeUp delay={0.1}>
-                  <h2 className="text-xl font-bold text-navy sm:text-2xl">{capitalizeHeadingWords("İletişim Bilgileri")}</h2>
+                  <h2 className="text-xl font-bold text-navy sm:text-2xl">{capitalizeHeadingWords("Ulaşım Bilgileri")}</h2>
                 </FadeUp>
                 <div className="mt-5 sm:mt-6">
                   <ContactInfo />
