@@ -3,6 +3,7 @@
 import { LazyImage } from "@/components/ui/lazy-image";
 import { FadeUp } from "@/components/motion";
 import { SectionTitle } from "@/components/calculator/content-layouts";
+import { withSaatiLink } from "@/components/seo/time-unit-links";
 
 export function AddSubtractTimeSection() {
   return (
@@ -51,10 +52,9 @@ export function AddSubtractTimeSection() {
             </SectionTitle>
 
             <p className="mt-4 text-sm font-medium leading-relaxed text-muted md:mt-5 md:text-base md:leading-7">
-              Bu hesap makinesi, ihtiyaçlarınıza göre zaman girişlerini toplamanıza
-              veya çıkarmanıza olanak tanır. Başlangıç tarihini ve saatini giriş
-              alanlarına girmeniz yeterlidir. Toplama veya çıkarma seçeneklerinden
-              birini seçin; ardından yeni tarih ve saati elde edeceksiniz.
+              {withSaatiLink(
+                "Bu hesap makinesi, ihtiyaçlarınıza göre zaman girişlerini toplamanıza veya çıkarmanıza olanak tanır. Başlangıç tarihini ve saatini giriş alanlarına girmeniz yeterlidir. Toplama veya çıkarma seçeneklerinden birini seçin; ardından yeni tarih ve saati elde edeceksiniz."
+              )}
             </p>
           </FadeUp>
         </div>

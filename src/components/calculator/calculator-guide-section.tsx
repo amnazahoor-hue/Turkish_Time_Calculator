@@ -7,7 +7,7 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
-import { withTimeUnitLinks } from "@/components/seo/time-unit-links";
+import { withSaatiLink, withTimeUnitLinks } from "@/components/seo/time-unit-links";
 import { capitalizeHeadingWords } from "@/lib/utils";
 const STEPS = [
   "Tüm alanlara (gün, saat, dakika ve saniye) değer girin.",
@@ -31,11 +31,10 @@ export function CalculatorGuideSection() {
                   {capitalizeHeadingWords("Tarihe saat Ekleme veya Çıkarma")}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-muted sm:mt-3 sm:text-base">
-                  Bu hesap makinesi, ihtiyaçlarınıza göre zaman girişlerini
-                  toplamanıza veya çıkarmanıza olanak tanır. Başlangıç tarihini
-                  ve saatini giriş alanlarına girmeniz yeterlidir. Toplama veya
-                  çıkarma seçeneklerinden birini seçin; ardından yeni tarih ve saati
-                  elde edeceksiniz.                </p>
+                  {withSaatiLink(
+                    "Bu hesap makinesi, ihtiyaçlarınıza göre zaman girişlerini toplamanıza veya çıkarmanıza olanak tanır. Başlangıç tarihini ve saatini giriş alanlarına girmeniz yeterlidir. Toplama veya çıkarma seçeneklerinden birini seçin; ardından yeni tarih ve saati elde edeceksiniz."
+                  )}
+                </p>
               </div>
             </div>
           </article>

@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Clock, TrendingUp } from "lucide-react";
 import { SectionTitle } from "@/components/calculator/content-layouts";
 import { FadeUp } from "@/components/motion";
+import { withHomepageToolLink } from "@/components/seo/time-unit-links";
 import { cn } from "@/lib/utils";
 
 function InfographicStepCard({
@@ -143,6 +144,11 @@ export function MinutesInDaySection() {
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-foreground/75 sm:mt-4 sm:text-base md:leading-7">
           Bir günde kaç dakika olduğunu hesaplamak için, günü saatlere ve
           saatleri dakikalara bölün. Cevabı bulacaksınız.
+        </p>
+        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-foreground/75 sm:text-base md:leading-7">
+          {withHomepageToolLink(
+            "Tarih ve saat toplama veya çıkarma işlemleri için ana sayfamızdaki saat hesaplama aracını kullanabilirsiniz."
+          )}
         </p>
       </FadeUp>
 

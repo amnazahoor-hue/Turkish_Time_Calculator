@@ -11,10 +11,8 @@ import { SeventyTwoHoursSolutionSection } from "@/components/pages/seventy-two-h
 import { SeventyTwoHoursFaqSection } from "@/components/pages/seventy-two-hours/faq-section";
 import { ToolPageJsonLd } from "@/components/seo/tool-page-json-ld";
 import { generatePageMetadata } from "@/lib/seo";
-import {
-  SEVENTY_TWO_HOURS_PAGE,
-  SEVENTY_TWO_HOURS_FAQS,
-} from "@/lib/seventy-two-hours-content";
+import { SEVENTY_TWO_HOURS_PAGE } from "@/lib/pages-seo";
+import { SEVENTY_TWO_HOURS_FAQS } from "@/lib/seventy-two-hours-content";
 
 const PAGE_PATH = SEVENTY_TWO_HOURS_PAGE.path;
 

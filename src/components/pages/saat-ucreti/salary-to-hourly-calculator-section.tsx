@@ -12,6 +12,7 @@ import { CalculatorResultActions } from "@/components/calculator/calculator-resu
 import { CalculatorResetButton } from "@/components/calculator/calculator-reset-button";
 import { SALARY_TO_HOURLY } from "@/lib/saat-ucreti-content";
 import { capitalizeHeadingWords } from "@/lib/utils";
+import { with72HoursPageLink } from "@/components/seo/time-unit-links";
 
 function formatCurrency(value: number): string {
   return new Intl.NumberFormat("tr-TR", {
@@ -99,6 +100,11 @@ export function SalaryToHourlyCalculatorSection() {
             <SectionTitle className="mx-auto">{title}</SectionTitle>
             <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
               {intro}
+            </p>
+            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
+              {with72HoursPageLink(
+                "Saat ve gün dönüşümleri için 72 saat kaç gündür sayfamızdaki hesaplayıcıyı da kullanabilirsiniz."
+              )}
             </p>
           </div>
 

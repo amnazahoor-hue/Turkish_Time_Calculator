@@ -11,6 +11,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { FadeUp } from "@/components/motion";
+import { withHomepageToolLink } from "@/components/seo/time-unit-links";
 import { SectionTitle } from "@/components/calculator/content-layouts";
 import { cn, capitalizeHeadingWords } from "@/lib/utils";
 import {
@@ -170,6 +171,11 @@ export function HowHourlyCalculatedSection() {
           <SectionTitle className="mx-auto">{title}</SectionTitle>
           <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
             {intro}
+          </p>
+          <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
+            {withHomepageToolLink(
+              "Zaman ve tarih hesaplamaları için ana sayfamızdaki saat hesaplama aracını kullanabilirsiniz."
+            )}
           </p>
         </FadeUp>
 

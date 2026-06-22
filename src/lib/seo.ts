@@ -65,7 +65,10 @@ export function generatePageMetadata({
   const ogImages = getOpenGraphImages(fullTitle);
 
   return {
-    title: fullTitle,
+    title:
+      path === "/"
+        ? title
+        : { absolute: fullTitle },
     description,
     keywords: [
       "saat hesaplama",

@@ -1,14 +1,7 @@
 import type { FAQItem } from "@/types";
+import { SEVENTY_TWO_HOURS_PAGE } from "@/lib/pages-seo";
 
-export const SEVENTY_TWO_HOURS_PAGE = {
-  path: "/72-saat-kac-gun",
-  title: "72 Saat Kaç Gün Eder? Basit Bir Açıklama ve Rehber",
-  description:
-    "72 saati günlere dönüştürmenin basit ve heyecan verici bir yolunu keşfedin. Rehberimizle zaman hesaplamalarında ustalaşın.",
-  slug: "72 saat kaç gündür?",
-  focusKeyword: "72 saat kaç gündür?",
-  h1: "72 Saatin Dökümü: Günler, Saatler ve Daha Fazlası",
-} as const;
+export { SEVENTY_TWO_HOURS_PAGE };
 
 export const SEVENTY_TWO_HOURS_HERO = {
   h1: SEVENTY_TWO_HOURS_PAGE.h1,
