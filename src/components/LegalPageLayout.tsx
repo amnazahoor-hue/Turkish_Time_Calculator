@@ -1,6 +1,7 @@
 import Link from "next/link";
 import LegalFaq from "@/components/LegalFaq";
 import { LEGAL_LAST_UPDATED } from "@/lib/legal-metadata";
+import { capitalizeHeadingWords } from "@/lib/utils";
 import type { FAQItem } from "@/types";
 
 export interface LegalSection {
@@ -30,16 +31,18 @@ export default function LegalPageLayout({
   children,
 }: LegalPageLayoutProps) {
   const HeadingTag = ({ level, id, children: heading }: { level: 2 | 3; id: string; children: React.ReactNode }) => {
+    const content =
+      typeof heading === "string" ? capitalizeHeadingWords(heading) : heading;
     if (level === 3) {
       return (
         <h3 id={id} className="text-card-mobile md:text-card text-text-primary mb-3 mt-6">
-          {heading}
+          {content}
         </h3>
       );
     }
     return (
       <h2 id={id} className="text-section-mobile md:text-section text-text-primary mb-4 mt-10 first:mt-0">
-        {heading}
+        {content}
       </h2>
     );
   };
@@ -67,7 +70,7 @@ export default function LegalPageLayout({
         </Link>
 
         <header className="mb-10">
-          <h1 className="text-hero-mobile md:text-hero mb-4">{title}</h1>
+          <h1 className="text-hero-mobile md:text-hero mb-4">{capitalizeHeadingWords(title)}</h1>
           <p className="prose-content text-body-mobile md:text-body mb-3">{description}</p>
           <p className="text-small text-text-secondary">
             Last Updated: {LEGAL_LAST_UPDATED}

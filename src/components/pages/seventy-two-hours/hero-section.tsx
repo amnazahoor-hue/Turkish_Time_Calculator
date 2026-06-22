@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { FadeUp } from "@/components/motion";
 import { SEVENTY_TWO_HOURS_HERO } from "@/lib/seventy-two-hours-content";
 import { HeroHoursDaysVisual } from "@/components/pages/seventy-two-hours/hero-hours-days-visual";
-import { capitalizeHeadingWords } from "@/lib/utils";
 
 export function SeventyTwoHoursHeroSection() {
   const { h1, paragraphs } = SEVENTY_TWO_HOURS_HERO;
@@ -29,7 +28,7 @@ export function SeventyTwoHoursHeroSection() {
               id="hero-72-saat-title"
               className="text-3xl font-black leading-tight tracking-tight text-navy sm:text-4xl md:text-[2.5rem] md:leading-tight lg:text-[2.75rem]"
             >
-              {capitalizeHeadingWords(h1)}
+              {h1}
             </h1>
 
             <div

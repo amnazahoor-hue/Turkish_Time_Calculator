@@ -9,10 +9,10 @@ export const HOME_PAGE = {
 
 export const HOURLY_WAGE_PAGE = {
   path: "/saat-ucreti-hesaplama",
-  title: "En Kapsamlı saat ücreti hesaplama Aracı: Hayatı Kolaylaştırır",
+  title: "En İyi Saatlik Ücret Hesaplaması: Hayatı Kolaylaştırır",
   description:
-    "Finansal durumunuzu canlandırmak için kanıtlanmış saat ücreti hesaplamayı kullanın. Basit, etkili ve pratik aracımızla ücreti hesaplamak için en uygun zamanı bulun.",
+    "Mali durumunuz için, başarısı kanıtlanmış saatlik ücret hesaplayıcımızı kullanın. Ücretleri hesaplamak için en uygun zamanı belirleyin.",
   slug: "Saatlik ücret hesaplaması",
   focusKeyword: "Saatlik ücret hesaplaması",
-  h1: "Saatlik ücret hesaplaması",
+  h1: "Saatlik Ücret Hesaplayıcı Saatlik Kazancınızı Çevrimiçi Hesaplayın",
 } as const;

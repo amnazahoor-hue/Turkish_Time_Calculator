@@ -1,4 +1,5 @@
 import { FadeUp } from "@/components/motion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 export function LegalPageLayout({
   title,
@@ -13,7 +14,7 @@ export function LegalPageLayout({
     <article className="pt-24 pb-12 md:pt-28 md:pb-16">
       <div className="mx-auto max-w-3xl px-4 md:px-6">
         <FadeUp>
-          <h1 className="text-2xl font-black text-foreground sm:text-3xl md:text-4xl">{title}</h1>
+          <h1 className="text-2xl font-black text-foreground sm:text-3xl md:text-4xl">{capitalizeHeadingWords(title)}</h1>
           <p className="mt-4 text-sm text-muted">
             Son güncelleme: {lastUpdated}
           </p>

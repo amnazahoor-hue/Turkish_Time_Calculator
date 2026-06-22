@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { PageTransition, FadeUp } from "@/components/motion";
 import { ContactForm, ContactInfo } from "@/components/iletisim/contact-form";
 import { generateIndexablePageMetadata } from "@/lib/seo";
+import { capitalizeHeadingWords } from "@/lib/utils";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 
 const PAGE = {
@@ -25,7 +26,7 @@ export default function IletisimPage() {
           <FadeUp>
             <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white sm:rounded-[2rem] sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />
-              <h1 className="text-2xl font-black sm:text-3xl md:text-4xl">İletişim</h1>
+              <h1 className="text-2xl font-black sm:text-3xl md:text-4xl">{capitalizeHeadingWords("İletişim")}</h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">
                 Saat hesaplama aracı, içerik veya yasal metinler hakkında sorularınız için bize
                 yazın. En kısa sürede dönüş yapıyoruz.
@@ -37,7 +38,7 @@ export default function IletisimPage() {
             <div className="grid gap-8 lg:grid-cols-2 lg:gap-10">
               <div>
                 <FadeUp delay={0.05}>
-                  <h2 className="text-xl font-bold text-navy sm:text-2xl">Bize Yazın</h2>
+                  <h2 className="text-xl font-bold text-navy sm:text-2xl">{capitalizeHeadingWords("Bize Yazın")}</h2>
                   <p className="mt-2 text-sm text-muted">
                     Formu doldurarak araç, hata bildirimi veya öneri gönderebilirsiniz.
                   </p>
@@ -48,7 +49,7 @@ export default function IletisimPage() {
               </div>
               <div>
                 <FadeUp delay={0.1}>
-                  <h2 className="text-xl font-bold text-navy sm:text-2xl">İletişim Bilgileri</h2>
+                  <h2 className="text-xl font-bold text-navy sm:text-2xl">{capitalizeHeadingWords("İletişim Bilgileri")}</h2>
                 </FadeUp>
                 <div className="mt-5 sm:mt-6">
                   <ContactInfo />

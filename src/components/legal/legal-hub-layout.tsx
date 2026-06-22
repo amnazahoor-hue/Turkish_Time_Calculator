@@ -21,7 +21,7 @@ import {
   LEGAL_LAST_UPDATED,
   type LegalSection,
 } from "@/lib/legal-pages-config";
-import { cn } from "@/lib/utils";
+import { cn, capitalizeHeadingWords } from "@/lib/utils";
 import { SITE_NAME } from "@/lib/constants";
 
 const sectionIcons = [FileText, Scale, Shield, Cookie, AlertTriangle, Building2];
@@ -36,7 +36,7 @@ function LegalTableOfContents({ sections }: { sections: LegalSection[] }) {
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
           <ListTree className="h-4 w-4 text-white" />
         </span>
-        <h2 className="text-sm font-bold text-navy">İçindekiler</h2>
+        <h2 className="text-sm font-bold text-navy">{capitalizeHeadingWords("İçindekiler")}</h2>
       </div>
       <ol className="mt-4 space-y-1.5">
         {sections.map((section, index) => (
@@ -48,7 +48,7 @@ function LegalTableOfContents({ sections }: { sections: LegalSection[] }) {
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-navy/10 text-[11px] font-bold text-navy transition-colors group-hover:bg-accent group-hover:text-white">
                 {index + 1}
               </span>
-              <span className="leading-snug">{section.title}</span>
+              <span className="leading-snug">{capitalizeHeadingWords(section.title)}</span>
             </a>
           </li>
         ))}
@@ -76,7 +76,7 @@ function LegalSections({ sections }: { sections: LegalSection[] }) {
                 </span>
                 <div className="min-w-0 flex-1">
                   <div className="flex flex-wrap items-center gap-2">
-                    <h2 className="text-lg font-bold text-navy sm:text-xl">{section.title}</h2>
+                    <h2 className="text-lg font-bold text-navy sm:text-xl">{capitalizeHeadingWords(section.title)}</h2>
                     <span className="rounded-full bg-navy-50 px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider text-accent">
                       Bölüm {index + 1}
                     </span>
@@ -129,7 +129,7 @@ function SidebarNav({
         <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-primary shadow-glow">
           <Icon className="h-4 w-4 text-white" />
         </span>
-        <h3 className="text-sm font-bold text-navy">{title}</h3>
+        <h3 className="text-sm font-bold text-navy">{capitalizeHeadingWords(title)}</h3>
       </div>
       <ul className="space-y-1">
         {links.map((link) => {
@@ -197,7 +197,7 @@ export function LegalHubLayout({
           <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white shadow-[0_24px_50px_-20px_rgba(0,43,91,0.45)] sm:rounded-[2rem] sm:px-10 sm:py-12">
             <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-16 left-1/4 h-32 w-32 rounded-full bg-white/5 blur-2xl" />
-            <h1 className="text-2xl font-black tracking-tight sm:text-3xl md:text-4xl">{title}</h1>
+            <h1 className="text-2xl font-black tracking-tight sm:text-3xl md:text-4xl">{capitalizeHeadingWords(title)}</h1>
             <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">{description}</p>
             <p className="mt-4 text-xs text-white/70">Son güncelleme: {LEGAL_LAST_UPDATED}</p>
           </div>

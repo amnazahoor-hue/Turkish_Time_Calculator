@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fadeUp, stagger, noMotion } from "@/lib/animations";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 const steps = [
   {
@@ -73,7 +74,7 @@ export default function HowToUse() {
                   className="step-icon-image"
                 />
               </div>
-              <h3 className="mt-4 text-lg font-bold text-heading">{item.title}</h3>
+              <h3 className="mt-4 text-lg font-bold text-heading">{capitalizeHeadingWords(item.title)}</h3>
               <p className="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.description}</p>
             </motion.div>
           ))}

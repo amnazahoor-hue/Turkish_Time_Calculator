@@ -7,10 +7,10 @@ import {
   CalendarDays,
   Hourglass,
   GraduationCap,
+  Clock,
   type LucideIcon,
 } from "lucide-react";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
-import { SiteLogo } from "@/components/layout/site-logo";
 import { TOOL_USES_SECTION } from "@/lib/calculator-page-content";
 import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
@@ -20,6 +20,7 @@ const USE_ICONS: LucideIcon[] = [
   CalendarDays,
   Hourglass,
   GraduationCap,
+  Clock,
 ];
 
 function UseGridCell({
@@ -63,25 +64,6 @@ function UseGridCell({
   );
 }
 
-function DecorativeCell() {
-  return (
-    <div
-      aria-hidden
-      className="relative hidden overflow-hidden lg:block lg:border-t lg:border-white/10"
-    >
-      <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-navy/20" />
-      <div className="flex h-full min-h-[180px] items-center justify-center p-8">
-        <div className="relative h-24 w-24">
-          <span className="absolute inset-0 rounded-full bg-accent/20 blur-xl" />
-          <span className="relative flex h-full w-full items-center justify-center rounded-full border border-white/15 bg-white/90 p-3">
-            <SiteLogo size={56} className="!ml-0 !mr-0 block shrink-0 object-center" />
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 export function ToolUsesSection() {
   const { title, intro, items } = TOOL_USES_SECTION;
 
@@ -122,7 +104,6 @@ export function ToolUsesSection() {
                     />
                   </StaggerItem>
                 ))}
-                <DecorativeCell />
               </StaggerContainer>
             </div>
           </div>

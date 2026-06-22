@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { DURATION, EASE_OUT, faqCollapse } from "@/lib/animations";
 import type { FAQItem } from "@/types";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 interface LegalFaqProps {
   items: FAQItem[];
@@ -16,7 +17,7 @@ export default function LegalFaq({ items }: LegalFaqProps) {
   return (
     <section className="mt-16 pt-10 border-t border-border" aria-labelledby="legal-faq-heading">
       <h2 id="legal-faq-heading" className="text-section-mobile md:text-section mb-8">
-        Frequently Asked Questions
+        {capitalizeHeadingWords("Frequently Asked Questions")}
       </h2>
       <div className="space-y-3">
         {items.map((item, index) => (
@@ -27,7 +28,7 @@ export default function LegalFaq({ items }: LegalFaqProps) {
               aria-expanded={openIndex === index}
             >
               <span className="text-body-mobile md:text-body font-medium text-text-primary">
-                {item.question}
+                {capitalizeHeadingWords(item.question)}
               </span>
               <motion.div
                 animate={{ rotate: openIndex === index ? 180 : 0 }}

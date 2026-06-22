@@ -1,7 +1,10 @@
 import {
   FaFacebook,
   FaInstagram,
+  FaLinkedin,
   FaPinterest,
+  FaQuora,
+  FaReddit,
   FaYoutube,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
@@ -14,6 +17,9 @@ const iconMap = {
   instagram: FaInstagram,
   pinterest: FaPinterest,
   x: FaXTwitter,
+  linkedin: FaLinkedin,
+  reddit: FaReddit,
+  quora: FaQuora,
 } as const;
 
 const brandHoverStyles: Record<
@@ -45,15 +51,27 @@ const brandHoverStyles: Record<
     hover:
       "hover:bg-black hover:text-white hover:ring-black/25 hover:shadow-[0_10px_24px_-8px_rgba(0,0,0,0.45)]",
   },
+  linkedin: {
+    default: "text-[#0A66C2]/80",
+    hover:
+      "hover:bg-[#0A66C2] hover:text-white hover:ring-[#0A66C2]/35 hover:shadow-[0_10px_24px_-8px_rgba(10,102,194,0.5)]",
+  },
+  reddit: {
+    default: "text-[#FF4500]/80",
+    hover:
+      "hover:bg-[#FF4500] hover:text-white hover:ring-[#FF4500]/35 hover:shadow-[0_10px_24px_-8px_rgba(255,69,0,0.5)]",
+  },
+  quora: {
+    default: "text-[#B92B27]/85",
+    hover:
+      "hover:bg-[#B92B27] hover:text-white hover:ring-[#B92B27]/35 hover:shadow-[0_10px_24px_-8px_rgba(185,43,39,0.5)]",
+  },
 };
 
 export function FooterSocialIcons({ className }: { className?: string }) {
   return (
     <div
-      className={cn(
-        "mt-6 flex flex-wrap items-center gap-3",
-        className
-      )}
+      className={cn("mt-6 flex flex-wrap items-center gap-3", className)}
       aria-label="Sosyal medya bağlantıları"
     >
       {FOOTER_SOCIAL_LINKS.map(({ href, label, platform }) => {

@@ -33,10 +33,11 @@ export function HeroSection() {
             <div className="mx-auto max-w-lg text-center lg:mx-0 lg:max-w-[520px] lg:text-left">
               <h1
                 id="home-hero-title"
-                className="text-3xl font-bold tracking-tight sm:text-[2.5rem] md:text-[3rem] md:leading-tight lg:text-[3.5rem]"
+                className="text-2xl font-bold leading-snug tracking-tight sm:text-3xl sm:leading-tight md:text-[2.125rem] lg:text-4xl lg:leading-tight"
               >
                 <span className="text-primary">Saat </span>
-                <span className="text-accent">Hesaplama</span>
+                <span className="text-accent">Hesaplama:</span>{" "}
+                Saat, Dakika ve Saniyeleri Çevrimiçi Hesaplayın
               </h1>
 
               <p

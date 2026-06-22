@@ -71,6 +71,14 @@ export function PinterestBrandIcon({ className }: IconProps) {
   );
 }
 
+export function QuoraBrandIcon({ className }: IconProps) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className} aria-hidden="true">
+      <path d="M12.738 18.701c-.831-1.635-1.858-3.317-3.307-3.317-1.199 0-1.954 1.045-1.954 2.515 0 1.47.755 2.516 1.954 2.516 1.449 0 2.476-1.682 3.307-3.317zm5.551-9.314c-2.837 0-5.138 2.298-5.138 5.137 0 .958.262 1.854.719 2.625l-1.979 3.645h3.469l1.419-2.616c.688.198 1.414.304 2.165.304 2.837 0 5.138-2.299 5.138-5.137S19.126 9.387 16.289 9.387z" />
+    </svg>
+  );
+}
+
 export type SocialPlatform =
   | "x"
   | "facebook"

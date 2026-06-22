@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteLogo } from "@/components/layout/site-logo";
 import { FooterSocialIcons } from "@/components/layout/footer-social-icons";
 import { FOOTER_LINKS, SITE_NAME } from "@/lib/constants";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 function FooterLinkColumn({
   title,
@@ -13,7 +14,7 @@ function FooterLinkColumn({
   return (
     <div>
       <h3 className="text-sm font-semibold text-primary md:text-[15px]">
-        {title}
+        {capitalizeHeadingWords(title)}
       </h3>
       <ul className="mt-3 space-y-2.5 md:mt-4 md:space-y-3">
         {links.map((link) => (

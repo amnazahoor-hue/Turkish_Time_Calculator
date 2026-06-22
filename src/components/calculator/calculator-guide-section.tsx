@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import {
   CalendarClock,
   Timer,
@@ -8,7 +7,8 @@ import {
   CheckCircle2,
 } from "lucide-react";
 import { FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
-
+import { withTimeUnitLinks } from "@/components/seo/time-unit-links";
+import { capitalizeHeadingWords } from "@/lib/utils";
 const STEPS = [
   "Tüm alanlara (gün, saat, dakika ve saniye) değer girin.",
   "İşlemi seçin (toplama veya çıkarma).",
@@ -28,21 +28,14 @@ export function CalculatorGuideSection() {
               </div>
               <div className="flex-1">
                 <h2 className="text-lg font-bold tracking-tight text-foreground sm:text-xl md:text-2xl">
-                  Tarihe saat Ekleme veya Çıkarma
+                  {capitalizeHeadingWords("Tarihe saat Ekleme veya Çıkarma")}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-muted sm:mt-3 sm:text-base">
                   Bu hesap makinesi, ihtiyaçlarınıza göre zaman girişlerini
                   toplamanıza veya çıkarmanıza olanak tanır. Başlangıç tarihini
                   ve saatini giriş alanlarına girmeniz yeterlidir. Toplama veya
-                  çıkarma seçeneklerinden birini seçin; ardından yeni tarih ve{" "}
-                  <Link
-                    href="/72-saat-kac-gun"
-                    className="font-medium text-primary underline-offset-2 transition-colors hover:text-accent hover:underline"
-                  >
-                    saati
-                  </Link>{" "}
-                  elde edeceksiniz.
-                </p>
+                  çıkarma seçeneklerinden birini seçin; ardından yeni tarih ve saati
+                  elde edeceksiniz.                </p>
               </div>
             </div>
           </article>
@@ -56,7 +49,7 @@ export function CalculatorGuideSection() {
               </div>
               <div className="flex-1">
                 <h2 className="text-lg font-bold tracking-tight text-foreground sm:text-xl md:text-2xl">
-                  Saat Farkı Nasıl Bulunur?
+                  {capitalizeHeadingWords("Saat Farkı Nasıl Bulunur?")}
                 </h2>
                 <p className="mt-2 text-sm leading-relaxed text-muted sm:mt-3">
                   Aşağıda bu zaman hesap makinesini kullanmak için bazı kolay
@@ -71,7 +64,7 @@ export function CalculatorGuideSection() {
                           {index + 1}
                         </span>
                         <p className="pt-0.5 text-xs leading-relaxed text-foreground sm:pt-1 sm:text-sm">
-                          {step}
+                          {withTimeUnitLinks(step)}
                         </p>
                       </div>
                     </StaggerItem>

@@ -4,6 +4,7 @@ import { useState, FormEvent } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Send, CheckCircle2, Loader2 } from "lucide-react";
 import { hoverScale, resultFade } from "@/lib/animations";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 interface FormErrors {
   fullName?: string;
@@ -101,7 +102,7 @@ export default function ContactForm() {
       >
         <CheckCircle2 className="h-12 w-12 text-success mx-auto mb-4" />
         <h2 className="text-card-mobile md:text-card text-text-primary mb-3">
-          Thank You!
+          {capitalizeHeadingWords("Thank You!")}
         </h2>
         <p className="text-body-mobile md:text-body text-text-secondary">
           Your message was received. We will get back to you as soon as possible.

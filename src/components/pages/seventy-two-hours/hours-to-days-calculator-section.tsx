@@ -30,6 +30,7 @@ import { convertTimeUnits } from "@/lib/calculator";
 import { CalculatorResultActions } from "@/components/calculator/calculator-result-actions";
 import { CalculatorResetButton } from "@/components/calculator/calculator-reset-button";
 import type { TimeUnit, TimeUnitConversionResult } from "@/types";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 
 
@@ -153,7 +154,7 @@ export function HoursToDaysCalculatorSection() {
 
           <h2 className="text-xl font-bold tracking-tight text-primary sm:text-2xl md:text-3xl">
 
-            Saatten Güne Hesaplayıcı
+            {capitalizeHeadingWords("Saatten Güne Hesaplayıcı")}
 
           </h2>
 

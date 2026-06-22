@@ -28,8 +28,8 @@ function pageUrl(baseUrl: string, path: string) {
 }
 
 /**
- * Tool pages: 5 independent schemas (no @id cross-links).
- * Validator shows Organization, WebSite, WebPage, BreadcrumbList, FAQPage separately.
+ * Tool pages: 6 independent schemas (no @id cross-links).
+ * Validator shows Organization, WebSite, WebPage, WebApplication, BreadcrumbList, FAQPage separately.
  */
 export function buildToolPageJsonLdScripts(
   input: ToolPageSchemaInput,
@@ -64,6 +64,22 @@ export function buildToolPageJsonLdScripts(
       name: pageName,
       description: pageDescription,
       inLanguage: "tr-TR",
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      name: path === "/" ? SITE_NAME : pageName,
+      description: pageDescription,
+      url,
+      applicationCategory: "UtilitiesApplication",
+      operatingSystem: "Web",
+      browserRequirements: "Requires JavaScript. Requires HTML5.",
+      inLanguage: "tr-TR",
+      offers: {
+        "@type": "Offer",
+        price: "0",
+        priceCurrency: "TRY",
+      },
     },
     {
       "@context": "https://schema.org",

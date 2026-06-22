@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { fadeUp, noMotion } from "@/lib/animations";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 interface SectionHeaderProps {
   eyebrow?: string;
@@ -32,7 +33,7 @@ export default function SectionHeader({
     >
       {eyebrow && <span className="section-eyebrow">{eyebrow}</span>}
       <h2 id={titleId} className="section-heading">
-        {title}
+        {capitalizeHeadingWords(title)}
       </h2>
       {subtitle && <p className="section-subheading">{subtitle}</p>}
     </motion.div>

@@ -19,6 +19,7 @@ import {
 import { CalculatorResultActions } from "@/components/calculator/calculator-result-actions";
 import { CalculatorResetButton } from "@/components/calculator/calculator-reset-button";
 import { CALCULATOR_TAB_EXPORT_META } from "@/lib/calculator-export";
+import { capitalizeHeadingWords } from "@/lib/utils";
 import type { CalculatorTab } from "@/types";
 
 const tabTriggerClass =
@@ -119,7 +120,7 @@ export function CalculatorCard({
         {showTitle && (
           <FadeUp className="mb-6 text-center md:mb-8">
             <h2 className="text-2xl font-bold tracking-tight text-primary md:text-3xl">
-              Saat Hesaplama Aracı
+              {capitalizeHeadingWords("Saat Hesaplama Aracı")}
             </h2>
             <p className="mt-2 text-sm text-accent md:mt-3 md:text-base">
               Tüm saat hesaplama işlemlerinizi tek bir yerden yapın.
@@ -162,7 +163,7 @@ export function CalculatorCard({
                 <TabsContent value="fark" className="mt-0">
                   <div className={toolGridClass}>
                     <div className={toolSectionClass}>
-                      <h4 className={toolHeadingClass}>Başlangıç</h4>
+                      <p className={toolHeadingClass}>{capitalizeHeadingWords("Başlangıç")}</p>
                       <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="start-date-fark" className={toolLabelClass}>
@@ -191,7 +192,7 @@ export function CalculatorCard({
                       </div>
                     </div>
                     <div className={toolSectionClass}>
-                      <h4 className={toolHeadingClass}>Bitiş</h4>
+                      <p className={toolHeadingClass}>{capitalizeHeadingWords("Bitiş")}</p>
                       <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="end-date-fark" className={toolLabelClass}>
@@ -345,7 +346,7 @@ export function CalculatorCard({
                 <TabsContent value="calisma" className="mt-0">
                   <div className={toolGridClass}>
                     <div className={toolSectionClass}>
-                      <h4 className={toolHeadingClass}>Giriş</h4>
+                      <p className={toolHeadingClass}>{capitalizeHeadingWords("Giriş")}</p>
                       <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="start-date-calisma" className={toolLabelClass}>
@@ -374,7 +375,7 @@ export function CalculatorCard({
                       </div>
                     </div>
                     <div className={toolSectionClass}>
-                      <h4 className={toolHeadingClass}>Çıkış</h4>
+                      <p className={toolHeadingClass}>{capitalizeHeadingWords("Çıkış")}</p>
                       <div className={toolFieldsRowClass}>
                         <div>
                           <Label htmlFor="end-date-calisma" className={toolLabelClass}>
@@ -447,8 +448,8 @@ export function CalculatorCard({
                   transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                   className="mt-6 rounded-2xl border border-navy-200 bg-gradient-to-br from-background to-accent-50 p-4 sm:mt-8 sm:p-6"
                 >
-                  <h4 className="text-[10px] font-bold uppercase tracking-widest text-accent">
-                    Sonuç
+                  <h4 className="text-sm font-semibold text-accent">
+                    {capitalizeHeadingWords("Sonuç")}
                   </h4>
                   <pre className="mt-3 whitespace-pre-wrap font-sans text-lg font-bold text-accent min-[400px]:text-2xl md:text-4xl">
                     {result}

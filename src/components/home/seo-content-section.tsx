@@ -9,7 +9,7 @@ export function SEOContentSection() {
     <section id="blog" className="section-padding">
       <div className="mx-auto max-w-4xl px-4 md:px-6">
         <FadeUp className="mb-6 text-center md:mb-8">
-          <h2 className="section-heading">Saat Hesaplama Rehberi</h2>
+          <h2 className="section-heading">{capitalizeHeadingWords("Saat Hesaplama Rehberi")}</h2>
           <p className="section-subheading">
             Saat hesaplama hakkında bilmeniz gereken her şey.
           </p>

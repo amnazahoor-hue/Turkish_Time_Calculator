@@ -9,7 +9,7 @@ export function HowItWorksSection() {
     <section id="nasil-calisir" className="section-padding">
       <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="mx-auto max-w-2xl text-center">
-          <h2 className="section-heading">Nasıl Çalışır?</h2>
+          <h2 className="section-heading">{capitalizeHeadingWords("Nasıl Çalışır?")}</h2>
           <p className="section-subheading">
             Dört basit adımda saat hesaplamalarınızı tamamlayın.
           </p>

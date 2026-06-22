@@ -8,13 +8,14 @@ import {
 } from "@/components/ui/accordion";
 import { FAQ_ITEMS } from "@/lib/faq-data";
 import { FadeUp } from "@/components/motion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 export function FAQSection() {
   return (
     <section id="sik-sorulan-sorular" className="section-padding">
       <div className="mx-auto w-full max-w-7xl px-4 md:px-6">
         <FadeUp className="text-center">
-          <h2 className="section-heading">Sık Sorulan Sorular</h2>
+          <h2 className="section-heading">{capitalizeHeadingWords("Sık Sorulan Sorular")}</h2>
           <p className="section-subheading">
             Merak ettiğiniz soruların cevaplarını burada bulabilirsiniz.
           </p>
@@ -25,7 +26,7 @@ export function FAQSection() {
             {FAQ_ITEMS.map((faq, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
                 <AccordionTrigger className="py-4 text-sm sm:text-base">
-                  {faq.question}
+                  {capitalizeHeadingWords(faq.question)}
                 </AccordionTrigger>
                 <AccordionContent className="text-sm">
                   {faq.answer}

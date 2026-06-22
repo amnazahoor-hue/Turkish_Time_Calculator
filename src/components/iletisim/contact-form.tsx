@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { FadeUp } from "@/components/motion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 import { useState } from "react";
 
 const contactSchema = z.object({
@@ -114,7 +115,7 @@ export function ContactInfo() {
           <Mail className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <h3 className="font-semibold text-foreground">E-posta</h3>
+          <h3 className="font-semibold text-foreground">{capitalizeHeadingWords("E-posta")}</h3>
           <p className="mt-1 text-sm text-muted">info@saathesaplama.com</p>
         </div>
       </div>

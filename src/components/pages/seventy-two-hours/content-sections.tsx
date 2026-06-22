@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
 import { Clock, TrendingUp } from "lucide-react";
@@ -144,16 +143,6 @@ export function MinutesInDaySection() {
         <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-foreground/75 sm:mt-4 sm:text-base md:leading-7">
           Bir günde kaç dakika olduğunu hesaplamak için, günü saatlere ve
           saatleri dakikalara bölün. Cevabı bulacaksınız.
-        </p>
-        <p className="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-foreground/75 sm:text-base md:leading-7">
-          Tarih ve saat toplama veya çıkarma işlemleri için ana sayfamızdaki{" "}
-          <Link
-            href="/"
-            className="font-medium text-primary underline-offset-2 transition-colors hover:text-accent hover:underline"
-          >
-            saat hesaplama
-          </Link>{" "}
-          aracını kullanabilirsiniz.
         </p>
       </FadeUp>
 

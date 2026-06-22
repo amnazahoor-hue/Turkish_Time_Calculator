@@ -167,6 +167,9 @@ export const FOOTER_SOCIAL_LINKS = [
   { href: "https://instagram.com/", label: "Instagram", platform: "instagram" as const },
   { href: "https://pinterest.com/", label: "Pinterest", platform: "pinterest" as const },
   { href: "https://x.com/", label: "X (Twitter)", platform: "x" as const },
+  { href: "https://linkedin.com/", label: "LinkedIn", platform: "linkedin" as const },
+  { href: "https://reddit.com/", label: "Reddit", platform: "reddit" as const },
+  { href: "https://quora.com/", label: "Quora", platform: "quora" as const },
 ] as const;
 
 export const FOOTER_LINKS = {

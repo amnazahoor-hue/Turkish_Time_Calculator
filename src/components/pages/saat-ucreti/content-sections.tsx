@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import type { ReactNode } from "react";
 import { LazyImage } from "@/components/ui/lazy-image";
 import { motion } from "framer-motion";
@@ -96,7 +95,7 @@ function BentoWageCard({
       </div>
 
       <div className="mt-5">
-        <h3 className="text-base font-bold text-navy sm:text-lg">{label}</h3>
+        <h3 className="text-base font-bold text-navy sm:text-lg">{capitalizeHeadingWords(label)}</h3>
         <p className="mt-2 text-sm leading-relaxed text-muted sm:text-[15px] sm:leading-6">
           {title}
         </p>
@@ -171,16 +170,6 @@ export function HowHourlyCalculatedSection() {
           <SectionTitle className="mx-auto">{title}</SectionTitle>
           <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
             {intro}
-          </p>
-          <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-base sm:leading-7">
-            Zaman ve tarih hesaplamaları için ana sayfamızdaki{" "}
-            <Link
-              href="/"
-              className="font-medium text-primary underline-offset-2 transition-colors hover:text-accent hover:underline"
-            >
-              saat hesaplama
-            </Link>{" "}
-            aracını kullanabilirsiniz.
           </p>
         </FadeUp>
 

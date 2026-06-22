@@ -2,25 +2,23 @@ import type { FAQItem } from "@/types";
 
 export const TIME_DIFFERENCE_STEPS = [
   {
-    title: "Değerleri Girin",
     description:
       "Tüm alanlara (gün, saat, dakika ve saniye) değer girin.",
   },
   {
-    title: "İşlem Seçin",
     description: "İşlemi seçin (toplama veya çıkarma).",
   },
   {
-    title: "İkinci Tarih",
     description: "İkinci tarih ve saati de aynı biçimde girin.",
   },
   {
-    title: "Hesapla",
     description: 'Ardından "Hesapla" düğmesine basın.',
   },
   {
-    title: "Sonuç",
     description: "Sonuç ekranda görünecektir.",
+  },
+  {
+    description: "Ekranınızda saat farkı gösterilmektedir.",
   },
 ] as const;
 
@@ -30,14 +28,11 @@ export const TIME_DIFFERENCE_INTRO =
 export const TIME_DIFFERENCE_OUTRO =
   "Bu saat hesaplayıcı basit ve kullanımı kolaydır ve görevlerinizi zamanınıza en uygun şekilde planlamanıza ve yönetmenize yardımcı olur. Bu dönüştürücü ile zaman kaybetmeden görevlerinizi verimli bir şekilde planlayabilirsiniz.";
 
+export const TIME_DIFFERENCE_HOURLY_NOTE =
+  "Çalışma saatlerinize göre kazancınızı öğrenmek isterseniz, saat ücreti hesaplama aracımızı kullanabilirsiniz.";
+
 export const ADD_SUBTRACT_INTRO =
   "Bu hesap makinesi, ihtiyaçlarınıza göre zaman girişlerini toplamanıza veya çıkarmanıza olanak tanır. Başlangıç tarihini ve saatini giriş alanlarına girmeniz yeterlidir. Toplama veya çıkarma seçeneklerinden birini seçin; ardından yeni tarih ve saati elde edeceksiniz.";
-
-export const MANUAL_ADD_EXAMPLE = {
-  first: "14:45",
-  add: "3 saat 30 dakika",
-  result: "18:15",
-};
 
 export const MANUAL_ADD_OVERLAP = {
   title: "Saat Manuel Olarak Nasıl Eklerim?",
@@ -107,29 +102,6 @@ export const CALCULATOR_USES = [
   { title: "Çalışma ve Eğitim Saatleri", icon: "GraduationCap" },
 ] as const;
 
-export const TOOL_FEATURES_SECTION = {
-  title: "Saat Hesaplama Aracının Özellikleri",
-  intro:
-    "Bu zaman hesap makinesinde bulunan bazı gelişmiş özellikler şunlardır:",
-  items: [
-    {
-      title: "Tarih ve Saat Hesaplamaları",
-      description:
-        "Birden fazla gün, ay veya yıl için tarih ve saat hesaplamalarını tek ekrandan yapın.",
-    },
-    {
-      title: "Esnek Format Desteği",
-      description:
-        "Tüm tarih ve saat formatları kabul edilir; 24 saat ve AM/PM girişleri desteklenir.",
-    },
-    {
-      title: "Saat Dilimi Planlaması",
-      description:
-        "Uluslararası toplantılar için saat dilimlerini ayarlamanıza ve farkı görmenize olanak tanır.",
-    },
-  ],
-} as const;
-
 export const TOOL_USES_SECTION = {
   title: "Saat Hesaplama Aracının Kullanım Alanları",
   intro:
@@ -159,6 +131,11 @@ export const TOOL_USES_SECTION = {
       title: "Çalışma ve Eğitim Saatlerini Hesaplayın",
       description:
         "Öğrenciler ve eğitmenler için ders, staj ve çalışma sürelerini düzenli takip edin.",
+    },
+    {
+      title: "Fazla Mesai ve Vardiya Saatlerini Hesapla",
+      description:
+        "Gece vardiyası, hafta sonu mesaisi ve fazla çalışma sürelerini giriş-çıkış saatlerine göre hesaplayın.",
     },
   ],
 } as const;

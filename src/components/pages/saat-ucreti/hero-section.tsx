@@ -4,7 +4,6 @@ import { ArrowRight } from "lucide-react";
 import { FadeUp } from "@/components/motion";
 import { HeroHourlyWageVisual } from "@/components/pages/saat-ucreti/hero-hourly-wage-visual";
 import { SAAT_UCRETI_HERO } from "@/lib/saat-ucreti-content";
-import { capitalizeHeadingWords } from "@/lib/utils";
 
 export function SaatUcretiHeroSection() {
   const { h1, paragraphs } = SAAT_UCRETI_HERO;
@@ -25,7 +24,7 @@ export function SaatUcretiHeroSection() {
               id="hero-saat-ucreti-title"
               className="text-3xl font-black leading-tight tracking-tight text-navy sm:text-4xl md:text-[2.5rem] md:leading-tight lg:text-[2.75rem]"
             >
-              {capitalizeHeadingWords(h1)}
+              {h1}
             </h1>
 
             <div

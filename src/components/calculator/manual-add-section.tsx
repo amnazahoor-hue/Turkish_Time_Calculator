@@ -67,9 +67,9 @@ export function ManualAddSection() {
           {startRow && addRow && (
             <div className="mt-8 grid gap-8 sm:grid-cols-2 sm:gap-10">
               <div>
-                <h3 className="text-base font-bold text-accent sm:text-lg">
+                <p className="text-base font-bold text-accent sm:text-lg">
                   {capitalizeHeadingWords(startRow.label)}
-                </h3>
+                </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
                   <span className="font-bold tabular-nums text-navy">
                     {startRow.value}
@@ -77,9 +77,9 @@ export function ManualAddSection() {
                 </p>
               </div>
               <div>
-                <h3 className="text-base font-bold text-accent sm:text-lg">
+                <p className="text-base font-bold text-accent sm:text-lg">
                   {capitalizeHeadingWords(addRow.label)}
-                </h3>
+                </p>
                 <p className="mt-3 text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
                   <span className="font-bold text-navy">{addRow.value}</span>
                 </p>

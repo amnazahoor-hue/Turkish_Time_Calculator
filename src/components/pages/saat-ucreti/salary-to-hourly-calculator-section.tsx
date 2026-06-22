@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { LazyImage } from "@/components/ui/lazy-image";
 import { Calculator, Coins } from "lucide-react";
@@ -101,16 +100,6 @@ export function SalaryToHourlyCalculatorSection() {
             <p className="mx-auto mt-4 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
               {intro}
             </p>
-            <p className="mx-auto mt-3 max-w-3xl text-sm leading-relaxed text-foreground/75 sm:text-[15px] sm:leading-7">
-              Saat ve gün dönüşümleri için{" "}
-              <Link
-                href="/72-saat-kac-gun"
-                className="font-medium text-primary underline-offset-2 transition-colors hover:text-accent hover:underline"
-              >
-                72 saat kaç gündür
-              </Link>{" "}
-              sayfamızdaki hesaplayıcıyı da kullanabilirsiniz.
-            </p>
           </div>
 
           <div className="mt-8 grid gap-8 lg:grid-cols-2 lg:gap-10 xl:gap-14">
@@ -151,7 +140,7 @@ export function SalaryToHourlyCalculatorSection() {
                     <Coins className="mt-1 h-7 w-7 shrink-0 text-accent" strokeWidth={2.25} />
                     <div>
                       <h3 className="text-xl font-bold tracking-tight text-navy sm:text-2xl">
-                        Hesaplayıcı
+                        {capitalizeHeadingWords("Hesaplayıcı")}
                       </h3>
                       <p className="mt-1 text-sm text-foreground/70 sm:text-base">
                         Aylık maaşınızı girin, saatlik ücreti anında hesaplayın.

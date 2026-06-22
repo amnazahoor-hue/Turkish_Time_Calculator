@@ -5,12 +5,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-/** Capitalizes the first letter of each word in visible headings (Turkish-aware). */
+/** Title case for headings: first letter of each word capital, rest lowercase (Turkish-aware). */
 export function capitalizeHeadingWords(text: string): string {
-  return text.replace(
-    /([^\p{L}]*)(\p{L})/gu,
-    (_, prefix, letter) => prefix + letter.toLocaleUpperCase("tr-TR")
-  );
+  return text.replace(/\p{L}+/gu, (word) => {
+    if (word.length === 0) return word;
+    return (
+      word.charAt(0).toLocaleUpperCase("tr-TR") +
+      word.slice(1).toLocaleLowerCase("tr-TR")
+    );
+  });
 }
 
 export function formatTurkishDate(date: Date): string {

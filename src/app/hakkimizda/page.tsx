@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Target, Eye, Heart, Award, TrendingUp, ArrowRight } from "lucide-react";
 import { PageTransition, FadeUp, StaggerContainer, StaggerItem } from "@/components/motion";
 import { generateIndexablePageMetadata } from "@/lib/seo";
+import { capitalizeHeadingWords } from "@/lib/utils";
 import { TRUST_STATS, SITE_NAME } from "@/lib/constants";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 import { AUTHOR } from "@/lib/legal-pages-config";
@@ -59,7 +60,7 @@ export default function HakkimizdaPage() {
           <FadeUp>
             <div className="relative overflow-hidden rounded-[1.75rem] border border-navy-100 bg-gradient-to-br from-navy via-navy-600 to-navy-700 px-6 py-10 text-white sm:rounded-[2rem] sm:px-10 sm:py-12">
               <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 rounded-full bg-accent/25 blur-3xl" />
-              <h1 className="text-2xl font-black sm:text-3xl md:text-4xl">Hakkımızda</h1>
+              <h1 className="text-2xl font-black sm:text-3xl md:text-4xl">{capitalizeHeadingWords("Hakkımızda")}</h1>
               <p className="mt-3 max-w-2xl text-sm leading-relaxed text-white/85 sm:text-base">
                 Saat farkı, tarih ekleme/çıkarma ve çalışma süresi hesaplamalarını herkes için
                 ücretsiz ve gizlilik odaklı sunuyoruz.
@@ -72,7 +73,7 @@ export default function HakkimizdaPage() {
               <div className="grid gap-6 sm:grid-cols-2">
                 <FadeUp>
                   <div className="hover-card rounded-2xl border border-navy-100 bg-white p-6">
-                    <h2 className="text-xl font-bold text-navy">Kimiz?</h2>
+                    <h2 className="text-xl font-bold text-navy">{capitalizeHeadingWords("Kimiz?")}</h2>
                     <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[15px]">
                       {SITE_NAME}, çalışanlar, vardiya personeli, öğrenciler ve yöneticiler için
                       ücretsiz bir çevrimiçi saat hesaplama platformudur. 2024&apos;te hayata geçirildi;
@@ -82,7 +83,7 @@ export default function HakkimizdaPage() {
                 </FadeUp>
                 <FadeUp delay={0.06}>
                   <div className="hover-card rounded-2xl border border-navy-100 bg-white p-6">
-                    <h2 className="text-xl font-bold text-navy">Ne Yapıyoruz?</h2>
+                    <h2 className="text-xl font-bold text-navy">{capitalizeHeadingWords("Ne Yapıyoruz?")}</h2>
                     <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[15px]">
                       İki zaman arasındaki farkı hesaplama, saat ve dakika ekleme/çıkarma, çalışma
                       süresi ve mesai senaryolarını destekleriz. Sık sorulan sorular, adım adım rehberler ve yasal
@@ -98,7 +99,7 @@ export default function HakkimizdaPage() {
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-primary">
                       <Target className="h-5 w-5 text-white" />
                     </div>
-                    <h2 className="mt-4 text-xl font-bold text-navy">Misyonumuz</h2>
+                    <h2 className="mt-4 text-xl font-bold text-navy">{capitalizeHeadingWords("Misyonumuz")}</h2>
                     <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[15px]">
                       Zaman hesaplamalarını kolay, hızlı ve doğru hale getirmek; karmaşık saat
                       aritmetiğini herkesin kullanabileceği araçlara dönüştürmek.
@@ -110,7 +111,7 @@ export default function HakkimizdaPage() {
                     <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-gradient-primary">
                       <Eye className="h-5 w-5 text-white" />
                     </div>
-                    <h2 className="mt-4 text-xl font-bold text-navy">Vizyonumuz</h2>
+                    <h2 className="mt-4 text-xl font-bold text-navy">{capitalizeHeadingWords("Vizyonumuz")}</h2>
                     <p className="mt-3 text-sm leading-relaxed text-muted sm:text-[15px]">
                       Türkiye&apos;de zaman planlama ve mesai hesabında güvenilen dijital
                       referans platform olmak.
@@ -121,14 +122,14 @@ export default function HakkimizdaPage() {
 
               <div>
                 <FadeUp className="text-center lg:text-left">
-                  <h2 className="text-2xl font-black text-navy">Değerlerimiz</h2>
+                  <h2 className="text-2xl font-black text-navy">{capitalizeHeadingWords("Değerlerimiz")}</h2>
                 </FadeUp>
                 <StaggerContainer className="mt-6 grid gap-4 sm:grid-cols-2">
                   {values.map((value) => (
                     <StaggerItem key={value.title}>
                       <div className="hover-card rounded-2xl border border-navy-100 bg-white p-5">
                         <value.icon className="h-7 w-7 text-accent" />
-                        <h3 className="mt-3 font-bold text-navy">{value.title}</h3>
+                        <h3 className="mt-3 font-bold text-navy">{capitalizeHeadingWords(value.title)}</h3>
                         <p className="mt-2 text-sm text-muted">{value.description}</p>
                       </div>
                     </StaggerItem>
@@ -149,7 +150,7 @@ export default function HakkimizdaPage() {
 
               <div>
                 <FadeUp>
-                  <h2 className="text-2xl font-black text-navy">Yolculuğumuz</h2>
+                  <h2 className="text-2xl font-black text-navy">{capitalizeHeadingWords("Yolculuğumuz")}</h2>
                 </FadeUp>
                 <div className="relative mt-8 space-y-4">
                   {timeline.map((item, index) => (
@@ -160,7 +161,7 @@ export default function HakkimizdaPage() {
                         </span>
                         <div>
                           <span className="text-xs font-semibold text-accent">{item.year}</span>
-                          <h3 className="font-bold text-navy">{item.title}</h3>
+                          <h3 className="font-bold text-navy">{capitalizeHeadingWords(item.title)}</h3>
                           <p className="mt-1 text-sm text-muted">{item.description}</p>
                         </div>
                       </div>
@@ -171,7 +172,7 @@ export default function HakkimizdaPage() {
 
               <div>
                 <FadeUp>
-                  <h2 className="text-2xl font-black text-navy">İçerik Ekibimiz</h2>
+                  <h2 className="text-2xl font-black text-navy">{capitalizeHeadingWords("İçerik Ekibimiz")}</h2>
                   <p className="mt-2 text-sm text-muted">
                     Saat hesaplama rehberleri ve sık sorulan sorular metinlerinin sorumlusu.
                   </p>

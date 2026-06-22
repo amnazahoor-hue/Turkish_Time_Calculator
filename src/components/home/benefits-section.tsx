@@ -15,7 +15,7 @@ export function BenefitsSection() {
     <section className="section-padding">
       <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="mx-auto max-w-2xl text-center">
-          <h2 className="section-heading">Neden Saat Hesaplama?</h2>
+          <h2 className="section-heading">{capitalizeHeadingWords("Neden Saat Hesaplama?")}</h2>
           <p className="section-subheading">
             Zamanınızı daha verimli kullanmanız için tasarlandı.
           </p>

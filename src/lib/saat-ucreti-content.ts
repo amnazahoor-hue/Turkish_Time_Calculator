@@ -4,7 +4,7 @@ import { HOURLY_WAGE_PAGE } from "@/lib/pages-seo";
 export const SAAT_UCRETI_PAGE = HOURLY_WAGE_PAGE;
 
 export const SAAT_UCRETI_HERO = {
-  h1: "Saatlik Ücret Hesaplayıcı",
+  h1: HOURLY_WAGE_PAGE.h1,
   paragraphs: [
     "Bu saatlik ücret dönüştürme aracı, saatlik ücretleri, aylık maaşları ve fazla mesai ücretlerini doğru bir şekilde hesaplamanıza yardımcı olur. Maaştan saatlik ücrete dönüşüm veya saatlik ücretten maaşa dönüşüm ihtiyacınız olsun, bu araç hızlı ve güvenilir sonuçlar sunar. Yıllık, aylık, haftalık veya saatlik ücret hesaplamalarınız için bu araca tamamen güvenebilirsiniz. Ayrıca brüt ve net kazançları tahmin etmek için de kullanılır.",
   ],

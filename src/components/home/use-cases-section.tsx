@@ -23,7 +23,7 @@ export function UseCasesSection() {
     <section className="section-padding">
       <div className="mx-auto w-full px-4 md:px-6">
         <FadeUp className="mx-auto max-w-2xl text-center">
-          <h2 className="section-heading">Kimler Kullanıyor?</h2>
+          <h2 className="section-heading">{capitalizeHeadingWords("Kimler Kullanıyor?")}</h2>
           <p className="section-subheading">
             Farklı sektörlerden binlerce kullanıcı güvenle tercih ediyor.
           </p>

@@ -6,6 +6,7 @@ import { Briefcase, CalendarClock, Moon } from "lucide-react";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fadeUp, stagger, noMotion } from "@/lib/animations";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 const cards = [
   {
@@ -74,7 +75,7 @@ export default function ToolDetailCards() {
                 />
                 <card.icon className="info-card-icon h-7 w-7" strokeWidth={1.75} />
               </div>
-              <h3 className="text-lg font-bold text-heading">{card.title}</h3>
+              <h3 className="text-lg font-bold text-heading">{capitalizeHeadingWords(card.title)}</h3>
               <p className="mt-3 flex-1 text-sm leading-relaxed text-muted">{card.description}</p>
             </motion.article>
           ))}

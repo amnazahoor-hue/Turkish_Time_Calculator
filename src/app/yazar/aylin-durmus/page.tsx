@@ -8,6 +8,7 @@ import { generateLegalPageMetadata } from "@/lib/seo";
 import { AUTHOR, LEGAL_LAST_UPDATED } from "@/lib/legal-pages-config";
 import { LegalPageSidebar } from "@/components/legal/legal-hub-layout";
 import { SITE_NAME } from "@/lib/constants";
+import { capitalizeHeadingWords } from "@/lib/utils";
 
 const PAGE_PATH = `/yazar/${AUTHOR.slug}`;
 const PAGE_TITLE = `${AUTHOR.name} — Yazar`;
@@ -77,7 +78,7 @@ export default function AuthorPage() {
                     <div className="mt-8">
                       <h2 className="flex items-center gap-2 text-lg font-bold text-navy">
                         <PenLine className="h-5 w-5 text-accent" />
-                        Uzmanlık Alanları
+                        {capitalizeHeadingWords("Uzmanlık Alanları")}
                       </h2>
                       <ul className="mt-4 grid gap-2 sm:grid-cols-2">
                         {AUTHOR.expertise.map((item) => (

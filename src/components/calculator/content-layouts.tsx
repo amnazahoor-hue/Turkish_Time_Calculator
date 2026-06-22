@@ -14,6 +14,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { FadeUp } from "@/components/motion";
+import { withTimeUnitLinks } from "@/components/seo/time-unit-links";
 import { cn, capitalizeHeadingWords } from "@/lib/utils";
 
 /* ─── Shared primitives ─── */
@@ -199,7 +200,7 @@ export function OverlapPanelSection({
 export function FourStepCards({
   steps,
 }: {
-  steps: readonly { title: string; description: string }[];
+  steps: readonly { title?: string; description: string }[];
 }) {
   const lastAloneOnTablet =
     steps.length % 2 === 1 ? steps.length - 1 : -1;
@@ -207,10 +208,10 @@ export function FourStepCards({
   return (
     <FadeUp>
       <div className="overflow-hidden rounded-2xl border border-border/60 shadow-sm md:rounded-3xl">
-        <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 sm:gap-3 md:p-4 lg:grid-cols-3 xl:grid-cols-5 xl:gap-0 xl:p-0">
+        <div className="grid grid-cols-1 gap-3 p-3 sm:grid-cols-2 sm:gap-3 md:p-4 lg:grid-cols-3 xl:grid-cols-6 xl:gap-0 xl:p-0">
           {steps.map((step, index) => (
             <motion.div
-              key={step.title}
+              key={`${index}-${step.description}`}
               className={cn(
                 "group relative flex flex-col items-center overflow-hidden rounded-xl bg-white px-3 py-5 text-center",
                 "border border-navy-100/70 shadow-sm",
@@ -236,11 +237,18 @@ export function FourStepCards({
               >
                 {index + 1}
               </span>
-              <h3 className="mt-3 text-sm font-bold text-foreground md:text-base lg:group-hover:text-primary">
-                {capitalizeHeadingWords(step.title)}
-              </h3>
-              <p className="mt-2 text-xs leading-relaxed text-muted md:text-sm">
-                {step.description}
+              {step.title ? (
+                <h3 className="mt-3 text-sm font-bold text-foreground md:text-base lg:group-hover:text-primary">
+                  {capitalizeHeadingWords(step.title)}
+                </h3>
+              ) : null}
+              <p
+                className={cn(
+                  "text-xs leading-relaxed text-muted md:text-sm",
+                  step.title ? "mt-2" : "mt-3"
+                )}
+              >
+                {withTimeUnitLinks(step.description)}
               </p>
             </motion.div>
           ))}
