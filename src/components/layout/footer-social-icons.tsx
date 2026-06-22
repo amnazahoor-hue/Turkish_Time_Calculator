@@ -1,7 +1,6 @@
 import {
   FaFacebook,
   FaInstagram,
-  FaLinkedin,
   FaPinterest,
   FaQuora,
   FaReddit,
@@ -17,7 +16,6 @@ const iconMap = {
   instagram: FaInstagram,
   pinterest: FaPinterest,
   x: FaXTwitter,
-  linkedin: FaLinkedin,
   reddit: FaReddit,
   quora: FaQuora,
 } as const;
@@ -50,11 +48,6 @@ const brandHoverStyles: Record<
     default: "text-black/70",
     hover:
       "hover:bg-black hover:text-white hover:ring-black/25 hover:shadow-[0_10px_24px_-8px_rgba(0,0,0,0.45)]",
-  },
-  linkedin: {
-    default: "text-[#0A66C2]/80",
-    hover:
-      "hover:bg-[#0A66C2] hover:text-white hover:ring-[#0A66C2]/35 hover:shadow-[0_10px_24px_-8px_rgba(10,102,194,0.5)]",
   },
   reddit: {
     default: "text-[#FF4500]/80",

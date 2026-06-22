@@ -1,6 +1,5 @@
 const SCHEMA_ORDER = [
   "Organization",
-  "WebSite",
   "WebPage",
   "WebApplication",
   "ProfilePage",

@@ -152,24 +152,6 @@ export function generateOrganizationSchema() {
   };
 }
 
-export function generateWebSiteSchema() {
-  return {
-    "@context": "https://schema.org",
-    "@type": "WebSite",
-    "@id": `${SITE_URL}#website`,
-    name: SITE_NAME,
-    url: SITE_URL,
-    description: SITE_DESCRIPTION,
-    inLanguage: "tr-TR",
-    publisher: {
-      "@type": "Organization",
-      name: SITE_NAME,
-      url: SITE_URL,
-      logo: `${SITE_URL}${SITE_LOGO}`,
-    },
-  };
-}
-
 export type PageSchemaType = "WebPage" | "ProfilePage";
 
 export interface WebPageSchemaOptions {
@@ -222,7 +204,7 @@ export function generateWebPageSchema({
     "@id": `${SITE_URL}#organization`,
     name: SITE_NAME,
   };
-  const partOfId = isPartOfId ?? `${SITE_URL}#website`;
+  const partOfId = isPartOfId ?? `${SITE_URL}#organization`;
 
   return {
     "@context": "https://schema.org",
@@ -327,7 +309,6 @@ export function buildPageSchemas({
 }: PageSchemaBundleOptions): Record<string, unknown> {
   const nodes: Record<string, unknown>[] = [
     generateOrganizationSchema(),
-    generateWebSiteSchema(),
     generateWebPageSchema({
       ...webPage,
       hasBreadcrumb: hasBreadcrumb ?? Boolean(breadcrumbs?.length),
@@ -446,7 +427,7 @@ export function generateWebApplicationSchema({
 }: ToolApplicationSchemaOptions) {
   const url = `${SITE_URL}${path}`;
   const authorUrl = `${SITE_URL}/yazar/${AUTHOR.slug}`;
-  const partOfId = isPartOfId ?? `${SITE_URL}#website`;
+  const partOfId = isPartOfId ?? `${SITE_URL}#organization`;
 
   return {
     "@context": "https://schema.org",

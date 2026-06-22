@@ -28,8 +28,8 @@ function pageUrl(baseUrl: string, path: string) {
 }
 
 /**
- * Tool pages: 6 independent schemas (no @id cross-links).
- * Validator shows Organization, WebSite, WebPage, WebApplication, BreadcrumbList, FAQPage separately.
+ * Tool pages: 5 independent schemas (no @id cross-links).
+ * Validator shows Organization, WebPage, WebApplication, BreadcrumbList, FAQPage separately.
  */
 export function buildToolPageJsonLdScripts(
   input: ToolPageSchemaInput,
@@ -48,14 +48,6 @@ export function buildToolPageJsonLdScripts(
       url: `${baseUrl}/`,
       logo: `${baseUrl}${SITE_LOGO}`,
       description: SITE_DESCRIPTION,
-    },
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      name: SITE_NAME,
-      url: `${baseUrl}/`,
-      description: SITE_DESCRIPTION,
-      inLanguage: "tr-TR",
     },
     {
       "@context": "https://schema.org",
