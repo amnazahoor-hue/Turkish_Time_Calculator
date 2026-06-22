@@ -51,7 +51,7 @@ export function Header() {
               priority
               className="h-9 w-9 shrink-0 transition-transform duration-300 group-hover:scale-105 md:h-10 md:w-10 xl:h-11 xl:w-11"
             />
-            <span className="min-w-0 truncate text-xs font-semibold text-primary sm:text-sm xl:text-lg">
+            <span className="min-w-0 truncate text-sm font-semibold text-primary sm:text-base xl:text-xl">
               {SITE_NAME}
             </span>
           </Link>

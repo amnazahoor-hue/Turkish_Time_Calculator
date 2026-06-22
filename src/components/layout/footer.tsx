@@ -44,7 +44,7 @@ export function Footer() {
               className="inline-flex items-center gap-2"
             >
               <SiteLogo size={44} className="h-10 w-10 md:h-11 md:w-11" />
-              <span className="text-lg font-bold text-primary md:text-xl">
+              <span className="text-xl font-bold text-primary md:text-2xl">
                 {SITE_NAME}
               </span>
             </Link>
